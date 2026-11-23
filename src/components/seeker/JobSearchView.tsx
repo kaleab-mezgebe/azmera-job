@@ -124,36 +124,38 @@ export default function JobSearchView() {
       {/* Top Search & Filter Bar */}
       <div className="p-4 sm:p-5 rounded-3xl border shadow-xs space-y-3" style={{ background: "var(--surface)", borderColor: "var(--border)" }}>
         <div className="flex flex-col md:flex-row gap-2.5">
-          <div className="flex-1 flex items-center gap-2.5 px-3.5 py-2.5 bg-[#F8FAFC] rounded-2xl border border-[#E2E8F0] focus-within:border-[#0A2540] focus-within:bg-white">
-            <Search className="w-4 h-4 text-[#0A2540] shrink-0" />
+          <div className="flex-1 flex items-center gap-2.5 px-3.5 py-2.5 bg-slate-50 dark:bg-slate-800/80 rounded-2xl border border-slate-200 dark:border-slate-700 focus-within:border-[#0A2540] dark:focus-within:border-[#F59E0B] focus-within:bg-white dark:focus-within:bg-[#101E33]">
+            <Search className="w-4 h-4 text-[#0A2540] dark:text-[#F59E0B] shrink-0" />
             <input
               type="text"
               placeholder="Search by job title, skills, or company (e.g. Next.js, Chapa, PM)..."
               value={searchQuery}
               onChange={(e) => setSearchQuery(e.target.value)}
-              className="w-full text-xs sm:text-sm text-[#0A1C2E] bg-transparent outline-none"
+              className="w-full text-xs sm:text-sm text-slate-900 dark:text-white bg-transparent outline-none placeholder:text-slate-400"
             />
             {searchQuery && (
               <button
                 onClick={() => setSearchQuery("")}
-                className="text-[#64748B] hover:text-[#0A1C2E] p-1"
+                className="text-slate-400 hover:text-slate-700 dark:hover:text-white p-1 cursor-pointer"
               >
                 <X className="w-3.5 h-3.5" />
               </button>
             )}
           </div>
 
-          <div className="md:w-64 flex items-center gap-2 px-3 py-2.5 bg-[#F8FAFC] rounded-2xl border border-[#E2E8F0] focus-within:border-[#0A2540]">
-            <MapPin className="w-4 h-4 text-[#0A2540] shrink-0" />
+          <div className="md:w-64 flex items-center gap-2 px-3 py-2.5 bg-slate-50 dark:bg-slate-800/80 rounded-2xl border border-slate-200 dark:border-slate-700 focus-within:border-[#0A2540] dark:focus-within:border-[#F59E0B]">
+            <MapPin className="w-4 h-4 text-[#0A2540] dark:text-[#F59E0B] shrink-0" />
             <select
               value={selectedLocation}
               onChange={(e) => setSelectedLocation(e.target.value)}
-              className="w-full text-xs text-[#0A1C2E] bg-transparent outline-none cursor-pointer"
+              className="w-full text-xs text-slate-900 dark:text-white bg-transparent outline-none cursor-pointer"
             >
-              <option value="All Locations (Ethiopia)">All Locations (Ethiopia)</option>
+              <option value="All Locations (Ethiopia)" className="text-slate-900 bg-white dark:bg-[#101E33] dark:text-white">
+                All Locations (Ethiopia)
+              </option>
               {ETHIOPIAN_LOCATIONS.filter((l) => !l.includes("All Locations")).map(
                 (loc) => (
-                  <option key={loc} value={loc}>
+                  <option key={loc} value={loc} className="text-slate-900 bg-white dark:bg-[#101E33] dark:text-white">
                     {loc}
                   </option>
                 )
@@ -163,23 +165,23 @@ export default function JobSearchView() {
 
           <button
             onClick={() => setShowMobileFilters(!showMobileFilters)}
-            className="md:hidden flex items-center justify-center gap-2 py-2.5 px-4 bg-[#F8FAFC] rounded-2xl border border-[#E2E8F0] text-xs font-bold text-[#0A1C2E]"
+            className="md:hidden flex items-center justify-center gap-2 py-2.5 px-4 bg-slate-50 dark:bg-slate-800 rounded-2xl border border-slate-200 dark:border-slate-700 text-xs font-bold text-slate-900 dark:text-white cursor-pointer"
           >
-            <SlidersHorizontal className="w-4 h-4 text-[#0A2540]" />
+            <SlidersHorizontal className="w-4 h-4 text-[#0A2540] dark:text-[#F59E0B]" />
             <span>Filters</span>
           </button>
         </div>
 
         {/* Quick Category and Type Pills */}
         <div className="flex items-center gap-2 overflow-x-auto pb-1 pt-1 no-scrollbar">
-          <span className="text-[11px] font-bold text-[#64748B] uppercase tracking-wider shrink-0">
+          <span className="text-[11px] font-bold text-slate-500 dark:text-slate-400 uppercase tracking-wider shrink-0">
             Sector:
           </span>
           <button
             onClick={() => setSelectedCategory("All Categories")}
-            className={`px-3 py-1 rounded-full text-xs font-semibold whitespace-nowrap transition-colors ${
+            className={`px-3 py-1 rounded-full text-xs font-semibold whitespace-nowrap transition-colors cursor-pointer ${
               selectedCategory === "All Categories"
-                ? "bg-[#0A2540] text-white"
+                ? "bg-[#0A2540] dark:bg-[#F59E0B] text-white dark:text-[#0A2540] shadow-xs"
                 : "bg-slate-100 dark:bg-slate-800 text-slate-600 dark:text-slate-400 hover:bg-slate-200 dark:hover:bg-slate-700 hover:text-slate-900 dark:hover:text-white"
             }`}
           >
@@ -189,9 +191,9 @@ export default function JobSearchView() {
             <button
               key={cat.id}
               onClick={() => setSelectedCategory(cat.name)}
-              className={`px-3 py-1 rounded-full text-xs font-semibold whitespace-nowrap transition-colors ${
+              className={`px-3 py-1 rounded-full text-xs font-semibold whitespace-nowrap transition-colors cursor-pointer ${
                 selectedCategory === cat.name
-                  ? "bg-[#0A2540] text-white"
+                  ? "bg-[#0A2540] dark:bg-[#F59E0B] text-white dark:text-[#0A2540] shadow-xs"
                   : "bg-slate-100 dark:bg-slate-800 text-slate-600 dark:text-slate-400 hover:bg-slate-200 dark:hover:bg-slate-700 hover:text-slate-900 dark:hover:text-white"
               }`}
             >
@@ -210,15 +212,15 @@ export default function JobSearchView() {
           } lg:col-span-1 space-y-5 p-5 rounded-3xl border shadow-xs h-fit`}
           style={{ background: "var(--surface)", borderColor: "var(--border)" }}
         >
-          <div className="flex items-center justify-between pb-3 border-b border-[#E2E8F0]">
+          <div className="flex items-center justify-between pb-3 border-b border-slate-200 dark:border-slate-800">
             <div className="flex items-center gap-2">
-              <Filter className="w-4 h-4 text-[#0A2540]" />
-              <h3 className="font-bold text-sm text-[#0A1C2E]">Filter Jobs</h3>
+              <Filter className="w-4 h-4 text-[#0A2540] dark:text-[#F59E0B]" />
+              <h3 className="font-bold text-sm text-slate-900 dark:text-white">Filter Jobs</h3>
             </div>
             {hasActiveFilters && (
               <button
                 onClick={handleResetFilters}
-                className="text-xs text-[#0A2540] hover:underline font-semibold"
+                className="text-xs text-[#0A2540] dark:text-[#F59E0B] hover:underline font-semibold cursor-pointer"
               >
                 Reset All
               </button>
@@ -227,21 +229,21 @@ export default function JobSearchView() {
 
           {/* Job Type */}
           <div>
-            <label className="block text-xs font-bold text-[#0A1C2E] mb-2">
+            <label className="block text-xs font-bold text-slate-900 dark:text-white mb-2">
               Employment Type
             </label>
             <div className="space-y-1.5">
               {["All Types", "Full-time", "Contract", "Hybrid", "Remote"].map((type) => (
                 <label
                   key={type}
-                  className="flex items-center gap-2 text-xs text-[#0A1C2E] cursor-pointer hover:text-[#0A2540]"
+                  className="flex items-center gap-2 text-xs text-slate-700 dark:text-slate-300 cursor-pointer hover:text-slate-900 dark:hover:text-white"
                 >
                   <input
                     type="radio"
                     name="jobType"
                     checked={selectedJobType === type}
                     onChange={() => setSelectedJobType(type)}
-                    className="text-[#0A2540] focus:ring-[#0A2540]"
+                    className="accent-[#0A2540] dark:accent-[#F59E0B]"
                   />
                   <span>{type}</span>
                 </label>
@@ -250,22 +252,22 @@ export default function JobSearchView() {
           </div>
 
           {/* Experience Level */}
-          <div className="pt-3 border-t border-[#E2E8F0]">
-            <label className="block text-xs font-bold text-[#0A1C2E] mb-2">
+          <div className="pt-3 border-t border-slate-200 dark:border-slate-800">
+            <label className="block text-xs font-bold text-slate-900 dark:text-white mb-2">
               Experience Level
             </label>
             <div className="space-y-1.5">
               {["All Experience", "Entry Level", "Mid Level", "Senior Level"].map((exp) => (
                 <label
                   key={exp}
-                  className="flex items-center gap-2 text-xs text-[#0A1C2E] cursor-pointer hover:text-[#0A2540]"
+                  className="flex items-center gap-2 text-xs text-slate-700 dark:text-slate-300 cursor-pointer hover:text-slate-900 dark:hover:text-white"
                 >
                   <input
                     type="radio"
                     name="expLevel"
                     checked={selectedExperience === exp}
                     onChange={() => setSelectedExperience(exp)}
-                    className="text-[#0A2540] focus:ring-[#0A2540]"
+                    className="accent-[#0A2540] dark:accent-[#F59E0B]"
                   />
                   <span>{exp}</span>
                 </label>
@@ -274,12 +276,12 @@ export default function JobSearchView() {
           </div>
 
           {/* Salary Minimum in ETB */}
-          <div className="pt-3 border-t border-[#E2E8F0]">
+          <div className="pt-3 border-t border-slate-200 dark:border-slate-800">
             <div className="flex items-center justify-between mb-2">
-              <label className="text-xs font-bold text-[#0A1C2E]">
+              <label className="text-xs font-bold text-slate-900 dark:text-white">
                 Min. Salary (ETB/mo)
               </label>
-              <span className="text-xs font-bold text-[#0A2540]">
+              <span className="text-xs font-bold text-[#0A2540] dark:text-[#F59E0B]">
                 {minSalary > 0 ? `${minSalary.toLocaleString()} ETB` : "Any"}
               </span>
             </div>
@@ -290,9 +292,9 @@ export default function JobSearchView() {
               step={5000}
               value={minSalary}
               onChange={(e) => setMinSalary(Number(e.target.value))}
-              className="w-full accent-[#0A2540] cursor-pointer"
+              className="w-full accent-[#0A2540] dark:accent-[#F59E0B] cursor-pointer"
             />
-            <div className="flex justify-between text-[10px] text-[#64748B] mt-1">
+            <div className="flex justify-between text-[10px] text-slate-500 dark:text-slate-400 mt-1">
               <span>0 ETB</span>
               <span>40k ETB</span>
               <span>80k+ ETB</span>
@@ -304,19 +306,19 @@ export default function JobSearchView() {
         <div className="lg:col-span-3 space-y-4">
           {/* Results Summary Header */}
           <div className="flex items-center justify-between px-4 py-3 rounded-2xl border" style={{ background: "var(--surface)", borderColor: "var(--border)" }}>
-            <span className="text-xs font-semibold text-[#0A1C2E]">
-              Showing <strong className="font-extrabold text-[#0A2540]">{sortedJobs.length}</strong> open vacancies in Ethiopia
+            <span className="text-xs font-semibold text-slate-900 dark:text-white">
+              Showing <strong className="font-extrabold text-[#0A2540] dark:text-[#F59E0B]">{sortedJobs.length}</strong> open vacancies in Ethiopia
             </span>
 
             <div className="flex items-center gap-2 text-xs">
-              <span className="text-[#64748B] hidden sm:inline">Sort by:</span>
+              <span className="text-slate-500 dark:text-slate-400 hidden sm:inline">Sort by:</span>
               <select
                 value={sortBy}
                 onChange={(e) => setSortBy(e.target.value as any)}
-                className="bg-[#F8FAFC] border border-[#E2E8F0] rounded-xl px-2.5 py-1 text-xs font-semibold text-[#0A1C2E] outline-none cursor-pointer"
+                className="bg-slate-50 dark:bg-slate-800 border border-slate-200 dark:border-slate-700 rounded-xl px-2.5 py-1 text-xs font-semibold text-slate-900 dark:text-white outline-none cursor-pointer"
               >
-                <option value="latest">Latest Vacancies</option>
-                <option value="salary-high">Highest Salary (ETB)</option>
+                <option value="latest" className="text-slate-900 bg-white dark:bg-[#101E33] dark:text-white">Latest Vacancies</option>
+                <option value="salary-high" className="text-slate-900 bg-white dark:bg-[#101E33] dark:text-white">Highest Salary (ETB)</option>
               </select>
             </div>
           </div>
@@ -324,19 +326,19 @@ export default function JobSearchView() {
           {/* Empty State */}
           {sortedJobs.length === 0 ? (
             <div className="p-12 rounded-3xl border text-center space-y-3" style={{ background: "var(--surface)", borderColor: "var(--border)" }}>
-              <div className="w-14 h-14 bg-[#F8FAFC] text-[#64748B] rounded-2xl flex items-center justify-center mx-auto">
+              <div className="w-14 h-14 bg-slate-50 dark:bg-slate-800 text-slate-500 dark:text-slate-400 rounded-2xl flex items-center justify-center mx-auto">
                 <Search className="w-6 h-6" />
               </div>
-              <h3 className="font-extrabold text-base text-[#0A1C2E]">
+              <h3 className="font-extrabold text-base text-slate-900 dark:text-white">
                 No jobs match your filter criteria
               </h3>
-              <p className="text-xs text-[#64748B] max-w-sm mx-auto">
+              <p className="text-xs text-slate-500 dark:text-slate-400 max-w-sm mx-auto">
                 Try loosening your filters or search query to find more vacancies across
                 Addis Ababa and other cities.
               </p>
               <button
                 onClick={handleResetFilters}
-                className="mt-2 px-4 py-2 bg-[#0A2540] text-white text-xs font-bold rounded-xl shadow-xs"
+                className="mt-2 px-4 py-2 bg-[#0A2540] hover:bg-[#07192C] dark:bg-[#F59E0B] dark:hover:bg-[#D97706] text-white dark:text-[#0A2540] text-xs font-bold rounded-xl shadow-xs cursor-pointer"
               >
                 Clear All Filters
               </button>
@@ -358,11 +360,11 @@ export default function JobSearchView() {
                         <img
                           src={job.companyLogo}
                           alt={job.companyName}
-                          className="w-13 h-13 rounded-2xl object-cover border border-[#E2E8F0] shrink-0"
+                          className="w-13 h-13 rounded-2xl object-cover border border-slate-200 dark:border-slate-700 shrink-0 bg-white"
                         />
                         <div className="space-y-1">
                           <div className="flex items-center gap-1.5 flex-wrap">
-                            <span className="text-xs font-bold text-[#64748B]">
+                            <span className="text-xs font-bold text-slate-500 dark:text-slate-400">
                               {job.companyName}
                             </span>
                             {job.verified && (
@@ -454,7 +456,7 @@ export default function JobSearchView() {
 
                           <button
                             onClick={() => selectJob(job.id)}
-                            className="px-4 py-2 rounded-xl bg-[#0A2540] hover:bg-[#07192C] text-white text-xs font-bold transition-all shadow-xs hover:shadow-md cursor-pointer hover:scale-[1.02]"
+                            className="px-4 py-2 rounded-xl bg-[#0A2540] hover:bg-[#07192C] dark:bg-[#F59E0B] dark:hover:bg-[#D97706] text-white dark:text-[#0A2540] text-xs font-bold transition-all shadow-xs hover:shadow-md cursor-pointer hover:scale-[1.02]"
                           >
                             View Job
                           </button>

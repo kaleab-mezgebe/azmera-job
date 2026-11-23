@@ -3,6 +3,7 @@
 import React, { useState } from "react";
 import { useApp } from "@/context/AppContext";
 import { MOCK_CATEGORIES, ETHIOPIAN_LOCATIONS } from "@/data/mockData";
+import { BASE_PATH } from "@/lib/constants";
 import { stripRichFormatting } from "@/components/common/RichDocumentRenderer";
 import {
   Search,
@@ -150,10 +151,13 @@ export default function LandingView() {
           </div>
 
           {/* Centered High-Impact Headline with Underline Bar */}
-          <h1 className="text-4xl sm:text-6xl lg:text-7xl font-black text-[#0A2540] dark:text-white tracking-tight leading-[1.12] max-w-4xl mx-auto">
-            Find Your <span className="text-[#0A2540] dark:text-white">Dream Job</span>
+          <h1 className="text-4xl sm:text-6xl lg:text-7xl font-black text-[#0A2540] dark:text-white tracking-tight leading-[1.15] max-w-4xl mx-auto">
+            Find Your Dream Job
             <br />
-
+            <span className="relative inline-block mt-2 sm:mt-3">
+              In Ethiopia
+              <span className="absolute -bottom-1 sm:-bottom-2 left-0 right-0 h-2 sm:h-3 bg-[#F59E0B] rounded-full" />
+            </span>
           </h1>
 
           {/* Centered Subtitle */}
@@ -321,7 +325,7 @@ export default function LandingView() {
             <div className="flex items-center gap-4">
               <div className="w-16 h-16 sm:w-20 sm:h-20 rounded-full border-3 border-[#F59E0B] shadow-md overflow-hidden bg-white shrink-0">
                 <img
-                  src="/azmera-logo.png"
+                  src={`${BASE_PATH}/azmera-logo.png`}
                   alt="Azmera Jobs Logo"
                   className="w-full h-full object-cover object-top"
                 />
@@ -1041,7 +1045,7 @@ export default function LandingView() {
             <div className="flex items-center gap-2.5">
               <div className="w-9 h-9 rounded-xl overflow-hidden border-2 border-[#F59E0B] bg-white shadow-xs shrink-0">
                 <img
-                  src="/azmera-logo.png"
+                  src={`${BASE_PATH}/azmera-logo.png`}
                   alt="Azmera Logo"
                   className="w-full h-full object-cover object-top"
                 />

@@ -254,13 +254,13 @@ export default function SeekerApplicationsView() {
 
                 {/* Status Note or Interview Notice */}
                 {app.statusNotes && (
-                  <div className="p-3.5 bg-[#F8FAFC] rounded-2xl text-xs text-[#0A1C2E] space-y-1">
-                    <span className="text-[10px] font-bold text-[#64748B] uppercase tracking-wider block">
+                  <div className="p-3.5 bg-slate-50 dark:bg-slate-800/60 rounded-2xl text-xs text-slate-800 dark:text-slate-200 space-y-1">
+                    <span className="text-[10px] font-bold text-slate-500 dark:text-slate-400 uppercase tracking-wider block">
                       Recruitment Update:
                     </span>
                     <p className="leading-relaxed">{app.statusNotes}</p>
                     {app.interviewDate && (
-                      <div className="pt-2 flex items-center gap-2 text-xs font-bold text-[#0A2540]">
+                      <div className="pt-2 flex items-center gap-2 text-xs font-bold text-[#0A2540] dark:text-[#F59E0B]">
                         <Video className="w-4 h-4" />
                         <span>Scheduled: {app.interviewDate}</span>
                       </div>
@@ -269,16 +269,16 @@ export default function SeekerApplicationsView() {
                 )}
 
                 {/* Bottom Row Actions */}
-                <div className="pt-3 border-t border-[#E2E8F0] flex flex-wrap items-center justify-between gap-3 text-xs">
-                  <div className="flex items-center gap-2 text-[#64748B]">
-                    <FileText className="w-4 h-4 text-[#0A2540]" />
+                <div className="pt-3 border-t border-slate-200 dark:border-slate-800 flex flex-wrap items-center justify-between gap-3 text-xs">
+                  <div className="flex items-center gap-2 text-slate-500 dark:text-slate-400">
+                    <FileText className="w-4 h-4 text-[#0A2540] dark:text-[#F59E0B]" />
                     <span>Attached CV: {app.cvFileName}</span>
                   </div>
 
                   <div className="flex items-center gap-2">
                     <button
                       onClick={() => selectJob(app.jobId)}
-                      className="px-3.5 py-1.5 rounded-xl border border-[#E2E8F0] hover:bg-[#F8FAFC] text-[#0A1C2E] font-bold transition-colors"
+                      className="px-3.5 py-1.5 rounded-xl border border-slate-200 dark:border-slate-700 bg-white dark:bg-slate-800 hover:bg-slate-50 dark:hover:bg-slate-700 text-slate-900 dark:text-white font-bold transition-colors cursor-pointer"
                     >
                       View Vacancy
                     </button>
@@ -287,7 +287,7 @@ export default function SeekerApplicationsView() {
                         onClick={() =>
                           showToast("Connecting to Google Meet interview room...")
                         }
-                        className="px-4 py-1.5 rounded-xl bg-[#0A2540] hover:bg-[#071A2E] text-white font-bold transition-colors flex items-center gap-1.5 shadow-xs"
+                        className="px-4 py-1.5 rounded-xl bg-[#0A2540] hover:bg-[#071A2E] dark:bg-[#F59E0B] dark:hover:bg-[#D97706] text-white dark:text-[#0A2540] font-bold transition-colors flex items-center gap-1.5 shadow-xs cursor-pointer"
                       >
                         <Video className="w-3.5 h-3.5" />
                         <span>Join Interview</span>

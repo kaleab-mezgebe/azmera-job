@@ -31,7 +31,7 @@ export default function ForgotPasswordView() {
         {/* Back Button */}
         <button
           onClick={() => setTab("signin")}
-          className="inline-flex items-center gap-1.5 text-xs font-semibold text-[#64748B] hover:text-[#0A2540] mb-4 transition-colors"
+          className="inline-flex items-center gap-1.5 text-xs font-semibold text-slate-500 dark:text-slate-400 hover:text-[#0A2540] dark:hover:text-[#F59E0B] mb-4 transition-colors cursor-pointer"
         >
           <ArrowLeft className="w-4 h-4" />
           <span>Back to Sign In</span>
@@ -73,14 +73,14 @@ export default function ForgotPasswordView() {
           </div>
         ) : !codeSent ? (
           <form onSubmit={handleSendCode} className="space-y-4">
-            <div className="flex gap-2 p-1 bg-[#F8FAFC] rounded-xl border border-[#E2E8F0]">
+            <div className="flex gap-2 p-1 bg-slate-100 dark:bg-slate-800 rounded-xl border border-slate-200 dark:border-slate-700">
               <button
                 type="button"
                 onClick={() => setMethod("phone")}
-                className={`flex-1 py-1.5 text-xs font-bold rounded-lg transition-all ${
+                className={`flex-1 py-1.5 text-xs font-bold rounded-lg transition-all cursor-pointer ${
                   method === "phone"
-                    ? "bg-white text-[#0A2540] shadow-xs"
-                    : "text-[#64748B]"
+                    ? "bg-white dark:bg-[#0A2540] text-[#0A2540] dark:text-[#F59E0B] shadow-xs"
+                    : "text-slate-600 dark:text-slate-400"
                 }`}
               >
                 Ethiopian SMS (+251)
@@ -88,10 +88,10 @@ export default function ForgotPasswordView() {
               <button
                 type="button"
                 onClick={() => setMethod("email")}
-                className={`flex-1 py-1.5 text-xs font-bold rounded-lg transition-all ${
+                className={`flex-1 py-1.5 text-xs font-bold rounded-lg transition-all cursor-pointer ${
                   method === "email"
-                    ? "bg-white text-[#0A2540] shadow-xs"
-                    : "text-[#64748B]"
+                    ? "bg-white dark:bg-[#0A2540] text-[#0A2540] dark:text-[#F59E0B] shadow-xs"
+                    : "text-slate-600 dark:text-slate-400"
                 }`}
               >
                 Email Address
@@ -121,7 +121,7 @@ export default function ForgotPasswordView() {
 
             <button
               type="submit"
-              className="w-full py-3 px-4 rounded-xl font-bold text-sm text-white bg-[#0A2540] hover:bg-[#071A2E] shadow-md shadow-[#0A2540]/20 flex items-center justify-center gap-2 transition-all cursor-pointer"
+              className="w-full py-3 px-4 rounded-xl font-bold text-sm text-white dark:text-[#0A2540] bg-[#0A2540] hover:bg-[#071A2E] dark:bg-[#F59E0B] dark:hover:bg-[#D97706] shadow-md shadow-[#0A2540]/20 flex items-center justify-center gap-2 transition-all cursor-pointer"
             >
               <span>Send Verification Code</span>
               <ArrowRight className="w-4 h-4" />
@@ -130,7 +130,7 @@ export default function ForgotPasswordView() {
         ) : (
           <form onSubmit={handleVerifyReset} className="space-y-4">
             <div>
-              <label className="block text-xs font-bold text-[#0A1C2E] mb-2 text-center">
+              <label className="block text-xs font-bold text-slate-900 dark:text-white mb-2 text-center">
                 6-Digit Verification Code
               </label>
               <div className="flex justify-between gap-1.5">
@@ -140,14 +140,14 @@ export default function ForgotPasswordView() {
                     type="text"
                     maxLength={1}
                     defaultValue={i === 0 ? "7" : i === 1 ? "4" : i === 2 ? "1" : ""}
-                    className="w-11 h-12 text-center font-bold text-base bg-[#F8FAFC] border border-[#E2E8F0] focus:border-[#0A2540] focus:bg-white rounded-xl outline-none"
+                    className="w-11 h-12 text-center font-bold text-base bg-slate-50 dark:bg-slate-800 border border-slate-200 dark:border-slate-700 text-slate-900 dark:text-white focus:border-[#0A2540] dark:focus:border-[#F59E0B] focus:bg-white dark:focus:bg-[#101E33] rounded-xl outline-none"
                   />
                 ))}
               </div>
             </div>
 
             <div>
-              <label className="block text-xs font-bold text-[#0A1C2E] mb-1">
+              <label className="block text-xs font-bold text-slate-900 dark:text-white mb-1">
                 New Password
               </label>
               <input
@@ -156,13 +156,13 @@ export default function ForgotPasswordView() {
                 placeholder="At least 8 characters"
                 value={newPassword}
                 onChange={(e) => setNewPassword(e.target.value)}
-                className="w-full px-3 py-2.5 rounded-xl border border-[#E2E8F0] bg-[#F8FAFC] focus:border-[#0A2540] focus:bg-white text-xs text-[#0A1C2E] outline-none"
+                className="w-full px-3 py-2.5 rounded-xl border border-slate-200 dark:border-slate-700 bg-slate-50 dark:bg-slate-800 text-slate-900 dark:text-white focus:border-[#0A2540] dark:focus:border-[#F59E0B] focus:bg-white dark:focus:bg-[#101E33] text-xs outline-none"
               />
             </div>
 
             <button
               type="submit"
-              className="w-full py-3 px-4 rounded-xl font-bold text-sm text-white bg-[#0A2540] hover:bg-[#071A2E] shadow-md shadow-[#0A2540]/20 flex items-center justify-center gap-2 cursor-pointer"
+              className="w-full py-3 px-4 rounded-xl font-bold text-sm text-white dark:text-[#0A2540] bg-[#0A2540] hover:bg-[#071A2E] dark:bg-[#F59E0B] dark:hover:bg-[#D97706] shadow-md shadow-[#0A2540]/20 flex items-center justify-center gap-2 cursor-pointer transition-all"
             >
               <span>Update Password</span>
               <ArrowRight className="w-4 h-4" />
@@ -171,7 +171,7 @@ export default function ForgotPasswordView() {
             <button
               type="button"
               onClick={() => setCodeSent(false)}
-              className="w-full text-center text-xs font-semibold text-[#64748B] hover:text-[#0A1C2E]"
+              className="w-full text-center text-xs font-semibold text-slate-500 dark:text-slate-400 hover:text-slate-900 dark:hover:text-white cursor-pointer"
             >
               Change phone/email or Resend
             </button>

@@ -78,7 +78,7 @@ function MainContent() {
         {role !== "guest" && <Sidebar />}
 
         <main
-          className={`flex-1 w-full ${
+          className={`flex-1 w-full pb-24 lg:pb-8 ${
             isPublicLanding ? "" : "max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-6 sm:py-8"
           }`}
         >

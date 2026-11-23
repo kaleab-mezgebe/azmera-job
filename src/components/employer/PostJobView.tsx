@@ -272,15 +272,15 @@ We are building high-resilience payment infrastructure powering digital commerce
   return (
     <div className="space-y-6 pb-20 max-w-4xl mx-auto">
       {/* Header */}
-      <div className="bg-white p-6 sm:p-8 rounded-3xl border border-[#E2E8F0] shadow-xs flex flex-col sm:flex-row sm:items-center justify-between gap-4">
+      <div className="bg-white dark:bg-[#101E33] p-6 sm:p-8 rounded-3xl border border-slate-200 dark:border-slate-800 shadow-xs flex flex-col sm:flex-row sm:items-center justify-between gap-4">
         <div>
-          <span className="text-[11px] font-bold text-[#0A2540] uppercase tracking-wider">
+          <span className="text-[11px] font-bold text-[#0A2540] dark:text-[#FBBF24] uppercase tracking-wider">
             Talent Acquisition Form
           </span>
-          <h1 className="text-xl sm:text-2xl font-extrabold text-[#0A1C2E] mt-0.5">
+          <h1 className="text-xl sm:text-2xl font-extrabold text-slate-900 dark:text-white mt-0.5">
             Post a New Job Vacancy
           </h1>
-          <p className="text-xs text-[#64748B] mt-1">
+          <p className="text-xs text-slate-500 dark:text-slate-400 mt-1">
             Reach thousands of qualified Ethiopian professionals on Azmera Jobs.
           </p>
         </div>
@@ -289,9 +289,9 @@ We are building high-resilience payment infrastructure powering digital commerce
           <button
             type="button"
             onClick={() => setIsPreviewOpen(true)}
-            className="px-4 py-2.5 rounded-xl border border-[#E2E8F0] bg-[#F8FAFC] hover:bg-white text-xs font-bold text-[#0A1C2E] flex items-center gap-1.5 transition-colors cursor-pointer"
+            className="px-4 py-2.5 rounded-xl border border-slate-200 dark:border-slate-700 bg-slate-50 dark:bg-slate-800 hover:bg-white dark:hover:bg-slate-700 text-xs font-bold text-slate-900 dark:text-white flex items-center gap-1.5 transition-colors cursor-pointer"
           >
-            <Eye className="w-4 h-4 text-[#0A2540]" />
+            <Eye className="w-4 h-4 text-[#0A2540] dark:text-[#F59E0B]" />
             <span>Preview Vacancy</span>
           </button>
         </div>
@@ -299,9 +299,9 @@ We are building high-resilience payment infrastructure powering digital commerce
 
       <form onSubmit={handleSubmit} className="space-y-6">
         {/* Section 1: Basic Information */}
-        <div className="bg-white p-6 sm:p-8 rounded-3xl border border-[#E2E8F0] shadow-xs space-y-4">
-          <h2 className="text-sm font-extrabold text-[#0A1C2E] uppercase tracking-wider flex items-center gap-2">
-            <span className="w-6 h-6 rounded-lg bg-[#0A2540] text-white flex items-center justify-center text-xs font-black">
+        <div className="bg-white dark:bg-[#101E33] p-6 sm:p-8 rounded-3xl border border-slate-200 dark:border-slate-800 shadow-xs space-y-4">
+          <h2 className="text-sm font-extrabold text-slate-900 dark:text-white uppercase tracking-wider flex items-center gap-2">
+            <span className="w-6 h-6 rounded-lg bg-[#0A2540] dark:bg-[#F59E0B] text-white dark:text-[#0A2540] flex items-center justify-center text-xs font-black">
               1
             </span>
             Basic Information
@@ -309,7 +309,7 @@ We are building high-resilience payment infrastructure powering digital commerce
 
           <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
             <div className="sm:col-span-2">
-              <label className="block text-xs font-bold text-[#0A1C2E] mb-1">
+              <label className="block text-xs font-bold text-slate-900 dark:text-white mb-1">
                 Job Title *
               </label>
               <input
@@ -318,21 +318,21 @@ We are building high-resilience payment infrastructure powering digital commerce
                 placeholder="e.g. Senior Full Stack Engineer (Next.js & Python)"
                 value={title}
                 onChange={(e) => setTitle(e.target.value)}
-                className="w-full px-3.5 py-2.5 rounded-xl border border-[#E2E8F0] bg-[#F8FAFC] focus:border-[#0A2540] focus:bg-white text-xs text-[#0A1C2E] outline-none"
+                className="w-full px-3.5 py-2.5 rounded-xl border border-slate-200 dark:border-slate-700 bg-slate-50 dark:bg-slate-800/80 focus:border-[#0A2540] dark:focus:border-[#F59E0B] focus:bg-white dark:focus:bg-[#101E33] text-xs text-slate-900 dark:text-white outline-none"
               />
             </div>
 
             <div>
-              <label className="block text-xs font-bold text-[#0A1C2E] mb-1">
+              <label className="block text-xs font-bold text-slate-900 dark:text-white mb-1">
                 Job Category *
               </label>
               <select
                 value={category}
                 onChange={(e) => setCategory(e.target.value)}
-                className="w-full px-3.5 py-2.5 rounded-xl border border-[#E2E8F0] bg-[#F8FAFC] focus:border-[#0A2540] focus:bg-white text-xs text-[#0A1C2E] outline-none cursor-pointer"
+                className="w-full px-3.5 py-2.5 rounded-xl border border-slate-200 dark:border-slate-700 bg-slate-50 dark:bg-slate-800/80 focus:border-[#0A2540] dark:focus:border-[#F59E0B] focus:bg-white dark:focus:bg-[#101E33] text-xs text-slate-900 dark:text-white outline-none cursor-pointer"
               >
                 {MOCK_CATEGORIES.map((c) => (
-                  <option key={c.id} value={c.name}>
+                  <option key={c.id} value={c.name} className="text-slate-900 bg-white dark:bg-[#101E33] dark:text-white">
                     {c.name}
                   </option>
                 ))}
@@ -340,23 +340,23 @@ We are building high-resilience payment infrastructure powering digital commerce
             </div>
 
             <div>
-              <label className="block text-xs font-bold text-[#0A1C2E] mb-1">
+              <label className="block text-xs font-bold text-slate-900 dark:text-white mb-1">
                 Employment Type *
               </label>
               <select
                 value={type}
                 onChange={(e) => setType(e.target.value as JobType)}
-                className="w-full px-3.5 py-2.5 rounded-xl border border-[#E2E8F0] bg-[#F8FAFC] focus:border-[#0A2540] focus:bg-white text-xs text-[#0A1C2E] outline-none cursor-pointer"
+                className="w-full px-3.5 py-2.5 rounded-xl border border-slate-200 dark:border-slate-700 bg-slate-50 dark:bg-slate-800/80 focus:border-[#0A2540] dark:focus:border-[#F59E0B] focus:bg-white dark:focus:bg-[#101E33] text-xs text-slate-900 dark:text-white outline-none cursor-pointer"
               >
-                <option value="Full-time">Full-time</option>
-                <option value="Contract">Contract</option>
-                <option value="Part-time">Part-time</option>
-                <option value="Internship">Internship</option>
+                <option value="Full-time" className="text-slate-900 bg-white dark:bg-[#101E33] dark:text-white">Full-time</option>
+                <option value="Contract" className="text-slate-900 bg-white dark:bg-[#101E33] dark:text-white">Contract</option>
+                <option value="Part-time" className="text-slate-900 bg-white dark:bg-[#101E33] dark:text-white">Part-time</option>
+                <option value="Internship" className="text-slate-900 bg-white dark:bg-[#101E33] dark:text-white">Internship</option>
               </select>
             </div>
 
             <div>
-              <label className="block text-xs font-bold text-[#0A1C2E] mb-1">
+              <label className="block text-xs font-bold text-slate-900 dark:text-white mb-1">
                 Workplace Model *
               </label>
               <div className="grid grid-cols-3 gap-2">
@@ -365,10 +365,10 @@ We are building high-resilience payment infrastructure powering digital commerce
                     key={m}
                     type="button"
                     onClick={() => setWorkplaceType(m)}
-                    className={`py-2 text-xs font-bold rounded-xl border transition-all ${
+                    className={`py-2 text-xs font-bold rounded-xl border transition-all cursor-pointer ${
                       workplaceType === m
-                        ? "bg-[#0A2540] text-white border-[#0A2540]"
-                        : "bg-[#F8FAFC] text-[#64748B] border-[#E2E8F0] hover:bg-white"
+                        ? "bg-[#0A2540] dark:bg-[#F59E0B] text-white dark:text-[#0A2540] border-[#0A2540] dark:border-[#F59E0B] shadow-xs"
+                        : "bg-slate-50 dark:bg-slate-800 text-slate-600 dark:text-slate-300 border-slate-200 dark:border-slate-700 hover:bg-white dark:hover:bg-slate-700"
                     }`}
                   >
                     {m}
@@ -378,27 +378,27 @@ We are building high-resilience payment infrastructure powering digital commerce
             </div>
 
             <div>
-              <label className="block text-xs font-bold text-[#0A1C2E] mb-1">
+              <label className="block text-xs font-bold text-slate-900 dark:text-white mb-1">
                 Experience Level *
               </label>
               <select
                 value={experienceLevel}
                 onChange={(e) => setExperienceLevel(e.target.value as ExperienceLevel)}
-                className="w-full px-3.5 py-2.5 rounded-xl border border-[#E2E8F0] bg-[#F8FAFC] focus:border-[#0A2540] focus:bg-white text-xs text-[#0A1C2E] outline-none cursor-pointer"
+                className="w-full px-3.5 py-2.5 rounded-xl border border-slate-200 dark:border-slate-700 bg-slate-50 dark:bg-slate-800/80 focus:border-[#0A2540] dark:focus:border-[#F59E0B] focus:bg-white dark:focus:bg-[#101E33] text-xs text-slate-900 dark:text-white outline-none cursor-pointer"
               >
-                <option value="Entry Level (0-1 yrs)">Entry Level (0-1 yrs)</option>
-                <option value="Mid Level (2-4 yrs)">Mid Level (2-4 yrs)</option>
-                <option value="Senior Level (5+ yrs)">Senior Level (5+ yrs)</option>
-                <option value="Lead / Director">Lead / Director</option>
+                <option value="Entry Level (0-1 yrs)" className="text-slate-900 bg-white dark:bg-[#101E33] dark:text-white">Entry Level (0-1 yrs)</option>
+                <option value="Mid Level (2-4 yrs)" className="text-slate-900 bg-white dark:bg-[#101E33] dark:text-white">Mid Level (2-4 yrs)</option>
+                <option value="Senior Level (5+ yrs)" className="text-slate-900 bg-white dark:bg-[#101E33] dark:text-white">Senior Level (5+ yrs)</option>
+                <option value="Lead / Director" className="text-slate-900 bg-white dark:bg-[#101E33] dark:text-white">Lead / Director</option>
               </select>
             </div>
           </div>
         </div>
 
         {/* Section 2: Location & Compensation */}
-        <div className="bg-white p-6 sm:p-8 rounded-3xl border border-[#E2E8F0] shadow-xs space-y-4">
-          <h2 className="text-sm font-extrabold text-[#0A1C2E] uppercase tracking-wider flex items-center gap-2">
-            <span className="w-6 h-6 rounded-lg bg-[#0A2540] text-white flex items-center justify-center text-xs font-black">
+        <div className="bg-white dark:bg-[#101E33] p-6 sm:p-8 rounded-3xl border border-slate-200 dark:border-slate-800 shadow-xs space-y-4">
+          <h2 className="text-sm font-extrabold text-slate-900 dark:text-white uppercase tracking-wider flex items-center gap-2">
+            <span className="w-6 h-6 rounded-lg bg-[#0A2540] dark:bg-[#F59E0B] text-white dark:text-[#0A2540] flex items-center justify-center text-xs font-black">
               2
             </span>
             Location & Compensation (ETB)
@@ -406,17 +406,17 @@ We are building high-resilience payment infrastructure powering digital commerce
 
           <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
             <div>
-              <label className="block text-xs font-bold text-[#0A1C2E] mb-1">
+              <label className="block text-xs font-bold text-slate-900 dark:text-white mb-1">
                 Location in Ethiopia *
               </label>
               <select
                 value={location}
                 onChange={(e) => setLocation(e.target.value)}
-                className="w-full px-3.5 py-2.5 rounded-xl border border-[#E2E8F0] bg-[#F8FAFC] focus:border-[#0A2540] focus:bg-white text-xs text-[#0A1C2E] outline-none cursor-pointer"
+                className="w-full px-3.5 py-2.5 rounded-xl border border-slate-200 dark:border-slate-700 bg-slate-50 dark:bg-slate-800/80 focus:border-[#0A2540] dark:focus:border-[#F59E0B] focus:bg-white dark:focus:bg-[#101E33] text-xs text-slate-900 dark:text-white outline-none cursor-pointer"
               >
                 {ETHIOPIAN_LOCATIONS.filter((l) => !l.includes("All Locations")).map(
                   (loc) => (
-                    <option key={loc} value={loc}>
+                    <option key={loc} value={loc} className="text-slate-900 bg-white dark:bg-[#101E33] dark:text-white">
                       {loc}
                     </option>
                   )
@@ -425,7 +425,7 @@ We are building high-resilience payment infrastructure powering digital commerce
             </div>
 
             <div>
-              <label className="block text-xs font-bold text-[#0A1C2E] mb-1">
+              <label className="block text-xs font-bold text-slate-900 dark:text-white mb-1">
                 Minimum Monthly Salary (ETB)
               </label>
               <input
@@ -433,12 +433,12 @@ We are building high-resilience payment infrastructure powering digital commerce
                 step={1000}
                 value={salaryMin}
                 onChange={(e) => setSalaryMin(Number(e.target.value))}
-                className="w-full px-3.5 py-2.5 rounded-xl border border-[#E2E8F0] bg-[#F8FAFC] focus:border-[#0A2540] focus:bg-white text-xs text-[#0A1C2E] outline-none font-semibold"
+                className="w-full px-3.5 py-2.5 rounded-xl border border-slate-200 dark:border-slate-700 bg-slate-50 dark:bg-slate-800/80 focus:border-[#0A2540] dark:focus:border-[#F59E0B] focus:bg-white dark:focus:bg-[#101E33] text-xs text-slate-900 dark:text-white outline-none font-semibold"
               />
             </div>
 
             <div>
-              <label className="block text-xs font-bold text-[#0A1C2E] mb-1">
+              <label className="block text-xs font-bold text-slate-900 dark:text-white mb-1">
                 Maximum Monthly Salary (ETB)
               </label>
               <input
@@ -446,17 +446,17 @@ We are building high-resilience payment infrastructure powering digital commerce
                 step={1000}
                 value={salaryMax}
                 onChange={(e) => setSalaryMax(Number(e.target.value))}
-                className="w-full px-3.5 py-2.5 rounded-xl border border-[#E2E8F0] bg-[#F8FAFC] focus:border-[#0A2540] focus:bg-white text-xs text-[#0A1C2E] outline-none font-semibold"
+                className="w-full px-3.5 py-2.5 rounded-xl border border-slate-200 dark:border-slate-700 bg-slate-50 dark:bg-slate-800/80 focus:border-[#0A2540] dark:focus:border-[#F59E0B] focus:bg-white dark:focus:bg-[#101E33] text-xs text-slate-900 dark:text-white outline-none font-semibold"
               />
             </div>
           </div>
         </div>
 
         {/* Section 3: Job Description & Microsoft Word Document Editor */}
-        <div className="bg-white dark:bg-[#101E33] p-6 sm:p-8 rounded-3xl border border-[#E2E8F0] dark:border-slate-800 shadow-xs space-y-5">
+        <div className="bg-white dark:bg-[#101E33] p-6 sm:p-8 rounded-3xl border border-slate-200 dark:border-slate-800 shadow-xs space-y-5">
           <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 pb-3 border-b border-slate-100 dark:border-slate-800">
             <div>
-              <h2 className="text-sm font-extrabold text-[#0A1C2E] dark:text-white uppercase tracking-wider flex items-center gap-2">
+              <h2 className="text-sm font-extrabold text-slate-900 dark:text-white uppercase tracking-wider flex items-center gap-2">
                 <span className="w-6 h-6 rounded-lg bg-[#0078D4] text-white flex items-center justify-center text-xs font-black shadow-xs">
                   W
                 </span>
@@ -508,7 +508,7 @@ We are building high-resilience payment infrastructure powering digital commerce
 
           {/* Responsibilities list builder */}
           <div>
-            <label className="block text-xs font-bold text-[#0A1C2E] mb-1">
+            <label className="block text-xs font-bold text-slate-900 dark:text-white mb-1">
               Responsibilities
             </label>
             <div className="flex gap-2 mb-2">
@@ -523,12 +523,12 @@ We are building high-resilience payment infrastructure powering digital commerce
                     handleAddResp();
                   }
                 }}
-                className="flex-1 px-3.5 py-2 rounded-xl border border-[#E2E8F0] bg-[#F8FAFC] text-xs text-[#0A1C2E] outline-none"
+                className="flex-1 px-3.5 py-2 rounded-xl border border-slate-200 dark:border-slate-700 bg-slate-50 dark:bg-slate-800 text-xs text-slate-900 dark:text-white outline-none"
               />
               <button
                 type="button"
                 onClick={handleAddResp}
-                className="px-4 py-2 bg-[#0A2540] text-white text-xs font-bold rounded-xl"
+                className="px-4 py-2 bg-[#0A2540] hover:bg-[#07192C] dark:bg-[#F59E0B] dark:hover:bg-[#D97706] text-white dark:text-[#0A2540] text-xs font-bold rounded-xl cursor-pointer"
               >
                 Add
               </button>
@@ -537,7 +537,7 @@ We are building high-resilience payment infrastructure powering digital commerce
               {responsibilities.map((r, i) => (
                 <div
                   key={i}
-                  className="flex items-center justify-between p-2.5 rounded-xl bg-[#F8FAFC] text-xs text-[#0A1C2E]"
+                  className="flex items-center justify-between p-2.5 rounded-xl bg-slate-50 dark:bg-slate-800 text-xs text-slate-900 dark:text-white border border-slate-100 dark:border-slate-700/60"
                 >
                   <span className="flex-1">• {r}</span>
                   <button
@@ -545,7 +545,7 @@ We are building high-resilience payment infrastructure powering digital commerce
                     onClick={() =>
                       setResponsibilities(responsibilities.filter((_, idx) => idx !== i))
                     }
-                    className="text-[#64748B] hover:text-red-500 pl-2"
+                    className="text-slate-400 hover:text-red-500 pl-2 cursor-pointer"
                   >
                     ×
                   </button>
@@ -556,7 +556,7 @@ We are building high-resilience payment infrastructure powering digital commerce
 
           {/* Qualifications list builder */}
           <div>
-            <label className="block text-xs font-bold text-[#0A1C2E] mb-1">
+            <label className="block text-xs font-bold text-slate-900 dark:text-white mb-1">
               Required Qualifications
             </label>
             <div className="flex gap-2 mb-2">
@@ -571,12 +571,12 @@ We are building high-resilience payment infrastructure powering digital commerce
                     handleAddQual();
                   }
                 }}
-                className="flex-1 px-3.5 py-2 rounded-xl border border-[#E2E8F0] bg-[#F8FAFC] text-xs text-[#0A1C2E] outline-none"
+                className="flex-1 px-3.5 py-2 rounded-xl border border-slate-200 dark:border-slate-700 bg-slate-50 dark:bg-slate-800 text-xs text-slate-900 dark:text-white outline-none"
               />
               <button
                 type="button"
                 onClick={handleAddQual}
-                className="px-4 py-2 bg-[#0A2540] text-white text-xs font-bold rounded-xl"
+                className="px-4 py-2 bg-[#0A2540] hover:bg-[#07192C] dark:bg-[#F59E0B] dark:hover:bg-[#D97706] text-white dark:text-[#0A2540] text-xs font-bold rounded-xl cursor-pointer"
               >
                 Add
               </button>
@@ -585,7 +585,7 @@ We are building high-resilience payment infrastructure powering digital commerce
               {qualifications.map((q, i) => (
                 <div
                   key={i}
-                  className="flex items-center justify-between p-2.5 rounded-xl bg-[#F8FAFC] text-xs text-[#0A1C2E]"
+                  className="flex items-center justify-between p-2.5 rounded-xl bg-slate-50 dark:bg-slate-800 text-xs text-slate-900 dark:text-white border border-slate-100 dark:border-slate-700/60"
                 >
                   <span className="flex-1">✓ {q}</span>
                   <button
@@ -593,7 +593,7 @@ We are building high-resilience payment infrastructure powering digital commerce
                     onClick={() =>
                       setQualifications(qualifications.filter((_, idx) => idx !== i))
                     }
-                    className="text-[#64748B] hover:text-red-500 pl-2"
+                    className="text-slate-400 hover:text-red-500 pl-2 cursor-pointer"
                   >
                     ×
                   </button>
@@ -604,7 +604,7 @@ We are building high-resilience payment infrastructure powering digital commerce
 
           {/* Required Skills tags */}
           <div>
-            <label className="block text-xs font-bold text-[#0A1C2E] mb-1">
+            <label className="block text-xs font-bold text-slate-900 dark:text-white mb-1">
               Required Skills Tags
             </label>
             <div className="flex gap-2 mb-2">
@@ -619,12 +619,12 @@ We are building high-resilience payment infrastructure powering digital commerce
                     handleAddSkill();
                   }
                 }}
-                className="flex-1 px-3.5 py-2 rounded-xl border border-[#E2E8F0] bg-[#F8FAFC] text-xs text-[#0A1C2E] outline-none"
+                className="flex-1 px-3.5 py-2 rounded-xl border border-slate-200 dark:border-slate-700 bg-slate-50 dark:bg-slate-800 text-xs text-slate-900 dark:text-white outline-none"
               />
               <button
                 type="button"
                 onClick={handleAddSkill}
-                className="px-4 py-2 bg-[#0A2540] text-white text-xs font-bold rounded-xl"
+                className="px-4 py-2 bg-[#0A2540] hover:bg-[#07192C] dark:bg-[#F59E0B] dark:hover:bg-[#D97706] text-white dark:text-[#0A2540] text-xs font-bold rounded-xl cursor-pointer"
               >
                 Add Skill
               </button>
@@ -639,7 +639,7 @@ We are building high-resilience payment infrastructure powering digital commerce
                   <button
                     type="button"
                     onClick={() => setSkills(skills.filter((sk) => sk !== s))}
-                    className="text-slate-400 hover:text-red-600"
+                    className="text-slate-400 hover:text-red-600 cursor-pointer"
                   >
                     ×
                   </button>
@@ -650,9 +650,9 @@ We are building high-resilience payment infrastructure powering digital commerce
         </div>
 
         {/* Section 4: Application Settings */}
-        <div className="bg-white p-6 sm:p-8 rounded-3xl border border-[#E2E8F0] shadow-xs space-y-4">
-          <h2 className="text-sm font-extrabold text-[#0A1C2E] uppercase tracking-wider flex items-center gap-2">
-            <span className="w-6 h-6 rounded-lg bg-[#0A2540] text-white flex items-center justify-center text-xs font-black">
+        <div className="bg-white dark:bg-[#101E33] p-6 sm:p-8 rounded-3xl border border-slate-200 dark:border-slate-800 shadow-xs space-y-4">
+          <h2 className="text-sm font-extrabold text-slate-900 dark:text-white uppercase tracking-wider flex items-center gap-2">
+            <span className="w-6 h-6 rounded-lg bg-[#0A2540] dark:bg-[#F59E0B] text-white dark:text-[#0A2540] flex items-center justify-center text-xs font-black">
               4
             </span>
             Application Settings
@@ -660,7 +660,7 @@ We are building high-resilience payment infrastructure powering digital commerce
 
           <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
             <div>
-              <label className="block text-xs font-bold text-[#0A1C2E] mb-1">
+              <label className="block text-xs font-bold text-slate-900 dark:text-white mb-1">
                 Application Deadline
               </label>
               <input
@@ -668,7 +668,7 @@ We are building high-resilience payment infrastructure powering digital commerce
                 value={deadline}
                 onChange={(e) => setDeadline(e.target.value)}
                 placeholder="e.g. Dec 31, 2026"
-                className="w-full px-3.5 py-2.5 rounded-xl border border-[#E2E8F0] bg-[#F8FAFC] text-xs text-[#0A1C2E] outline-none"
+                className="w-full px-3.5 py-2.5 rounded-xl border border-slate-200 dark:border-slate-700 bg-slate-50 dark:bg-slate-800 text-xs text-slate-900 dark:text-white outline-none"
               />
             </div>
           </div>
@@ -679,13 +679,13 @@ We are building high-resilience payment infrastructure powering digital commerce
           <button
             type="button"
             onClick={() => setIsPreviewOpen(true)}
-            className="px-5 py-3 rounded-xl border border-[#E2E8F0] bg-white hover:bg-[#F8FAFC] text-xs font-bold text-[#0A1C2E] cursor-pointer"
+            className="px-5 py-3 rounded-xl border border-slate-200 dark:border-slate-700 bg-white dark:bg-slate-800 hover:bg-slate-50 dark:hover:bg-slate-700 text-xs font-bold text-slate-900 dark:text-white cursor-pointer transition-colors"
           >
             Preview Vacancy
           </button>
           <button
             type="submit"
-            className="px-8 py-3 rounded-xl bg-[#0A2540] hover:bg-[#071A2E] text-white text-xs font-extrabold shadow-md shadow-[#0A2540]/20 flex items-center gap-2 cursor-pointer transition-transform hover:scale-[1.01]"
+            className="px-8 py-3 rounded-xl bg-[#0A2540] hover:bg-[#071A2E] dark:bg-[#F59E0B] dark:hover:bg-[#D97706] text-white dark:text-[#0A2540] text-xs font-extrabold shadow-md shadow-[#0A2540]/20 flex items-center gap-2 cursor-pointer transition-transform hover:scale-[1.01]"
           >
             <CheckCircle2 className="w-4 h-4" />
             <span>Publish Job Vacancy</span>
@@ -695,21 +695,21 @@ We are building high-resilience payment infrastructure powering digital commerce
 
       {/* Preview Modal */}
       {isPreviewOpen && (
-        <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/50 backdrop-blur-xs">
-          <div className="bg-white rounded-3xl border border-[#E2E8F0] shadow-2xl w-full max-w-2xl max-h-[85vh] overflow-y-auto p-6 space-y-4">
-            <div className="flex items-center justify-between border-b border-[#E2E8F0] pb-4">
+        <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/60 backdrop-blur-xs">
+          <div className="bg-white dark:bg-[#101E33] rounded-3xl border border-slate-200 dark:border-slate-800 shadow-2xl w-full max-w-2xl max-h-[85vh] overflow-y-auto p-6 space-y-4">
+            <div className="flex items-center justify-between border-b border-slate-100 dark:border-slate-800 pb-4">
               <div>
-                <span className="text-[10px] font-bold text-[#0A2540] uppercase tracking-wider">
+                <span className="text-[10px] font-bold text-[#0A2540] dark:text-[#FBBF24] uppercase tracking-wider">
                   Live Preview
                 </span>
-                <h3 className="font-extrabold text-base text-[#0A1C2E]">
+                <h3 className="font-extrabold text-base text-slate-900 dark:text-white">
                   {title || "Job Title Preview"}
                 </h3>
-                <p className="text-xs text-[#64748B]">{company.name} • {location}</p>
+                <p className="text-xs text-slate-500 dark:text-slate-400">{company.name} • {location}</p>
               </div>
               <button
                 onClick={() => setIsPreviewOpen(false)}
-                className="p-1.5 text-[#64748B] hover:text-[#0A1C2E]"
+                className="p-1.5 text-slate-400 hover:text-slate-700 dark:hover:text-white rounded-xl hover:bg-slate-100 dark:hover:bg-slate-800 cursor-pointer"
               >
                 <X className="w-5 h-5" />
               </button>
@@ -723,27 +723,27 @@ We are building high-resilience payment infrastructure powering digital commerce
               <span className="text-[#0A2540] dark:text-[#38BDF8] font-semibold">{type}</span>
             </div>
 
-            <div className="space-y-2 text-xs text-[#0A1C2E]">
+            <div className="space-y-2 text-xs text-slate-900 dark:text-white">
               <h4 className="font-bold">Description:</h4>
               <RichDocumentRenderer content={description || "No description provided yet."} />
             </div>
 
-            <div className="space-y-2 text-xs text-[#0A1C2E]">
+            <div className="space-y-2 text-xs text-slate-900 dark:text-white">
               <h4 className="font-bold">Responsibilities:</h4>
-              <ul className="list-disc pl-5 space-y-1 text-[#64748B]">
+              <ul className="list-disc pl-5 space-y-1 text-slate-600 dark:text-slate-400">
                 {responsibilities.map((r, i) => (
                   <li key={i}>{r}</li>
                 ))}
               </ul>
             </div>
 
-            <div className="space-y-2 text-xs text-[#0A1C2E]">
+            <div className="space-y-2 text-xs text-slate-900 dark:text-white">
               <h4 className="font-bold">Required Skills:</h4>
               <div className="flex flex-wrap gap-1.5">
                 {skills.map((s) => (
                   <span
                     key={s}
-                    className="px-2.5 py-0.5 rounded-lg bg-[#F8FAFC] text-[#0A2540] font-bold border border-[#E2E8F0]"
+                    className="px-2.5 py-0.5 rounded-lg bg-slate-100 dark:bg-slate-800 text-[#0A2540] dark:text-[#FBBF24] font-bold border border-slate-200 dark:border-slate-700"
                   >
                     {s}
                   </span>
@@ -751,10 +751,10 @@ We are building high-resilience payment infrastructure powering digital commerce
               </div>
             </div>
 
-            <div className="pt-4 border-t border-[#E2E8F0] flex justify-end">
+            <div className="pt-4 border-t border-slate-100 dark:border-slate-800 flex justify-end">
               <button
                 onClick={() => setIsPreviewOpen(false)}
-                className="px-5 py-2.5 bg-[#0A2540] text-white text-xs font-bold rounded-xl"
+                className="px-5 py-2.5 bg-[#0A2540] hover:bg-[#07192C] dark:bg-[#F59E0B] dark:hover:bg-[#D97706] text-white dark:text-[#0A2540] text-xs font-bold rounded-xl cursor-pointer"
               >
                 Close Preview
               </button>

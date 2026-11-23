@@ -11,36 +11,36 @@ export default function SavedJobsView() {
 
   return (
     <div className="space-y-6 pb-20">
-      <div className="bg-white p-6 rounded-3xl border border-[#E2E8F0] shadow-xs flex items-center justify-between">
+      <div className="bg-white dark:bg-[#101E33] p-6 rounded-3xl border border-slate-200 dark:border-slate-800 shadow-xs flex flex-col sm:flex-row sm:items-center justify-between gap-4">
         <div>
-          <h1 className="text-xl sm:text-2xl font-extrabold text-[#0A1C2E]">
+          <h1 className="text-xl sm:text-2xl font-extrabold text-slate-900 dark:text-white">
             Saved Jobs ({savedJobs.length})
           </h1>
-          <p className="text-xs text-[#64748B] mt-1">
+          <p className="text-xs text-slate-500 dark:text-slate-400 mt-1">
             Keep track of job openings you want to review and apply to later.
           </p>
         </div>
 
         <button
           onClick={() => setTab("search")}
-          className="px-4 py-2 bg-[#0A2540] text-white text-xs font-bold rounded-xl hover:bg-[#071A2E] transition-colors"
+          className="px-4 py-2 bg-[#0A2540] hover:bg-[#07192C] dark:bg-[#F59E0B] dark:hover:bg-[#D97706] text-white dark:text-[#0A2540] text-xs font-bold rounded-xl transition-colors cursor-pointer self-start sm:self-auto"
         >
           Find More Jobs
         </button>
       </div>
 
       {savedJobs.length === 0 ? (
-        <div className="bg-white p-12 rounded-3xl border border-[#E2E8F0] text-center space-y-3">
-          <div className="w-12 h-12 rounded-2xl bg-[#F8FAFC] text-[#64748B] flex items-center justify-center mx-auto">
+        <div className="bg-white dark:bg-[#101E33] p-12 rounded-3xl border border-slate-200 dark:border-slate-800 text-center space-y-3">
+          <div className="w-12 h-12 rounded-2xl bg-slate-100 dark:bg-slate-800 text-slate-500 dark:text-slate-400 flex items-center justify-center mx-auto">
             <Bookmark className="w-6 h-6" />
           </div>
-          <h3 className="font-bold text-sm text-[#0A1C2E]">No saved jobs yet</h3>
-          <p className="text-xs text-[#64748B]">
+          <h3 className="font-bold text-sm text-slate-900 dark:text-white">No saved jobs yet</h3>
+          <p className="text-xs text-slate-500 dark:text-slate-400">
             When you find a vacancy you like, tap the bookmark icon to save it here.
           </p>
           <button
             onClick={() => setTab("search")}
-            className="mt-2 px-4 py-2 bg-[#0A2540] text-white text-xs font-bold rounded-xl"
+            className="mt-2 px-4 py-2 bg-[#0A2540] hover:bg-[#07192C] dark:bg-[#F59E0B] dark:hover:bg-[#D97706] text-white dark:text-[#0A2540] text-xs font-bold rounded-xl cursor-pointer"
           >
             Explore Jobs
           </button>
@@ -50,7 +50,7 @@ export default function SavedJobsView() {
           {savedJobs.map((job) => (
             <div
               key={job.id}
-              className="bg-white p-5 rounded-2xl border border-[#E2E8F0] hover:border-[#0A2540]/40 hover:shadow-md transition-all flex flex-col justify-between"
+              className="bg-white dark:bg-[#101E33] p-5 rounded-2xl border border-slate-200 dark:border-slate-800 hover:border-[#F59E0B] hover:shadow-md transition-all flex flex-col justify-between"
             >
               <div>
                 <div className="flex items-start justify-between gap-3 mb-2.5">
@@ -58,19 +58,19 @@ export default function SavedJobsView() {
                     <img
                       src={job.companyLogo}
                       alt={job.companyName}
-                      className="w-11 h-11 rounded-xl object-cover border border-[#E2E8F0]"
+                      className="w-11 h-11 rounded-xl object-cover border border-slate-200 dark:border-slate-700 bg-white"
                     />
                     <div>
                       <div className="flex items-center gap-1">
-                        <span className="text-xs font-bold text-[#0A1C2E]">
+                        <span className="text-xs font-bold text-slate-900 dark:text-white">
                           {job.companyName}
                         </span>
                         {job.verified && (
-                          <ShieldCheck className="w-3.5 h-3.5 text-[#0A2540]" />
+                          <ShieldCheck className="w-3.5 h-3.5 text-[#0A2540] dark:text-[#38BDF8]" />
                         )}
                       </div>
-                      <span className="text-[11px] text-[#64748B] flex items-center gap-1">
-                        <MapPin className="w-3 h-3 text-[#0A2540]" />
+                      <span className="text-[11px] text-slate-500 dark:text-slate-400 flex items-center gap-1">
+                        <MapPin className="w-3 h-3 text-[#0A2540] dark:text-[#F59E0B]" />
                         {job.location}
                       </span>
                     </div>
@@ -78,7 +78,7 @@ export default function SavedJobsView() {
 
                   <button
                     onClick={() => toggleSaveJob(job.id)}
-                    className="p-1.5 text-red-500 hover:bg-red-50 rounded-lg transition-colors"
+                    className="p-1.5 text-rose-500 hover:bg-rose-50 dark:hover:bg-rose-950/40 rounded-lg transition-colors cursor-pointer"
                     title="Remove bookmark"
                   >
                     <Trash2 className="w-4 h-4" />
@@ -87,7 +87,7 @@ export default function SavedJobsView() {
 
                 <h3
                   onClick={() => selectJob(job.id)}
-                  className="font-extrabold text-sm text-slate-900 dark:text-white hover:text-[#F59E0B] transition-colors cursor-pointer"
+                  className="font-extrabold text-sm text-slate-900 dark:text-white hover:text-[#F59E0B] transition-colors cursor-pointer line-clamp-1"
                 >
                   {job.title}
                 </h3>
@@ -109,10 +109,10 @@ export default function SavedJobsView() {
                 </span>
                 <button
                   onClick={() => selectJob(job.id)}
-                  className="px-3.5 py-1.5 rounded-xl bg-[#0A2540] hover:bg-[#07192C] text-white text-xs font-bold transition-all flex items-center gap-1 cursor-pointer hover:scale-[1.02]"
+                  className="px-3.5 py-1.5 rounded-xl bg-[#0A2540] hover:bg-[#07192C] dark:bg-[#F59E0B] dark:hover:bg-[#D97706] text-white dark:text-[#0A2540] text-xs font-bold transition-all flex items-center gap-1 cursor-pointer hover:scale-[1.02]"
                 >
                   <span>Apply Now</span>
-                  <ArrowRight className="w-3.5 h-3.5 text-[#F59E0B]" />
+                  <ArrowRight className="w-3.5 h-3.5 text-[#F59E0B] dark:text-[#0A2540]" />
                 </button>
               </div>
             </div>

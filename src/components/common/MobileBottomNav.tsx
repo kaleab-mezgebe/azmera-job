@@ -94,7 +94,7 @@ export default function MobileBottomNav() {
           </button>
           <button
             onClick={() => setTab("role-selection")}
-            className="bg-[#0A2540] hover:bg-[#071A2E] text-white px-3.5 py-1.5 rounded-xl text-xs font-bold border border-[#F59E0B]/40 shadow-sm"
+            className="bg-[#0A2540] hover:bg-[#071A2E] dark:bg-[#F59E0B] dark:hover:bg-[#D97706] text-white dark:text-[#0A2540] px-3.5 py-1.5 rounded-xl text-xs font-bold border border-[#F59E0B]/40 shadow-sm cursor-pointer"
           >
             Register
           </button>

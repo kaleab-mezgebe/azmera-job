@@ -91,7 +91,7 @@ export default function ScheduleInterviewModal({
         <form onSubmit={handleSubmit} className="p-6 space-y-4">
           {/* Format selection */}
           <div>
-            <label className="block text-xs font-bold text-[#0A1C2E] mb-1.5">
+            <label className="block text-xs font-bold text-slate-900 dark:text-white mb-1.5">
               Interview Format *
             </label>
             <div className="grid grid-cols-3 gap-2">
@@ -100,10 +100,10 @@ export default function ScheduleInterviewModal({
                   key={fmt}
                   type="button"
                   onClick={() => handleTypeChange(fmt)}
-                  className={`py-2 px-2 text-xs font-bold rounded-xl border transition-all ${
+                  className={`py-2 px-2 text-xs font-bold rounded-xl border transition-all cursor-pointer ${
                     type === fmt
-                      ? "bg-[#0A2540] text-white border-[#0A2540]"
-                      : "bg-[#F8FAFC] text-[#64748B] border-[#E2E8F0] hover:bg-white"
+                      ? "bg-[#0A2540] dark:bg-[#F59E0B] text-white dark:text-[#0A2540] border-[#0A2540] dark:border-[#F59E0B] shadow-xs"
+                      : "bg-slate-50 dark:bg-slate-800 text-slate-600 dark:text-slate-300 border-slate-200 dark:border-slate-700 hover:bg-white dark:hover:bg-slate-700"
                   }`}
                 >
                   {fmt}
@@ -114,7 +114,7 @@ export default function ScheduleInterviewModal({
 
           <div className="grid grid-cols-2 gap-3">
             <div>
-              <label className="block text-xs font-bold text-[#0A1C2E] mb-1">
+              <label className="block text-xs font-bold text-slate-900 dark:text-white mb-1">
                 Interview Date *
               </label>
               <input
@@ -122,11 +122,11 @@ export default function ScheduleInterviewModal({
                 required
                 value={date}
                 onChange={(e) => setDate(e.target.value)}
-                className="w-full px-3 py-2 rounded-xl border border-[#E2E8F0] bg-[#F8FAFC] text-xs text-[#0A1C2E] outline-none"
+                className="w-full px-3 py-2 rounded-xl border border-slate-200 dark:border-slate-700 bg-slate-50 dark:bg-slate-900 text-xs text-slate-900 dark:text-white outline-none"
               />
             </div>
             <div>
-              <label className="block text-xs font-bold text-[#0A1C2E] mb-1">
+              <label className="block text-xs font-bold text-slate-900 dark:text-white mb-1">
                 Time Slot (EAT) *
               </label>
               <input
@@ -135,13 +135,13 @@ export default function ScheduleInterviewModal({
                 value={time}
                 onChange={(e) => setTime(e.target.value)}
                 placeholder="2:00 PM - 3:00 PM"
-                className="w-full px-3 py-2 rounded-xl border border-[#E2E8F0] bg-[#F8FAFC] text-xs text-[#0A1C2E] outline-none"
+                className="w-full px-3 py-2 rounded-xl border border-slate-200 dark:border-slate-700 bg-slate-50 dark:bg-slate-900 text-xs text-slate-900 dark:text-white outline-none"
               />
             </div>
           </div>
 
           <div>
-            <label className="block text-xs font-bold text-[#0A1C2E] mb-1">
+            <label className="block text-xs font-bold text-slate-900 dark:text-white mb-1">
               {type === "Google Meet"
                 ? "Meeting Link"
                 : type === "In-person"
@@ -153,12 +153,12 @@ export default function ScheduleInterviewModal({
               required
               value={locationOrLink}
               onChange={(e) => setLocationOrLink(e.target.value)}
-              className="w-full px-3 py-2 rounded-xl border border-[#E2E8F0] bg-[#F8FAFC] text-xs text-[#0A1C2E] outline-none"
+              className="w-full px-3 py-2 rounded-xl border border-slate-200 dark:border-slate-700 bg-slate-50 dark:bg-slate-900 text-xs text-slate-900 dark:text-white outline-none"
             />
           </div>
 
           <div>
-            <label className="block text-xs font-bold text-[#0A1C2E] mb-1">
+            <label className="block text-xs font-bold text-slate-900 dark:text-white mb-1">
               Interviewer Name / Title
             </label>
             <input
@@ -166,19 +166,19 @@ export default function ScheduleInterviewModal({
               required
               value={interviewerName}
               onChange={(e) => setInterviewerName(e.target.value)}
-              className="w-full px-3 py-2 rounded-xl border border-[#E2E8F0] bg-[#F8FAFC] text-xs text-[#0A1C2E] outline-none"
+              className="w-full px-3 py-2 rounded-xl border border-slate-200 dark:border-slate-700 bg-slate-50 dark:bg-slate-900 text-xs text-slate-900 dark:text-white outline-none"
             />
           </div>
 
           <div>
-            <label className="block text-xs font-bold text-[#0A1C2E] mb-1">
+            <label className="block text-xs font-bold text-slate-900 dark:text-white mb-1">
               Instructions & Preparation Notes
             </label>
             <textarea
               rows={3}
               value={notes}
               onChange={(e) => setNotes(e.target.value)}
-              className="w-full p-3 rounded-xl border border-[#E2E8F0] bg-[#F8FAFC] text-xs text-[#0A1C2E] outline-none leading-relaxed"
+              className="w-full p-3 rounded-xl border border-slate-200 dark:border-slate-700 bg-slate-50 dark:bg-slate-900 text-xs text-slate-900 dark:text-white outline-none leading-relaxed"
             />
           </div>
 
@@ -186,13 +186,13 @@ export default function ScheduleInterviewModal({
             <button
               type="button"
               onClick={onClose}
-              className="px-4 py-2.5 rounded-xl text-xs font-bold text-[#64748B] hover:bg-[#F8FAFC]"
+              className="px-4 py-2.5 rounded-xl text-xs font-bold text-slate-500 dark:text-slate-400 hover:bg-slate-100 dark:hover:bg-slate-800 cursor-pointer"
             >
               Cancel
             </button>
             <button
               type="submit"
-              className="px-5 py-2.5 rounded-xl bg-[#0A2540] hover:bg-[#071A2E] text-white text-xs font-bold shadow-md shadow-[#0A2540]/20"
+              className="px-5 py-2.5 rounded-xl bg-[#0A2540] hover:bg-[#071A2E] dark:bg-[#F59E0B] dark:hover:bg-[#D97706] text-white dark:text-[#0A2540] text-xs font-bold shadow-md shadow-[#0A2540]/20 cursor-pointer"
             >
               Send Interview Invitation
             </button>

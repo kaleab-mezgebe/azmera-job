@@ -152,14 +152,14 @@ export default function ApplyJobModal({ job, onClose }: ApplyJobModalProps) {
                     }`}
                   >
                     <div className="flex items-center gap-3">
-                      <div className="w-10 h-10 rounded-xl bg-blue-50 text-blue-600 flex items-center justify-center">
+                      <div className="w-10 h-10 rounded-xl bg-blue-50 dark:bg-blue-950/50 text-blue-600 dark:text-blue-400 flex items-center justify-center">
                         <FileText className="w-5 h-5" />
                       </div>
                       <div>
-                        <h4 className="text-xs font-bold text-[#0A1C2E]">
+                        <h4 className="text-xs font-bold text-slate-900 dark:text-white">
                           {customCvName}
                         </h4>
-                        <p className="text-[11px] text-[#64748B]">
+                        <p className="text-[11px] text-slate-500 dark:text-slate-400">
                           Newly uploaded PDF document
                         </p>
                       </div>
@@ -167,24 +167,24 @@ export default function ApplyJobModal({ job, onClose }: ApplyJobModalProps) {
                     <div
                       className={`w-4 h-4 rounded-full border-2 flex items-center justify-center ${
                         selectedCv === customCvName
-                          ? "border-[#0A2540] bg-[#0A2540]"
-                          : "border-[#D0DBD4]"
+                          ? "border-[#F59E0B] bg-[#F59E0B]"
+                          : "border-slate-300 dark:border-slate-600"
                       }`}
                     >
                       {selectedCv === customCvName && (
-                        <div className="w-1.5 h-1.5 rounded-full bg-white" />
+                        <div className="w-1.5 h-1.5 rounded-full bg-[#0A2540]" />
                       )}
                     </div>
                   </div>
                 )}
 
                 {/* Upload New CV Box */}
-                <label className="border border-dashed border-[#D0DBD4] hover:border-[#0A2540] rounded-2xl p-4 flex flex-col items-center justify-center gap-1.5 text-center cursor-pointer transition-colors bg-[#F8FAFC]/60">
-                  <UploadCloud className="w-6 h-6 text-[#0A2540]" />
-                  <span className="text-xs font-bold text-[#0A1C2E]">
+                <label className="border border-dashed border-slate-300 dark:border-slate-600 hover:border-[#F59E0B] dark:hover:border-[#F59E0B] rounded-2xl p-4 flex flex-col items-center justify-center gap-1.5 text-center cursor-pointer transition-colors bg-slate-50/80 dark:bg-slate-800/40">
+                  <UploadCloud className="w-6 h-6 text-[#0A2540] dark:text-[#F59E0B]" />
+                  <span className="text-xs font-bold text-slate-900 dark:text-white">
                     Upload a different CV / Resume
                   </span>
-                  <span className="text-[10px] text-[#64748B]">
+                  <span className="text-[10px] text-slate-500 dark:text-slate-400">
                     PDF, DOCX up to 5MB
                   </span>
                   <input
@@ -200,10 +200,10 @@ export default function ApplyJobModal({ job, onClose }: ApplyJobModalProps) {
             {/* Cover Letter */}
             <div>
               <div className="flex items-center justify-between mb-1.5">
-                <label className="text-xs font-bold text-[#0A1C2E]">
+                <label className="text-xs font-bold text-slate-900 dark:text-white">
                   2. Cover Letter
                 </label>
-                <span className="text-[11px] text-[#64748B]">
+                <span className="text-[11px] text-slate-500 dark:text-slate-400">
                   Personalize for {job.companyName}
                 </span>
               </div>
@@ -211,7 +211,7 @@ export default function ApplyJobModal({ job, onClose }: ApplyJobModalProps) {
                 rows={5}
                 value={coverLetter}
                 onChange={(e) => setCoverLetter(e.target.value)}
-                className="w-full p-3.5 rounded-2xl border border-[#E2E8F0] bg-[#F8FAFC] focus:border-[#0A2540] focus:bg-white text-xs text-[#0A1C2E] outline-none leading-relaxed"
+                className="w-full p-3.5 rounded-2xl border border-slate-200 dark:border-slate-700 bg-slate-50 dark:bg-slate-900 focus:border-[#0A2540] dark:focus:border-[#F59E0B] focus:bg-white dark:focus:bg-[#101E33] text-xs text-slate-900 dark:text-white outline-none leading-relaxed"
                 placeholder="Explain why you are the best candidate for this opening..."
               />
             </div>
@@ -221,7 +221,7 @@ export default function ApplyJobModal({ job, onClose }: ApplyJobModalProps) {
               <button
                 type="button"
                 onClick={() => setStep(2)}
-                className="w-full py-3.5 px-4 rounded-xl font-bold text-sm text-white bg-[#0A2540] hover:bg-[#071A2E] shadow-md shadow-[#0A2540]/20 flex items-center justify-center gap-2 cursor-pointer transition-all"
+                className="w-full py-3.5 px-4 rounded-xl font-bold text-sm text-white dark:text-[#0A2540] bg-[#0A2540] hover:bg-[#071A2E] dark:bg-[#F59E0B] dark:hover:bg-[#D97706] shadow-md shadow-[#0A2540]/20 flex items-center justify-center gap-2 cursor-pointer transition-all"
               >
                 <span>Review Application</span>
                 <ArrowRight className="w-4 h-4" />
@@ -231,51 +231,51 @@ export default function ApplyJobModal({ job, onClose }: ApplyJobModalProps) {
         ) : (
           /* Step 2: Review & Submit */
           <div className="p-6 space-y-5">
-            <div className="p-4 bg-[#F8FAFC] rounded-2xl border border-[#E2E8F0] space-y-3">
-              <h3 className="text-xs font-bold text-[#64748B] uppercase tracking-wider">
+            <div className="p-4 bg-slate-50 dark:bg-slate-800/60 rounded-2xl border border-slate-200 dark:border-slate-700 space-y-3">
+              <h3 className="text-xs font-bold text-slate-500 dark:text-slate-400 uppercase tracking-wider">
                 Candidate Information
               </h3>
               <div className="flex items-center gap-3">
                 <img
                   src={seeker.avatar}
                   alt={seeker.name}
-                  className="w-12 h-12 rounded-full object-cover border border-[#0A2540]"
+                  className="w-12 h-12 rounded-full object-cover border-2 border-[#0A2540] dark:border-[#F59E0B]"
                 />
                 <div>
-                  <h4 className="font-extrabold text-sm text-[#0A1C2E]">
+                  <h4 className="font-extrabold text-sm text-slate-900 dark:text-white">
                     {seeker.name}
                   </h4>
-                  <p className="text-xs text-[#64748B]">{seeker.title}</p>
+                  <p className="text-xs text-slate-500 dark:text-slate-400">{seeker.title}</p>
                 </div>
               </div>
 
-              <div className="grid grid-cols-2 gap-2 text-xs pt-2 border-t border-[#E2E8F0]">
-                <div className="flex items-center gap-1.5 text-[#0A1C2E]">
-                  <Mail className="w-3.5 h-3.5 text-[#0A2540]" />
+              <div className="grid grid-cols-2 gap-2 text-xs pt-2 border-t border-slate-200 dark:border-slate-700">
+                <div className="flex items-center gap-1.5 text-slate-800 dark:text-slate-200">
+                  <Mail className="w-3.5 h-3.5 text-[#0A2540] dark:text-[#F59E0B]" />
                   <span className="truncate">{seeker.email}</span>
                 </div>
-                <div className="flex items-center gap-1.5 text-[#0A1C2E]">
-                  <Phone className="w-3.5 h-3.5 text-[#0A2540]" />
+                <div className="flex items-center gap-1.5 text-slate-800 dark:text-slate-200">
+                  <Phone className="w-3.5 h-3.5 text-[#0A2540] dark:text-[#F59E0B]" />
                   <span>{seeker.phone}</span>
                 </div>
               </div>
             </div>
 
-            <div className="p-4 bg-[#F8FAFC] rounded-2xl border border-[#E2E8F0] space-y-2">
-              <h3 className="text-xs font-bold text-[#64748B] uppercase tracking-wider">
+            <div className="p-4 bg-slate-50 dark:bg-slate-800/60 rounded-2xl border border-slate-200 dark:border-slate-700 space-y-2">
+              <h3 className="text-xs font-bold text-slate-500 dark:text-slate-400 uppercase tracking-wider">
                 Selected Attachment
               </h3>
-              <div className="flex items-center gap-2.5 text-xs font-bold text-[#0A1C2E]">
-                <FileText className="w-4 h-4 text-[#0A2540]" />
+              <div className="flex items-center gap-2.5 text-xs font-bold text-slate-900 dark:text-white">
+                <FileText className="w-4 h-4 text-[#0A2540] dark:text-[#F59E0B]" />
                 <span>{selectedCv}</span>
               </div>
             </div>
 
-            <div className="p-4 bg-[#F8FAFC] rounded-2xl border border-[#E2E8F0] space-y-2">
-              <h3 className="text-xs font-bold text-[#64748B] uppercase tracking-wider">
+            <div className="p-4 bg-slate-50 dark:bg-slate-800/60 rounded-2xl border border-slate-200 dark:border-slate-700 space-y-2">
+              <h3 className="text-xs font-bold text-slate-500 dark:text-slate-400 uppercase tracking-wider">
                 Cover Letter Preview
               </h3>
-              <p className="text-xs text-[#0A1C2E] whitespace-pre-line leading-relaxed max-h-36 overflow-y-auto">
+              <p className="text-xs text-slate-800 dark:text-slate-200 whitespace-pre-line leading-relaxed max-h-36 overflow-y-auto">
                 {coverLetter}
               </p>
             </div>
@@ -285,7 +285,7 @@ export default function ApplyJobModal({ job, onClose }: ApplyJobModalProps) {
               <button
                 type="button"
                 onClick={() => setStep(1)}
-                className="w-1/3 py-3 px-4 rounded-xl font-bold text-xs text-[#0A1C2E] bg-[#F8FAFC] hover:bg-[#E2E8F0] transition-colors"
+                className="w-1/3 py-3 px-4 rounded-xl font-bold text-xs text-slate-700 dark:text-slate-300 bg-slate-100 dark:bg-slate-800 hover:bg-slate-200 dark:hover:bg-slate-700 transition-colors cursor-pointer"
               >
                 Back
               </button>
@@ -294,7 +294,7 @@ export default function ApplyJobModal({ job, onClose }: ApplyJobModalProps) {
                 type="button"
                 disabled={isSubmitting}
                 onClick={handleSubmit}
-                className="w-2/3 py-3 px-4 rounded-xl font-bold text-sm text-white bg-[#0A2540] hover:bg-[#071A2E] shadow-md shadow-[#0A2540]/20 flex items-center justify-center gap-2 cursor-pointer transition-all disabled:opacity-50"
+                className="w-2/3 py-3 px-4 rounded-xl font-bold text-sm text-white dark:text-[#0A2540] bg-[#0A2540] hover:bg-[#071A2E] dark:bg-[#F59E0B] dark:hover:bg-[#D97706] shadow-md shadow-[#0A2540]/20 flex items-center justify-center gap-2 cursor-pointer transition-all disabled:opacity-50"
               >
                 {isSubmitting ? (
                   <span>Submitting...</span>

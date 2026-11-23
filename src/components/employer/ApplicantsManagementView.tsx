@@ -94,12 +94,12 @@ export default function ApplicantsManagementView() {
   return (
     <div className="space-y-6 pb-20">
       {/* Header */}
-      <div className="bg-white p-6 sm:p-8 rounded-3xl border border-[#E2E8F0] shadow-xs flex flex-col sm:flex-row sm:items-center justify-between gap-4">
+      <div className="bg-white dark:bg-[#101E33] p-6 sm:p-8 rounded-3xl border border-slate-200 dark:border-slate-800 shadow-xs flex flex-col sm:flex-row sm:items-center justify-between gap-4">
         <div>
-          <h1 className="text-xl sm:text-2xl font-extrabold text-[#0A1C2E]">
+          <h1 className="text-xl sm:text-2xl font-extrabold text-slate-900 dark:text-white">
             Candidate & Applicant Management ({filteredApps.length})
           </h1>
-          <p className="text-xs text-[#64748B] mt-1">
+          <p className="text-xs text-slate-500 dark:text-slate-400 mt-1">
             Review profiles, screen CVs, advance candidates, and coordinate interviews.
           </p>
         </div>
@@ -112,15 +112,15 @@ export default function ApplicantsManagementView() {
       </div>
 
       {/* Search & Filters */}
-      <div className="bg-white p-4 rounded-2xl border border-[#E2E8F0] shadow-xs flex flex-col sm:flex-row items-center justify-between gap-3">
-        <div className="w-full sm:w-80 flex items-center gap-2 px-3 py-2 bg-[#F8FAFC] rounded-xl border border-[#E2E8F0] focus-within:border-[#0A2540]">
-          <Search className="w-4 h-4 text-[#0A2540]" />
+      <div className="bg-white dark:bg-[#101E33] p-4 rounded-2xl border border-slate-200 dark:border-slate-800 shadow-xs flex flex-col sm:flex-row items-center justify-between gap-3">
+        <div className="w-full sm:w-80 flex items-center gap-2 px-3 py-2 bg-slate-50 dark:bg-slate-800/80 rounded-xl border border-slate-200 dark:border-slate-700 focus-within:border-[#0A2540] dark:focus-within:border-[#F59E0B]">
+          <Search className="w-4 h-4 text-[#0A2540] dark:text-[#F59E0B]" />
           <input
             type="text"
             placeholder="Search candidate or job role..."
             value={search}
             onChange={(e) => setSearch(e.target.value)}
-            className="w-full text-xs text-[#0A1C2E] bg-transparent outline-none"
+            className="w-full text-xs text-slate-900 dark:text-white bg-transparent outline-none placeholder:text-slate-400"
           />
         </div>
 
@@ -129,10 +129,10 @@ export default function ApplicantsManagementView() {
             <button
               key={st}
               onClick={() => setStatusFilter(st)}
-              className={`px-3 py-1.5 rounded-xl text-xs font-semibold whitespace-nowrap transition-colors ${
+              className={`px-3 py-1.5 rounded-xl text-xs font-semibold whitespace-nowrap transition-colors cursor-pointer ${
                 statusFilter === st
-                  ? "bg-[#0A2540] text-white font-bold"
-                  : "bg-[#F8FAFC] text-[#64748B] hover:bg-white border border-transparent hover:border-[#E2E8F0]"
+                  ? "bg-[#0A2540] dark:bg-[#F59E0B] text-white dark:text-[#0A2540] font-bold shadow-xs"
+                  : "bg-slate-50 dark:bg-slate-800 text-slate-600 dark:text-slate-300 hover:bg-white dark:hover:bg-slate-700 border border-transparent hover:border-slate-200 dark:hover:border-slate-700"
               }`}
             >
               {st}
@@ -144,12 +144,12 @@ export default function ApplicantsManagementView() {
       {/* Candidate Cards Grid */}
       <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
         {filteredApps.length === 0 ? (
-          <div className="col-span-2 bg-white p-12 rounded-3xl border border-[#E2E8F0] text-center space-y-2">
-            <Users className="w-8 h-8 text-[#64748B] mx-auto" />
-            <h3 className="font-bold text-sm text-[#0A1C2E]">
+          <div className="col-span-2 bg-white dark:bg-[#101E33] p-12 rounded-3xl border border-slate-200 dark:border-slate-800 text-center space-y-2">
+            <Users className="w-8 h-8 text-slate-400 mx-auto" />
+            <h3 className="font-bold text-sm text-slate-900 dark:text-white">
               No applicants found matching this criteria
             </h3>
-            <p className="text-xs text-[#64748B]">
+            <p className="text-xs text-slate-500 dark:text-slate-400">
               Try clearing filters or search query.
             </p>
           </div>
@@ -157,7 +157,7 @@ export default function ApplicantsManagementView() {
           filteredApps.map((app) => (
             <div
               key={app.id}
-              className="bg-white p-5 rounded-3xl border border-[#E2E8F0] hover:border-[#0A2540]/40 hover:shadow-md transition-all flex flex-col justify-between space-y-4"
+              className="bg-white dark:bg-[#101E33] p-5 rounded-3xl border border-slate-200 dark:border-slate-800 hover:border-[#F59E0B]/50 hover:shadow-md transition-all flex flex-col justify-between space-y-4"
             >
               <div>
                 {/* Top Row: Candidate info + Status badge */}
@@ -166,20 +166,20 @@ export default function ApplicantsManagementView() {
                     <img
                       src={app.candidateAvatar}
                       alt={app.candidateName}
-                      className="w-13 h-13 rounded-2xl object-cover border border-[#0A2540]"
+                      className="w-13 h-13 rounded-2xl object-cover border-2 border-[#0A2540] dark:border-[#F59E0B]"
                     />
                     <div>
                       <h3
                         onClick={() => handleOpenProfile(app)}
-                        className="font-extrabold text-sm text-[#0A1C2E] hover:text-[#0A2540] transition-colors cursor-pointer"
+                        className="font-extrabold text-sm text-slate-900 dark:text-white hover:text-[#F59E0B] transition-colors cursor-pointer"
                       >
                         {app.candidateName}
                       </h3>
-                      <p className="text-xs font-semibold text-[#0A2540]">
+                      <p className="text-xs font-semibold text-[#0A2540] dark:text-[#38BDF8]">
                         {app.candidateTitle}
                       </p>
-                      <p className="text-[11px] text-[#64748B] flex items-center gap-1 mt-0.5">
-                        <MapPin className="w-3 h-3 text-[#0A2540]" />
+                      <p className="text-[11px] text-slate-500 dark:text-slate-400 flex items-center gap-1 mt-0.5">
+                        <MapPin className="w-3 h-3 text-[#0A2540] dark:text-[#F59E0B]" />
                         {app.location} • Applied {app.appliedDate}
                       </p>
                     </div>
@@ -271,7 +271,7 @@ export default function ApplicantsManagementView() {
                       setInterviewModalCandidate(cand);
                       setSelectedApplication(app);
                     }}
-                    className="px-3.5 py-1.5 rounded-xl bg-[#0A2540] hover:bg-[#071A2E] text-white text-xs font-bold shadow-xs transition-colors flex items-center gap-1"
+                    className="px-3.5 py-1.5 rounded-xl bg-[#0A2540] hover:bg-[#071A2E] dark:bg-[#F59E0B] dark:hover:bg-[#D97706] text-white dark:text-[#0A2540] text-xs font-bold shadow-xs transition-colors flex items-center gap-1 cursor-pointer"
                   >
                     <CalendarCheck className="w-3.5 h-3.5" />
                     <span>Interview</span>
@@ -284,7 +284,7 @@ export default function ApplicantsManagementView() {
                         updateApplicationStatus(app.id, "Rejected");
                         showToast(`Rejected ${app.candidateName}`);
                       }}
-                      className="p-1.5 rounded-xl text-red-500 hover:bg-red-50 transition-colors"
+                      className="p-1.5 rounded-xl text-red-500 hover:bg-red-50 dark:hover:bg-red-950/40 transition-colors cursor-pointer"
                       title="Reject candidate"
                     >
                       <XCircle className="w-4 h-4" />
@@ -324,25 +324,25 @@ export default function ApplicantsManagementView() {
 
       {/* CV Preview Modal */}
       {cvPreviewUrl && (
-        <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/50 backdrop-blur-xs">
-          <div className="bg-white rounded-3xl border border-[#E2E8F0] shadow-2xl w-full max-w-lg p-6 space-y-4">
-            <div className="flex items-center justify-between border-b border-[#E2E8F0] pb-3">
+        <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/60 backdrop-blur-xs">
+          <div className="bg-white dark:bg-[#101E33] rounded-3xl border border-slate-200 dark:border-slate-800 shadow-2xl w-full max-w-lg p-6 space-y-4">
+            <div className="flex items-center justify-between border-b border-slate-100 dark:border-slate-800 pb-3">
               <div className="flex items-center gap-2">
-                <FileText className="w-5 h-5 text-[#0A2540]" />
-                <h3 className="font-extrabold text-sm text-[#0A1C2E]">{cvPreviewUrl}</h3>
+                <FileText className="w-5 h-5 text-[#0A2540] dark:text-[#F59E0B]" />
+                <h3 className="font-extrabold text-sm text-slate-900 dark:text-white">{cvPreviewUrl}</h3>
               </div>
               <button
                 onClick={() => setCvPreviewUrl(null)}
-                className="text-[#64748B] hover:text-[#0A1C2E]"
+                className="text-slate-400 hover:text-slate-700 dark:hover:text-white p-1 rounded-lg cursor-pointer"
               >
                 ✕
               </button>
             </div>
 
-            <div className="p-8 bg-[#F8FAFC] rounded-2xl text-center space-y-3">
-              <FileText className="w-12 h-12 text-[#0A2540] mx-auto animate-pulse" />
-              <h4 className="font-bold text-sm text-[#0A1C2E]">Verified Candidate CV</h4>
-              <p className="text-xs text-[#64748B] max-w-xs mx-auto">
+            <div className="p-8 bg-slate-50 dark:bg-slate-800/60 rounded-2xl text-center space-y-3">
+              <FileText className="w-12 h-12 text-[#0A2540] dark:text-[#F59E0B] mx-auto animate-pulse" />
+              <h4 className="font-bold text-sm text-slate-900 dark:text-white">Verified Candidate CV</h4>
+              <p className="text-xs text-slate-500 dark:text-slate-400 max-w-xs mx-auto">
                 Validated PDF format including academic credentials and work history.
               </p>
               <button
@@ -350,7 +350,7 @@ export default function ApplicantsManagementView() {
                   showToast(`Downloading ${cvPreviewUrl}...`);
                   setCvPreviewUrl(null);
                 }}
-                className="px-4 py-2 bg-[#0A2540] text-white text-xs font-bold rounded-xl"
+                className="px-4 py-2 bg-[#0A2540] hover:bg-[#071A2E] dark:bg-[#F59E0B] dark:hover:bg-[#D97706] text-white dark:text-[#0A2540] text-xs font-bold rounded-xl cursor-pointer"
               >
                 Download Document
               </button>

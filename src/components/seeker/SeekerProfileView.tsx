@@ -65,38 +65,38 @@ export default function SeekerProfileView() {
   return (
     <div className="space-y-6 pb-20 max-w-5xl mx-auto">
       {/* Profile Header Card */}
-      <div className="bg-white p-6 sm:p-8 rounded-3xl border border-[#E2E8F0] shadow-xs relative overflow-hidden">
+      <div className="bg-white dark:bg-[#101E33] p-6 sm:p-8 rounded-3xl border border-slate-200 dark:border-slate-800 shadow-xs relative overflow-hidden">
         <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-6">
           <div className="flex flex-col sm:flex-row items-center sm:items-start gap-5 text-center sm:text-left">
             <div className="relative">
               <img
                 src={seeker.avatar}
                 alt={seeker.name}
-                className="w-24 h-24 rounded-full object-cover border-4 border-[#0A2540] shadow-md"
+                className="w-24 h-24 rounded-full object-cover border-4 border-[#0A2540] dark:border-[#F59E0B] shadow-md"
               />
-              <span className="absolute bottom-1 right-1 w-5 h-5 rounded-full bg-[#0A2540] border-2 border-white flex items-center justify-center text-white text-[10px]">
+              <span className="absolute bottom-1 right-1 w-5 h-5 rounded-full bg-[#0A2540] dark:bg-[#F59E0B] border-2 border-white dark:border-[#101E33] flex items-center justify-center text-white dark:text-[#0A2540] text-[10px] font-black">
                 ✓
               </span>
             </div>
 
             <div className="space-y-1">
-              <h1 className="text-2xl font-extrabold text-[#0A1C2E]">
+              <h1 className="text-2xl font-extrabold text-slate-900 dark:text-white">
                 {seeker.name}
               </h1>
-              <p className="text-sm font-semibold text-[#0A2540]">{seeker.title}</p>
-              <div className="flex flex-wrap items-center justify-center sm:justify-start gap-3 text-xs text-[#64748B] pt-1">
+              <p className="text-sm font-semibold text-[#0A2540] dark:text-[#F59E0B]">{seeker.title}</p>
+              <div className="flex flex-wrap items-center justify-center sm:justify-start gap-3 text-xs text-slate-500 dark:text-slate-400 pt-1">
                 <span className="flex items-center gap-1">
-                  <MapPin className="w-3.5 h-3.5 text-[#0A2540]" />
+                  <MapPin className="w-3.5 h-3.5 text-[#0A2540] dark:text-[#F59E0B]" />
                   {seeker.location}
                 </span>
                 <span>•</span>
                 <span className="flex items-center gap-1">
-                  <Mail className="w-3.5 h-3.5 text-[#0A2540]" />
+                  <Mail className="w-3.5 h-3.5 text-[#0A2540] dark:text-[#F59E0B]" />
                   {seeker.email}
                 </span>
                 <span>•</span>
                 <span className="flex items-center gap-1">
-                  <Phone className="w-3.5 h-3.5 text-[#0A2540]" />
+                  <Phone className="w-3.5 h-3.5 text-[#0A2540] dark:text-[#F59E0B]" />
                   {seeker.phone}
                 </span>
               </div>
@@ -104,20 +104,20 @@ export default function SeekerProfileView() {
           </div>
 
           {/* Profile Strength Widget */}
-          <div className="p-4 bg-[#F8FAFC] rounded-2xl border border-[#E2E8F0] text-center sm:text-right shrink-0">
-            <span className="text-[10px] font-bold text-[#64748B] uppercase tracking-wider block">
+          <div className="p-4 bg-slate-50 dark:bg-slate-800/60 rounded-2xl border border-slate-200 dark:border-slate-700 text-center sm:text-right shrink-0">
+            <span className="text-[10px] font-bold text-slate-500 dark:text-slate-400 uppercase tracking-wider block">
               Profile Completeness
             </span>
-            <div className="text-2xl font-extrabold text-[#0A2540] my-0.5">
+            <div className="text-2xl font-extrabold text-[#0A2540] dark:text-[#F59E0B] my-0.5">
               {seeker.profileCompletion}%
             </div>
-            <div className="w-36 h-2 bg-[#E2E8F0] rounded-full mx-auto sm:ml-auto overflow-hidden">
+            <div className="w-36 h-2 bg-slate-200 dark:bg-slate-700 rounded-full mx-auto sm:ml-auto overflow-hidden">
               <div
-                className="h-full bg-[#0A2540] rounded-full"
+                className="h-full bg-[#0A2540] dark:bg-[#F59E0B] rounded-full"
                 style={{ width: `${seeker.profileCompletion}%` }}
               />
             </div>
-            <span className="text-[10px] text-[#0A2540] font-semibold mt-1 block">
+            <span className="text-[10px] text-[#0A2540] dark:text-[#FBBF24] font-semibold mt-1 block">
               Visible to top recruiters
             </span>
           </div>
@@ -128,12 +128,12 @@ export default function SeekerProfileView() {
         {/* Left 2 Cols: Bio, Experience, Education */}
         <div className="lg:col-span-2 space-y-6">
           {/* About Me */}
-          <div className="bg-white p-6 rounded-3xl border border-[#E2E8F0] space-y-3">
+          <div className="bg-white dark:bg-[#101E33] p-6 rounded-3xl border border-slate-200 dark:border-slate-800 space-y-3">
             <div className="flex items-center justify-between">
-              <h2 className="text-base font-extrabold text-[#0A1C2E]">About Me</h2>
+              <h2 className="text-base font-extrabold text-slate-900 dark:text-white">About Me</h2>
               <button
                 onClick={() => setIsEditingBio(!isEditingBio)}
-                className="text-xs font-bold text-[#0A2540] hover:underline flex items-center gap-1"
+                className="text-xs font-bold text-[#0A2540] dark:text-[#F59E0B] hover:underline flex items-center gap-1 cursor-pointer"
               >
                 <Edit3 className="w-3.5 h-3.5" />
                 <span>{isEditingBio ? "Cancel" : "Edit Bio"}</span>
@@ -146,28 +146,28 @@ export default function SeekerProfileView() {
                   rows={4}
                   value={bioText}
                   onChange={(e) => setBioText(e.target.value)}
-                  className="w-full p-3 rounded-2xl border border-[#E2E8F0] bg-[#F8FAFC] focus:border-[#0A2540] text-xs text-[#0A1C2E] outline-none leading-relaxed"
+                  className="w-full p-3 rounded-2xl border border-slate-200 dark:border-slate-700 bg-slate-50 dark:bg-slate-800 focus:border-[#0A2540] dark:focus:border-[#F59E0B] text-xs text-slate-900 dark:text-white outline-none leading-relaxed"
                 />
                 <button
                   onClick={handleSaveBio}
-                  className="px-4 py-2 bg-[#0A2540] text-white text-xs font-bold rounded-xl"
+                  className="px-4 py-2 bg-[#0A2540] hover:bg-[#071A2E] dark:bg-[#F59E0B] dark:hover:bg-[#D97706] text-white dark:text-[#0A2540] text-xs font-bold rounded-xl cursor-pointer"
                 >
                   Save Bio
                 </button>
               </div>
             ) : (
-              <p className="text-xs sm:text-sm text-[#0A1C2E] leading-relaxed">
+              <p className="text-xs sm:text-sm text-slate-700 dark:text-slate-300 leading-relaxed">
                 {seeker.bio}
               </p>
             )}
           </div>
 
           {/* Work Experience */}
-          <div className="bg-white p-6 rounded-3xl border border-[#E2E8F0] space-y-4">
+          <div className="bg-white dark:bg-[#101E33] p-6 rounded-3xl border border-slate-200 dark:border-slate-800 space-y-4">
             <div className="flex items-center justify-between">
               <div className="flex items-center gap-2">
-                <Briefcase className="w-4 h-4 text-[#0A2540]" />
-                <h2 className="text-base font-extrabold text-[#0A1C2E]">
+                <Briefcase className="w-4 h-4 text-[#0A2540] dark:text-[#F59E0B]" />
+                <h2 className="text-base font-extrabold text-slate-900 dark:text-white">
                   Work Experience ({seeker.experienceYears} Years)
                 </h2>
               </div>
@@ -177,7 +177,7 @@ export default function SeekerProfileView() {
               {seeker.workHistory.map((work, idx) => (
                 <div
                   key={idx}
-                  className="p-4 rounded-2xl bg-[#F8FAFC] border border-[#E2E8F0] space-y-1.5"
+                  className="p-4 rounded-2xl bg-slate-50 dark:bg-slate-800/60 border border-slate-200 dark:border-slate-700 space-y-1.5"
                 >
                   <div className="flex items-center justify-between">
                     <h3 className="font-extrabold text-sm text-slate-900 dark:text-white">

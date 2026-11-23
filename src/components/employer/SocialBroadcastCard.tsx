@@ -398,9 +398,9 @@ export default function SocialBroadcastCard() {
                 </button>
                 <button
                   type="submit"
-                  className="px-5 py-2.5 rounded-xl bg-[#0A2540] hover:bg-[#07192C] text-white text-xs font-bold shadow-md shadow-[#0A2540]/20 flex items-center gap-1.5"
+                  className="px-5 py-2.5 rounded-xl bg-[#0A2540] hover:bg-[#07192C] dark:bg-[#F59E0B] dark:hover:bg-[#D97706] text-white dark:text-[#0A2540] text-xs font-bold shadow-md shadow-[#0A2540]/20 flex items-center gap-1.5 cursor-pointer"
                 >
-                  <CheckCircle2 className="w-4 h-4 text-[#F59E0B]" />
+                  <CheckCircle2 className="w-4 h-4 text-[#F59E0B] dark:text-[#0A2540]" />
                   <span>Publish to Platform &amp; Broadcast</span>
                 </button>
               </div>

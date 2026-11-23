@@ -29,19 +29,19 @@ export default function ManageJobsView() {
   return (
     <div className="space-y-6 pb-20">
       {/* Header */}
-      <div className="bg-white p-6 sm:p-8 rounded-3xl border border-[#E2E8F0] shadow-xs flex flex-col sm:flex-row sm:items-center justify-between gap-4">
+      <div className="bg-white dark:bg-[#101E33] p-6 sm:p-8 rounded-3xl border border-slate-200 dark:border-slate-800 shadow-xs flex flex-col sm:flex-row sm:items-center justify-between gap-4">
         <div>
-          <h1 className="text-xl sm:text-2xl font-extrabold text-[#0A1C2E]">
+          <h1 className="text-xl sm:text-2xl font-extrabold text-slate-900 dark:text-white">
             Manage Vacancies ({companyJobs.length})
           </h1>
-          <p className="text-xs text-[#64748B] mt-1">
+          <p className="text-xs text-slate-500 dark:text-slate-400 mt-1">
             Monitor, edit, and close recruitment postings for {company.name}.
           </p>
         </div>
 
         <button
           onClick={() => setTab("post-job")}
-          className="px-5 py-2.5 rounded-2xl bg-[#0A2540] hover:bg-[#071A2E] text-white text-xs font-bold shadow-md shadow-[#0A2540]/20 flex items-center gap-2 transition-all cursor-pointer self-start sm:self-auto"
+          className="px-5 py-2.5 rounded-2xl bg-[#0A2540] hover:bg-[#071A2E] dark:bg-[#F59E0B] dark:hover:bg-[#D97706] text-white dark:text-[#0A2540] text-xs font-bold shadow-md shadow-[#0A2540]/20 flex items-center gap-2 transition-all cursor-pointer self-start sm:self-auto"
         >
           <PlusCircle className="w-4 h-4" />
           <span>Post New Vacancy</span>
@@ -54,10 +54,10 @@ export default function ManageJobsView() {
           <button
             key={st}
             onClick={() => setFilter(st)}
-            className={`px-4 py-1.5 rounded-full text-xs font-semibold transition-colors ${
+            className={`px-4 py-1.5 rounded-full text-xs font-semibold transition-colors cursor-pointer ${
               filter === st
-                ? "bg-[#0A2540] text-white font-bold"
-                : "bg-white text-[#64748B] border border-[#E2E8F0] hover:bg-[#F8FAFC]"
+                ? "bg-[#0A2540] dark:bg-[#F59E0B] text-white dark:text-[#0A2540] font-bold shadow-xs"
+                : "bg-white dark:bg-[#101E33] text-slate-600 dark:text-slate-300 border border-slate-200 dark:border-slate-700 hover:bg-slate-50 dark:hover:bg-slate-800"
             }`}
           >
             {st} ({companyJobs.filter((j) => st === "All" || j.status === st).length})
@@ -66,10 +66,10 @@ export default function ManageJobsView() {
       </div>
 
       {/* Table / Cards */}
-      <div className="bg-white rounded-3xl border border-[#E2E8F0] shadow-xs overflow-hidden">
+      <div className="bg-white dark:bg-[#101E33] rounded-3xl border border-slate-200 dark:border-slate-800 shadow-xs overflow-hidden">
         <div className="overflow-x-auto">
-          <table className="w-full text-left text-xs text-[#0A1C2E]">
-            <thead className="bg-[#F8FAFC] text-[#64748B] font-bold uppercase text-[10px] tracking-wider border-b border-[#E2E8F0]">
+          <table className="w-full text-left text-xs text-slate-900 dark:text-white">
+            <thead className="bg-slate-50 dark:bg-slate-900/80 text-slate-500 dark:text-slate-400 font-bold uppercase text-[10px] tracking-wider border-b border-slate-200 dark:border-slate-800">
               <tr>
                 <th className="px-6 py-4">Job Title & Sector</th>
                 <th className="px-6 py-4">Published Date</th>
@@ -79,29 +79,29 @@ export default function ManageJobsView() {
                 <th className="px-6 py-4 text-right">Actions</th>
               </tr>
             </thead>
-            <tbody className="divide-y divide-[#E2E8F0]">
+            <tbody className="divide-y divide-slate-100 dark:divide-slate-800">
               {filteredJobs.length === 0 ? (
                 <tr>
-                  <td colSpan={6} className="px-6 py-10 text-center text-[#64748B]">
+                  <td colSpan={6} className="px-6 py-10 text-center text-slate-500 dark:text-slate-400">
                     No vacancies found in this status.
                   </td>
                 </tr>
               ) : (
                 filteredJobs.map((job) => (
-                  <tr key={job.id} className="hover:bg-[#F8FAFC]/60 transition-colors">
+                  <tr key={job.id} className="hover:bg-slate-50/60 dark:hover:bg-slate-800/40 transition-colors">
                     <td className="px-6 py-4">
                       <div>
-                        <h3 className="font-extrabold text-sm text-[#0A1C2E]">
+                        <h3 className="font-extrabold text-sm text-slate-900 dark:text-white">
                           {job.title}
                         </h3>
-                        <div className="flex items-center gap-2 text-[11px] text-[#64748B] mt-0.5">
+                        <div className="flex items-center gap-2 text-[11px] text-slate-500 dark:text-slate-400 mt-0.5">
                           <span>{job.category}</span>
                           <span>•</span>
                           <span>{job.workplaceType}</span>
                         </div>
                       </div>
                     </td>
-                    <td className="px-6 py-4 text-xs text-[#64748B]">
+                    <td className="px-6 py-4 text-xs text-slate-500 dark:text-slate-400">
                       {job.postedDate}
                     </td>
                     <td className="px-6 py-4">
@@ -132,7 +132,7 @@ export default function ManageJobsView() {
                       <div className="flex items-center justify-end gap-2">
                         <button
                           onClick={() => selectJob(job.id)}
-                          className="p-1.5 rounded-lg border border-slate-200 dark:border-slate-700 hover:bg-slate-50 dark:hover:bg-slate-800 text-slate-500 hover:text-slate-900 dark:hover:text-white"
+                          className="p-1.5 rounded-lg border border-slate-200 dark:border-slate-700 hover:bg-slate-50 dark:hover:bg-slate-800 text-slate-500 hover:text-slate-900 dark:hover:text-white cursor-pointer"
                           title="View Live Listing"
                         >
                           <Eye className="w-3.5 h-3.5" />
@@ -142,7 +142,7 @@ export default function ManageJobsView() {
                           className={`px-3 py-1 rounded-lg text-[11px] font-bold transition-colors cursor-pointer ${
                             job.status === "Active"
                               ? "bg-amber-50 hover:bg-amber-100 text-amber-900 dark:bg-amber-950/40 dark:text-amber-300 border border-amber-200 dark:border-amber-800"
-                              : "bg-slate-100 hover:bg-[#0A2540] text-slate-800 hover:text-white"
+                              : "bg-slate-100 dark:bg-slate-800 hover:bg-[#0A2540] dark:hover:bg-[#F59E0B] text-slate-800 dark:text-slate-200 hover:text-white dark:hover:text-[#0A2540]"
                           }`}
                         >
                           {job.status === "Active" ? "Close Vacancy" : "Reopen"}

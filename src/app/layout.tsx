@@ -1,5 +1,6 @@
 import type { Metadata, Viewport } from "next";
 import { Inter } from "next/font/google";
+import { BASE_PATH } from "@/lib/constants";
 import "./globals.css";
 
 const inter = Inter({
@@ -23,7 +24,7 @@ export const metadata: Metadata = {
   description:
     "Ethiopia's premier employment marketplace. Connecting talent with opportunity. Find verified jobs in Addis Ababa, Hawassa, Dire Dawa and beyond. በሥራ ፍለጋ አስተማማኝ አጋርዎ.",
   keywords: ["Azmera Jobs", "Ethiopia jobs", "Addis Ababa careers", "Ethiopian employment", "ETB salary"],
-  icons: { icon: "/azmera-logo.png" },
+  icons: { icon: `${BASE_PATH}/azmera-logo.png` },
 };
 
 export default function RootLayout({

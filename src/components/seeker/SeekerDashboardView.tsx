@@ -3,6 +3,7 @@
 import React, { useState } from "react";
 import { useApp } from "@/context/AppContext";
 import { MOCK_CATEGORIES, ETHIOPIAN_LOCATIONS } from "@/data/mockData";
+import { BASE_PATH } from "@/lib/constants";
 import {
   Search,
   MapPin,
@@ -81,7 +82,7 @@ export default function SeekerDashboardView() {
         {/* Subtle decorative background circles & Azmera logo watermark */}
         <div className="absolute right-0 top-0 w-80 h-80 bg-[#F59E0B]/10 rounded-full blur-3xl pointer-events-none" />
         <div className="hidden sm:block absolute right-8 top-1/2 -translate-y-1/2 w-32 h-32 rounded-full overflow-hidden border-2 border-[#F59E0B]/40 shadow-xl opacity-90 pointer-events-none bg-white/10 backdrop-blur-xs">
-          <img src="/azmera-logo.png" alt="Azmera" className="w-full h-full object-cover object-top" />
+          <img src={`${BASE_PATH}/azmera-logo.png`} alt="Azmera" className="w-full h-full object-cover object-top" />
         </div>
 
         <div className="relative z-10 max-w-2xl space-y-3">
@@ -259,7 +260,7 @@ export default function SeekerDashboardView() {
 
         <button
           onClick={() => setTab("profile")}
-          className="px-4 py-2 rounded-xl bg-[#0A2540] hover:bg-[#07192C] text-white font-bold text-xs transition-colors shrink-0 shadow-xs cursor-pointer"
+          className="px-4 py-2 rounded-xl bg-[#0A2540] hover:bg-[#07192C] dark:bg-[#F59E0B] dark:hover:bg-[#D97706] text-white dark:text-[#0A2540] font-bold text-xs transition-colors shrink-0 shadow-xs cursor-pointer"
         >
           Complete Profile
         </button>
@@ -269,16 +270,16 @@ export default function SeekerDashboardView() {
       <div>
         <div className="flex items-center justify-between mb-4">
           <div>
-            <span className="text-[11px] font-bold text-[#0A2540] uppercase tracking-wider">
+            <span className="text-[11px] font-bold text-[#0A2540] dark:text-[#FBBF24] uppercase tracking-wider">
               Matches your skills
             </span>
-            <h2 className="text-xl font-extrabold text-[#0A1C2E]">
+            <h2 className="text-xl font-extrabold text-slate-900 dark:text-white">
               Recommended Vacancies For You
             </h2>
           </div>
           <button
             onClick={() => setTab("search")}
-            className="text-xs font-bold text-[#0A2540] hover:underline flex items-center gap-1"
+            className="text-xs font-bold text-[#0A2540] dark:text-[#F59E0B] hover:underline flex items-center gap-1 cursor-pointer"
           >
             <span>See All</span>
             <ChevronRight className="w-3.5 h-3.5" />
@@ -300,19 +301,19 @@ export default function SeekerDashboardView() {
                       <img
                         src={job.companyLogo}
                         alt={job.companyName}
-                        className="w-11 h-11 rounded-xl object-cover border border-[#E2E8F0]"
+                        className="w-11 h-11 rounded-xl object-cover border border-slate-200 dark:border-slate-700 bg-white"
                       />
                       <div>
                         <div className="flex items-center gap-1">
-                          <span className="text-xs font-bold text-[#0A1C2E]">
+                          <span className="text-xs font-bold text-slate-900 dark:text-white">
                             {job.companyName}
                           </span>
                           {job.verified && (
-                            <ShieldCheck className="w-3.5 h-3.5 text-[#0A2540]" />
+                            <ShieldCheck className="w-3.5 h-3.5 text-[#0A2540] dark:text-[#38BDF8]" />
                           )}
                         </div>
-                        <span className="text-[11px] text-[#64748B] flex items-center gap-1">
-                          <MapPin className="w-3 h-3 text-[#0A2540]" />
+                        <span className="text-[11px] text-slate-500 dark:text-slate-400 flex items-center gap-1">
+                          <MapPin className="w-3 h-3 text-[#0A2540] dark:text-[#F59E0B]" />
                           {job.location}
                         </span>
                       </div>
@@ -357,7 +358,7 @@ export default function SeekerDashboardView() {
                   </span>
                   <button
                     onClick={() => selectJob(job.id)}
-                    className="px-3 py-1.5 rounded-xl bg-[#0A2540] hover:bg-[#07192C] text-white text-xs font-bold transition-all shadow-xs cursor-pointer hover:scale-[1.02]"
+                    className="px-3 py-1.5 rounded-xl bg-[#0A2540] hover:bg-[#07192C] dark:bg-[#F59E0B] dark:hover:bg-[#D97706] text-white dark:text-[#0A2540] text-xs font-bold transition-all shadow-xs cursor-pointer hover:scale-[1.02]"
                   >
                     Details &amp; Apply
                   </button>

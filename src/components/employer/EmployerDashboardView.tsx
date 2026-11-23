@@ -67,9 +67,9 @@ export default function EmployerDashboardView() {
         <div className="flex items-center gap-3">
           <button
             onClick={() => setTab("post-job")}
-            className="px-5 py-3 rounded-2xl bg-[#0A2540] hover:bg-[#07192C] text-white text-xs font-bold shadow-md shadow-[#0A2540]/20 flex items-center gap-2 transition-all cursor-pointer hover:scale-[1.02]"
+            className="px-5 py-3 rounded-2xl bg-[#0A2540] hover:bg-[#07192C] dark:bg-[#F59E0B] dark:hover:bg-[#D97706] text-white dark:text-[#0A2540] text-xs font-bold shadow-md shadow-[#0A2540]/20 flex items-center gap-2 transition-all cursor-pointer hover:scale-[1.02]"
           >
-            <PlusCircle className="w-4 h-4 text-[#F59E0B]" />
+            <PlusCircle className="w-4 h-4 text-[#F59E0B] dark:text-[#0A2540]" />
             <span>Post New Vacancy</span>
           </button>
         </div>
@@ -157,7 +157,7 @@ export default function EmployerDashboardView() {
       <SocialBroadcastCard />
 
       {/* Recruitment Pipeline Performance */}
-      <div className="bg-white p-6 rounded-3xl border border-[#E2E8F0] shadow-xs space-y-4">
+      <div className="bg-white dark:bg-[#101E33] p-6 rounded-3xl border border-slate-200 dark:border-slate-800 shadow-xs space-y-4">
         <div className="flex items-center justify-between">
           <div>
             <h2 className="text-base font-extrabold text-slate-900 dark:text-white">
@@ -281,7 +281,7 @@ export default function EmployerDashboardView() {
                           selectCandidate(app.candidateId);
                           setTab("applicants");
                         }}
-                        className="px-3 py-1 rounded-lg border border-[#E2E8F0] hover:bg-white text-[11px] font-bold text-[#0A1C2E]"
+                        className="px-3 py-1 rounded-lg border border-slate-200 dark:border-slate-700 bg-white dark:bg-slate-800 hover:bg-slate-50 dark:hover:bg-slate-700 text-[11px] font-bold text-slate-900 dark:text-white cursor-pointer"
                       >
                         Profile & CV
                       </button>
@@ -290,7 +290,7 @@ export default function EmployerDashboardView() {
                           onClick={() =>
                             updateApplicationStatus(app.id, "Shortlisted")
                           }
-                          className="px-3 py-1 rounded-lg bg-[#0A2540] text-white hover:bg-[#071A2E] text-[11px] font-bold"
+                          className="px-3 py-1 rounded-lg bg-[#0A2540] hover:bg-[#071A2E] dark:bg-[#F59E0B] dark:hover:bg-[#D97706] text-white dark:text-[#0A2540] text-[11px] font-bold cursor-pointer"
                         >
                           Shortlist
                         </button>

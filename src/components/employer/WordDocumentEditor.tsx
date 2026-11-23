@@ -612,7 +612,7 @@ export default function WordDocumentEditor({
                         "</span>"
                       )
                 }
-                className="p-1.5 px-2.5 rounded-lg bg-blue-50 hover:bg-blue-100 text-[#0A2540] border border-blue-200 flex items-center gap-1 cursor-pointer font-bold"
+                className="p-1.5 px-2.5 rounded-lg bg-blue-50 dark:bg-blue-950/40 hover:bg-blue-100 dark:hover:bg-blue-900/60 text-[#0A2540] dark:text-[#38BDF8] border border-blue-200 dark:border-blue-800 flex items-center gap-1 cursor-pointer font-bold"
                 title="Navy Color Text"
               >
                 <Palette className="w-3.5 h-3.5" />
@@ -653,7 +653,7 @@ export default function WordDocumentEditor({
               <button
                 type="button"
                 onClick={() => insertCallout("notice")}
-                className="px-2.5 py-1 rounded-lg bg-[#0A2540] text-white text-[11px] font-bold hover:bg-[#071829] cursor-pointer"
+                className="px-2.5 py-1 rounded-lg bg-[#0A2540] dark:bg-[#F59E0B] text-white dark:text-[#0A2540] text-[11px] font-bold hover:bg-[#071829] dark:hover:bg-[#D97706] cursor-pointer"
               >
                 + Notice Callout
               </button>
@@ -693,16 +693,16 @@ export default function WordDocumentEditor({
             <button
               type="button"
               onClick={() => insertCallout("urgent")}
-              className="px-3 py-1.5 rounded-xl bg-amber-50 hover:bg-amber-100 text-[#0A2540] border border-amber-300 font-bold flex items-center gap-2 cursor-pointer"
+              className="px-3 py-1.5 rounded-xl bg-amber-50 dark:bg-amber-950/40 hover:bg-amber-100 dark:hover:bg-amber-900/60 text-[#0A2540] dark:text-[#FBBF24] border border-amber-300 dark:border-amber-800 font-bold flex items-center gap-2 cursor-pointer"
             >
-              <Flame className="w-4 h-4 text-[#D97706]" />
+              <Flame className="w-4 h-4 text-[#D97706] dark:text-[#F59E0B]" />
               <span>Insert Fast-Track Callout (ናባይ ቀጥታ)</span>
             </button>
 
             <button
               type="button"
               onClick={() => insertCallout("benefits")}
-              className="px-3 py-1.5 rounded-xl bg-emerald-50 hover:bg-emerald-100 text-emerald-900 border border-emerald-300 font-bold flex items-center gap-2 cursor-pointer"
+              className="px-3 py-1.5 rounded-xl bg-emerald-50 dark:bg-emerald-950/40 hover:bg-emerald-100 dark:hover:bg-emerald-900/60 text-emerald-900 dark:text-emerald-300 border border-emerald-300 dark:border-emerald-800 font-bold flex items-center gap-2 cursor-pointer"
             >
               <span>Insert Benefits Box</span>
             </button>
@@ -1004,7 +1004,7 @@ export default function WordDocumentEditor({
               <button
                 type="button"
                 onClick={() => setShowImageModal(false)}
-                className="text-slate-400 hover:text-slate-700 cursor-pointer"
+                className="text-slate-400 hover:text-slate-700 dark:hover:text-white cursor-pointer"
               >
                 ✕
               </button>
@@ -1123,7 +1123,7 @@ export default function WordDocumentEditor({
               <button
                 type="button"
                 onClick={() => setShowAttachModal(false)}
-                className="text-slate-400 hover:text-slate-700 cursor-pointer"
+                className="text-slate-400 hover:text-slate-700 dark:hover:text-white cursor-pointer"
               >
                 ✕
               </button>
@@ -1212,7 +1212,7 @@ export default function WordDocumentEditor({
               <button
                 type="button"
                 onClick={handleAddAttachment}
-                className="px-4 py-2 rounded-xl bg-[#0A2540] text-white text-xs font-bold shadow-xs hover:bg-[#07192C] cursor-pointer"
+                className="px-4 py-2 rounded-xl bg-[#0A2540] hover:bg-[#07192C] dark:bg-[#F59E0B] dark:hover:bg-[#D97706] text-white dark:text-[#0A2540] text-xs font-bold shadow-xs cursor-pointer"
               >
                 Attach File to Job
               </button>

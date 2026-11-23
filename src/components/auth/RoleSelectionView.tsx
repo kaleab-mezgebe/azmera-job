@@ -176,10 +176,10 @@ export default function RoleSelectionView() {
         <div className="space-y-3">
           <button
             onClick={handleContinue}
-            className="w-full py-4 px-6 rounded-2xl font-black text-sm text-white bg-[#0A2540] hover:bg-[#07192C] shadow-lg shadow-[#0A2540]/20 flex items-center justify-center gap-2 transition-all cursor-pointer hover:scale-[1.01]"
+            className="w-full py-4 px-6 rounded-2xl font-black text-sm text-white bg-[#0A2540] hover:bg-[#07192C] dark:bg-[#F59E0B] dark:hover:bg-[#D97706] dark:text-[#0A2540] shadow-lg shadow-[#0A2540]/20 dark:shadow-[#F59E0B]/20 flex items-center justify-center gap-2 transition-all cursor-pointer hover:scale-[1.01]"
           >
             <span>Continue as {selected === "seeker" ? "Job Seeker" : "Employer"}</span>
-            <ArrowRight className="w-4 h-4 text-[#F59E0B]" />
+            <ArrowRight className="w-4 h-4 text-[#F59E0B] dark:text-[#0A2540]" />
           </button>
 
           <div className="text-center">

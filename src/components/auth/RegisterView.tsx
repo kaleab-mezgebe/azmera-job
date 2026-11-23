@@ -62,17 +62,17 @@ export default function RegisterView() {
 
         {/* Role Toggle */}
         <div className="mb-6">
-          <label className="block text-xs font-bold text-[#0A1C2E] mb-1.5">
+          <label className="block text-xs font-bold text-slate-900 dark:text-white mb-1.5">
             I want to join as:
           </label>
-          <div className="grid grid-cols-2 gap-2 p-1.5 bg-[#F8FAFC] rounded-2xl border border-[#E2E8F0]">
+          <div className="grid grid-cols-2 gap-2 p-1.5 bg-slate-50 dark:bg-slate-800/80 rounded-2xl border border-slate-200 dark:border-slate-700">
             <button
               type="button"
               onClick={() => setRoleType("seeker")}
-              className={`py-2 px-3 rounded-xl text-xs font-bold flex items-center justify-center gap-2 transition-all ${
+              className={`py-2 px-3 rounded-xl text-xs font-bold flex items-center justify-center gap-2 transition-all cursor-pointer ${
                 roleType === "seeker"
-                  ? "bg-[#0A2540] text-white shadow-xs"
-                  : "text-[#64748B] hover:text-[#0A1C2E]"
+                  ? "bg-[#0A2540] dark:bg-[#F59E0B] text-white dark:text-[#0A2540] shadow-xs"
+                  : "text-slate-600 dark:text-slate-300 hover:text-slate-900 dark:hover:text-white"
               }`}
             >
               <User className="w-4 h-4" />
@@ -81,10 +81,10 @@ export default function RegisterView() {
             <button
               type="button"
               onClick={() => setRoleType("employer")}
-              className={`py-2 px-3 rounded-xl text-xs font-bold flex items-center justify-center gap-2 transition-all ${
+              className={`py-2 px-3 rounded-xl text-xs font-bold flex items-center justify-center gap-2 transition-all cursor-pointer ${
                 roleType === "employer"
-                  ? "bg-[#0A2540] text-white shadow-xs"
-                  : "text-[#64748B] hover:text-[#0A1C2E]"
+                  ? "bg-[#0A2540] dark:bg-[#F59E0B] text-white dark:text-[#0A2540] shadow-xs"
+                  : "text-slate-600 dark:text-slate-300 hover:text-slate-900 dark:hover:text-white"
               }`}
             >
               <Building2 className="w-4 h-4" />
@@ -206,35 +206,35 @@ export default function RegisterView() {
           </div>
 
           <div className="pt-2">
-            <label className="flex items-start gap-2 text-xs text-[#64748B] cursor-pointer">
+            <label className="flex items-start gap-2 text-xs text-slate-600 dark:text-slate-300 cursor-pointer">
               <input
                 type="checkbox"
                 checked={acceptedTerms}
                 onChange={(e) => setAcceptedTerms(e.target.checked)}
-                className="mt-0.5 rounded border-[#E2E8F0] text-[#0A2540] focus:ring-[#0A2540]"
+                className="mt-0.5 rounded border-slate-300 dark:border-slate-700 text-[#0A2540] dark:text-[#F59E0B] focus:ring-[#F59E0B]"
               />
               <span>
                 I agree to the Azmera Job{" "}
-                <span className="text-[#0A2540] underline">Terms of Service</span> and{" "}
-                <span className="text-[#0A2540] underline">Privacy Policy</span>.
+                <span className="text-[#0A2540] dark:text-[#F59E0B] underline font-bold">Terms of Service</span> and{" "}
+                <span className="text-[#0A2540] dark:text-[#F59E0B] underline font-bold">Privacy Policy</span>.
               </span>
             </label>
           </div>
 
           <button
             type="submit"
-            className="w-full py-3 px-4 rounded-xl font-bold text-sm text-white bg-[#0A2540] hover:bg-[#071A2E] shadow-md shadow-[#0A2540]/20 flex items-center justify-center gap-2 transition-all cursor-pointer mt-4"
+            className="w-full py-3.5 px-4 rounded-xl font-extrabold text-sm text-white bg-[#0A2540] hover:bg-[#07192C] dark:bg-[#F59E0B] dark:hover:bg-[#D97706] dark:text-[#0A2540] shadow-md shadow-[#0A2540]/20 dark:shadow-[#F59E0B]/20 flex items-center justify-center gap-2 transition-all cursor-pointer mt-4"
           >
             <span>Complete Registration</span>
-            <ArrowRight className="w-4 h-4" />
+            <ArrowRight className="w-4 h-4 text-[#F59E0B] dark:text-[#0A2540]" />
           </button>
         </form>
 
-        <div className="mt-6 pt-4 border-t border-[#E2E8F0] text-center">
-          <span className="text-xs text-[#64748B]">Already have an account? </span>
+        <div className="mt-6 pt-4 border-t border-slate-200 dark:border-slate-800 text-center">
+          <span className="text-xs text-slate-500 dark:text-slate-400">Already have an account? </span>
           <button
             onClick={() => setTab("signin")}
-            className="text-xs font-bold text-[#0A2540] hover:underline"
+            className="text-xs font-bold text-[#F59E0B] hover:underline cursor-pointer"
           >
             Sign In
           </button>

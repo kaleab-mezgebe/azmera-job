@@ -83,13 +83,13 @@ export default function SignInView() {
             <label className="block text-xs font-bold mb-1" style={{ color: "var(--text)" }}>
               Account Role
             </label>
-            <div className="grid grid-cols-2 gap-2 p-1 rounded-xl border" style={{ background: "var(--bg)", borderColor: "var(--border)" }}>
+            <div className="grid grid-cols-2 gap-2 p-1 rounded-xl border border-slate-200 dark:border-slate-700 bg-slate-50 dark:bg-slate-800/80">
               <button
                 type="button"
                 onClick={() => setUserRole("seeker")}
-                className={`py-1.5 text-xs rounded-lg transition-all ${userRole === "seeker"
-                    ? "bg-[#0A2540] text-white shadow-xs font-bold"
-                    : "text-[#64748B]"
+                className={`py-2 text-xs rounded-lg transition-all ${userRole === "seeker"
+                    ? "bg-[#0A2540] dark:bg-[#F59E0B] text-white dark:text-[#0A2540] shadow-xs font-bold"
+                    : "text-slate-600 dark:text-slate-300 hover:text-slate-900 dark:hover:text-white"
                   }`}
               >
                 Job Seeker
@@ -97,9 +97,9 @@ export default function SignInView() {
               <button
                 type="button"
                 onClick={() => setUserRole("employer")}
-                className={`py-1.5 text-xs rounded-lg transition-all ${userRole === "employer"
-                    ? "bg-[#0A2540] text-white shadow-xs font-bold"
-                    : "text-[#64748B]"
+                className={`py-2 text-xs rounded-lg transition-all ${userRole === "employer"
+                    ? "bg-[#0A2540] dark:bg-[#F59E0B] text-white dark:text-[#0A2540] shadow-xs font-bold"
+                    : "text-slate-600 dark:text-slate-300 hover:text-slate-900 dark:hover:text-white"
                   }`}
               >
                 Employer
@@ -161,10 +161,10 @@ export default function SignInView() {
 
           <button
             type="submit"
-            className="w-full py-3 px-4 rounded-xl font-bold text-sm text-white bg-[#0A2540] hover:bg-[#071A2E] shadow-md border border-[#F59E0B]/30 flex items-center justify-center gap-2 transition-all cursor-pointer"
+            className="w-full py-3.5 px-4 rounded-xl font-extrabold text-sm text-white bg-[#0A2540] hover:bg-[#07192C] dark:bg-[#F59E0B] dark:hover:bg-[#D97706] dark:text-[#0A2540] shadow-md shadow-[#0A2540]/20 dark:shadow-[#F59E0B]/20 border border-[#F59E0B]/30 flex items-center justify-center gap-2 transition-all cursor-pointer"
           >
             <span>Sign In</span>
-            <ArrowRight className="w-4 h-4 text-[#F59E0B]" />
+            <ArrowRight className="w-4 h-4 text-[#F59E0B] dark:text-[#0A2540]" />
           </button>
         </form>
 

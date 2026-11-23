@@ -44,10 +44,10 @@ export default function JobDetailsView() {
   if (!selectedJob) {
     return (
       <div className="p-12 text-center">
-        <p className="text-sm text-[#64748B]">No job selected.</p>
+        <p className="text-sm text-slate-500 dark:text-slate-400">No job selected.</p>
         <button
           onClick={() => setTab("search")}
-          className="mt-3 px-4 py-2 bg-[#0A2540] text-white rounded-xl text-xs font-bold"
+          className="mt-3 px-4 py-2 bg-[#0A2540] hover:bg-[#071A2E] dark:bg-[#F59E0B] dark:hover:bg-[#D97706] text-white dark:text-[#0A2540] rounded-xl text-xs font-bold cursor-pointer"
         >
           Back to Search
         </button>
@@ -76,24 +76,24 @@ export default function JobDetailsView() {
       {/* Back button */}
       <button
         onClick={() => setTab("search")}
-        className="inline-flex items-center gap-1.5 text-xs font-bold text-[#64748B] hover:text-[#0A2540] transition-colors"
+        className="inline-flex items-center gap-1.5 text-xs font-bold text-slate-500 dark:text-slate-400 hover:text-slate-900 dark:hover:text-white transition-colors cursor-pointer"
       >
         <ArrowLeft className="w-4 h-4" />
         <span>Back to Vacancies</span>
       </button>
 
       {/* Hero Header Card */}
-      <div className="bg-white p-6 sm:p-8 rounded-3xl border border-[#E2E8F0] shadow-sm space-y-6">
+      <div className="bg-white dark:bg-[#101E33] p-6 sm:p-8 rounded-3xl border border-slate-200 dark:border-slate-800 shadow-sm space-y-6">
         <div className="flex flex-col md:flex-row md:items-start justify-between gap-6">
           <div className="flex items-start gap-4">
             <img
               src={selectedJob.companyLogo}
               alt={selectedJob.companyName}
-              className="w-16 h-16 sm:w-20 sm:h-20 rounded-2xl object-cover border border-[#E2E8F0] shadow-xs"
+              className="w-16 h-16 sm:w-20 sm:h-20 rounded-2xl object-cover border border-slate-200 dark:border-slate-700 shadow-xs bg-white"
             />
             <div className="space-y-1.5">
               <div className="flex items-center gap-2 flex-wrap">
-                <span className="font-bold text-sm text-[#64748B]">
+                <span className="font-bold text-sm text-slate-500 dark:text-slate-400">
                   {selectedJob.companyName}
                 </span>
                 {selectedJob.verified && (
@@ -131,7 +131,7 @@ export default function JobDetailsView() {
           <div className="flex items-center gap-2.5 self-start shrink-0">
             <button
               onClick={handleShare}
-              className="p-3 rounded-2xl border border-slate-200 dark:border-slate-700 bg-white dark:bg-slate-800 hover:bg-slate-50 dark:hover:bg-slate-700 text-slate-600 dark:text-slate-300 transition-colors"
+              className="p-3 rounded-2xl border border-slate-200 dark:border-slate-700 bg-white dark:bg-slate-800 hover:bg-slate-50 dark:hover:bg-slate-700 text-slate-600 dark:text-slate-300 transition-colors cursor-pointer"
               title="Share job"
             >
               <Share2 className="w-4 h-4" />
@@ -160,7 +160,7 @@ export default function JobDetailsView() {
             ) : (
               <button
                 onClick={() => setIsApplyModalOpen(true)}
-                className="px-6 py-3 rounded-2xl bg-[#0A2540] hover:bg-[#071A2E] text-white text-xs font-bold shadow-md shadow-[#0A2540]/20 transition-all cursor-pointer hover:scale-[1.02]"
+                className="px-6 py-3 rounded-2xl bg-[#0A2540] hover:bg-[#071A2E] dark:bg-[#F59E0B] dark:hover:bg-[#D97706] text-white dark:text-[#0A2540] text-xs font-bold shadow-md shadow-[#0A2540]/20 transition-all cursor-pointer hover:scale-[1.02]"
               >
                 Apply for Position
               </button>
@@ -169,9 +169,9 @@ export default function JobDetailsView() {
         </div>
 
         {/* Quick Highlights Strip */}
-        <div className="grid grid-cols-2 sm:grid-cols-4 gap-3 pt-6 border-t border-[#E2E8F0]">
-          <div className="p-3.5 bg-[#F8FAFC] dark:bg-slate-800/60 rounded-2xl">
-            <span className="text-[10px] text-[#64748B] dark:text-slate-400 block font-medium">
+        <div className="grid grid-cols-2 sm:grid-cols-4 gap-3 pt-6 border-t border-slate-100 dark:border-slate-800">
+          <div className="p-3.5 bg-slate-50 dark:bg-slate-800/60 rounded-2xl">
+            <span className="text-[10px] text-slate-500 dark:text-slate-400 block font-medium">
               Monthly Compensation
             </span>
             <span className="text-sm font-extrabold text-[#0A2540] dark:text-[#F59E0B]">
@@ -180,29 +180,29 @@ export default function JobDetailsView() {
             </span>
           </div>
 
-          <div className="p-3.5 bg-[#F8FAFC] dark:bg-slate-800/60 rounded-2xl">
-            <span className="text-[10px] text-[#64748B] dark:text-slate-400 block font-medium">
+          <div className="p-3.5 bg-slate-50 dark:bg-slate-800/60 rounded-2xl">
+            <span className="text-[10px] text-slate-500 dark:text-slate-400 block font-medium">
               Experience Level
             </span>
-            <span className="text-sm font-bold text-[#0A1C2E] dark:text-white">
+            <span className="text-sm font-bold text-slate-900 dark:text-white">
               {selectedJob.experienceLevel}
             </span>
           </div>
 
-          <div className="p-3.5 bg-[#F8FAFC] dark:bg-slate-800/60 rounded-2xl">
-            <span className="text-[10px] text-[#64748B] dark:text-slate-400 block font-medium">
+          <div className="p-3.5 bg-slate-50 dark:bg-slate-800/60 rounded-2xl">
+            <span className="text-[10px] text-slate-500 dark:text-slate-400 block font-medium">
               Application Deadline
             </span>
-            <span className="text-sm font-bold text-[#0A1C2E] dark:text-white">
+            <span className="text-sm font-bold text-slate-900 dark:text-white">
               {selectedJob.deadline}
             </span>
           </div>
 
-          <div className="p-3.5 bg-[#F8FAFC] dark:bg-slate-800/60 rounded-2xl">
-            <span className="text-[10px] text-[#64748B] dark:text-slate-400 block font-medium">
+          <div className="p-3.5 bg-slate-50 dark:bg-slate-800/60 rounded-2xl">
+            <span className="text-[10px] text-slate-500 dark:text-slate-400 block font-medium">
               Applicants So Far
             </span>
-            <span className="text-sm font-bold text-[#0A1C2E] dark:text-white">
+            <span className="text-sm font-bold text-slate-900 dark:text-white">
               {selectedJob.applicantCount} candidates
             </span>
           </div>

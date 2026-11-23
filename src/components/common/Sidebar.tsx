@@ -75,7 +75,7 @@ export default function Sidebar() {
       {role === "employer" && (
         <button
           onClick={() => setTab("post-job")}
-          className="w-full mb-5 py-2.5 px-4 rounded-xl font-bold text-sm text-white bg-[#0A2540] hover:bg-[#071A2E] shadow-md shadow-[#0A2540]/15 flex items-center justify-center gap-2 transition-all"
+          className="w-full mb-5 py-2.5 px-4 rounded-xl font-bold text-sm text-white dark:text-[#0A2540] bg-[#0A2540] hover:bg-[#071A2E] dark:bg-[#F59E0B] dark:hover:bg-[#D97706] shadow-md shadow-[#0A2540]/15 flex items-center justify-center gap-2 transition-all cursor-pointer"
         >
           <PlusCircle className="w-4 h-4" />
           {t(lang, "postJob")}
