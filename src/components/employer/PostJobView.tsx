@@ -5,6 +5,7 @@ import { useApp } from "@/context/AppContext";
 import { Job, JobType, ExperienceLevel, JobAttachment } from "@/types";
 import { ETHIOPIAN_LOCATIONS, MOCK_CATEGORIES } from "@/data/mockData";
 import WordDocumentEditor from "./WordDocumentEditor";
+import RichDocumentRenderer from "@/components/common/RichDocumentRenderer";
 import {
   Briefcase,
   MapPin,
@@ -724,9 +725,7 @@ We are building high-resilience payment infrastructure powering digital commerce
 
             <div className="space-y-2 text-xs text-[#0A1C2E]">
               <h4 className="font-bold">Description:</h4>
-              <p className="text-[#64748B] leading-relaxed">
-                {description || "No description provided yet."}
-              </p>
+              <RichDocumentRenderer content={description || "No description provided yet."} />
             </div>
 
             <div className="space-y-2 text-xs text-[#0A1C2E]">

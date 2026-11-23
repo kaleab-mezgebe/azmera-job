@@ -18,7 +18,8 @@ export default function RoleSelectionView() {
   const [selected, setSelected] = useState<"seeker" | "employer">("seeker");
 
   const handleContinue = () => {
-    // Navigate to register view with pre-selected role
+    // Save selected role and navigate to registration
+    setRole(selected);
     setTab("register");
   };
 

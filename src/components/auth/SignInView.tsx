@@ -22,16 +22,19 @@ export default function SignInView() {
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
     setRole(userRole);
+    setTab(userRole === "employer" ? "employer-dashboard" : "dashboard");
     showToast(`Signed in successfully as ${userRole === "seeker" ? "Dawit Bekele" : "Chapa HR"}`);
   };
 
   const handleQuickLoginSeeker = () => {
     setRole("seeker");
+    setTab("dashboard");
     showToast("Signed in as Dawit Bekele (Job Seeker)");
   };
 
   const handleQuickLoginEmployer = () => {
     setRole("employer");
+    setTab("employer-dashboard");
     showToast("Signed in as Chapa Financial Technologies (Employer)");
   };
 
@@ -84,22 +87,20 @@ export default function SignInView() {
               <button
                 type="button"
                 onClick={() => setUserRole("seeker")}
-                className={`py-1.5 text-xs rounded-lg transition-all ${
-                  userRole === "seeker"
+                className={`py-1.5 text-xs rounded-lg transition-all ${userRole === "seeker"
                     ? "bg-[#0A2540] text-white shadow-xs font-bold"
                     : "text-[#64748B]"
-                }`}
+                  }`}
               >
                 Job Seeker
               </button>
               <button
                 type="button"
                 onClick={() => setUserRole("employer")}
-                className={`py-1.5 text-xs rounded-lg transition-all ${
-                  userRole === "employer"
+                className={`py-1.5 text-xs rounded-lg transition-all ${userRole === "employer"
                     ? "bg-[#0A2540] text-white shadow-xs font-bold"
                     : "text-[#64748B]"
-                }`}
+                  }`}
               >
                 Employer
               </button>

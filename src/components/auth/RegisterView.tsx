@@ -16,9 +16,11 @@ import {
 import { ETHIOPIAN_LOCATIONS } from "@/data/mockData";
 
 export default function RegisterView() {
-  const { setRole, setTab, showToast } = useApp();
+  const { role, setRole, setTab, showToast } = useApp();
 
-  const [roleType, setRoleType] = useState<"seeker" | "employer">("seeker");
+  const [roleType, setRoleType] = useState<"seeker" | "employer">(
+    role === "employer" ? "employer" : "seeker"
+  );
   const [fullName, setFullName] = useState("");
   const [companyName, setCompanyName] = useState("");
   const [email, setEmail] = useState("");
@@ -34,6 +36,7 @@ export default function RegisterView() {
       return;
     }
     setRole(roleType);
+    setTab(roleType === "employer" ? "employer-dashboard" : "dashboard");
     showToast(
       `Welcome to Azmera Jobs! Account created as ${
         roleType === "seeker" ? fullName || "Job Seeker" : companyName || "Employer"

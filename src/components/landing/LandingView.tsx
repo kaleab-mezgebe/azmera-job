@@ -3,6 +3,7 @@
 import React, { useState } from "react";
 import { useApp } from "@/context/AppContext";
 import { MOCK_CATEGORIES, ETHIOPIAN_LOCATIONS } from "@/data/mockData";
+import { stripRichFormatting } from "@/components/common/RichDocumentRenderer";
 import {
   Search,
   MapPin,
@@ -51,12 +52,17 @@ export default function LandingView() {
     setSearchQuery,
     selectedLocation,
     setSelectedLocation,
+    selectedCategory,
+    setSelectedCategory,
     showToast,
   } = useApp();
 
   const [localSearch, setLocalSearch] = useState(searchQuery);
   const [localLocation, setLocalLocation] = useState(
     selectedLocation === "All Locations (Ethiopia)" ? "" : selectedLocation
+  );
+  const [localCategory, setLocalCategory] = useState(
+    selectedCategory || "All Categories"
   );
   const [activeJobTab, setActiveJobTab] = useState<
     "all" | "direct" | "hospitality" | "ngo" | "tech" | "banking"
@@ -69,6 +75,9 @@ export default function LandingView() {
     e.preventDefault();
     setSearchQuery(localSearch);
     if (localLocation) setSelectedLocation(localLocation);
+    if (localCategory && localCategory !== "All Categories") {
+      setSelectedCategory(localCategory);
+    }
     setTab("search");
   };
 
@@ -127,305 +136,232 @@ export default function LandingView() {
 
   return (
     <div className="flex flex-col min-h-screen theme-bg theme-text">
-      {/* ── 1. ULTRA-PREMIUM TECH RECRUITER HERO SECTION ── */}
-      <section className="relative overflow-hidden pt-8 pb-16 md:py-20 lg:py-24 border-b border-slate-200 dark:border-slate-800 bg-gradient-to-b from-white via-slate-50/70 to-slate-100/60 dark:from-[#060D17] dark:via-[#091526] dark:to-[#0C1B2E]">
-        {/* Subtle dot matrix & glowing mesh */}
-        <div className="absolute inset-0 hero-grid-pattern opacity-60 pointer-events-none" />
-        <div className="absolute top-1/4 left-1/2 -translate-x-1/2 w-[700px] h-[350px] bg-gradient-to-r from-[#0A2540]/10 via-[#F59E0B]/15 to-[#0A2540]/10 rounded-full blur-3xl pointer-events-none" />
+      {/* ── 1. TALENTHUB STYLE HERO SECTION (CENTERED + 3-ZONE SEARCH CAPSULE + 4-COLUMN STATS) ── */}
+      <section className="relative overflow-hidden pt-12 pb-16 md:pt-16 md:pb-20 border-b border-slate-200/80 dark:border-slate-800/80 bg-gradient-to-b from-[#F9FBFA] via-[#FFFFFF] to-[#F3F7F5] dark:from-[#060D17] dark:via-[#091526] dark:to-[#0C1B2E]">
+        {/* Soft ambient background warmth & dot matrix */}
+        <div className="absolute inset-0 hero-grid-pattern opacity-40 pointer-events-none" />
+        <div className="absolute top-10 left-1/2 -translate-x-1/2 w-[720px] h-[360px] bg-gradient-to-r from-orange-400/10 via-[#F59E0B]/15 to-orange-400/10 rounded-full blur-3xl pointer-events-none" />
 
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
-          <div className="grid grid-cols-1 lg:grid-cols-12 gap-10 lg:gap-14 items-center">
-            {/* Left Column: Authoritative Messaging & Dual-Action CTAs */}
-            <div className="lg:col-span-7 space-y-6 text-center lg:text-left">
-              {/* Trust Pill */}
-              <div className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-[#0A2540]/5 dark:bg-[#F59E0B]/10 border border-[#0A2540]/15 dark:border-[#F59E0B]/30 text-xs font-bold text-[#0A2540] dark:text-[#FBBF24] shadow-2xs">
-                <span className="w-2 h-2 rounded-full bg-[#10B981] animate-pulse" />
-                <span>ETHIOPIA&apos;S PREMIER RECRUITMENT &amp; TALENT PLATFORM</span>
-                <span className="text-[10px] text-slate-400">•</span>
-                <span className="text-[11px] font-extrabold text-[#F59E0B]">4,200+ ACTIVE OPENINGS</span>
-              </div>
+        <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10 text-center">
+          {/* Top Pill Tag - Exactly like TalentHub #1 Job Portal Platform */}
+          <div className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-[#FFF4ED] dark:bg-[#F59E0B]/15 border border-[#FFE1CF] dark:border-[#F59E0B]/30 text-xs font-bold text-[#EA580C] dark:text-[#FBBF24] shadow-xs mb-6">
+            <span className="text-[#EA580C] dark:text-[#FBBF24]">✦</span>
+            <span>#1 JOB PORTAL PLATFORM 2026 • ETHIOPIA</span>
+          </div>
 
-              {/* High-Impact Headline */}
-              <h1 className="text-3xl sm:text-5xl lg:text-6xl font-black tracking-tight leading-[1.12] text-slate-900 dark:text-white">
-                Connecting Top Ethiopian Talent With{" "}
-                <span className="text-[#F59E0B] relative inline-block">
-                  Opportunity.
-                  <svg
-                    className="absolute left-0 -bottom-2 w-full h-3.5 text-[#F59E0B]/40"
-                    viewBox="0 0 100 12"
-                    preserveAspectRatio="none"
-                  >
-                    <path
-                      d="M0 6 Q 50 12, 100 6"
-                      stroke="currentColor"
-                      strokeWidth="4"
-                      fill="none"
-                    />
-                  </svg>
-                </span>
-              </h1>
+          {/* Centered High-Impact Headline with Underline Bar */}
+          <h1 className="text-4xl sm:text-6xl lg:text-7xl font-black text-[#0A2540] dark:text-white tracking-tight leading-[1.12] max-w-4xl mx-auto">
+            Find Your <span className="text-[#0A2540] dark:text-white">Dream Job</span>
+            <br />
 
-              {/* Subtitle */}
-              <p className="text-sm sm:text-base max-w-xl mx-auto lg:mx-0 leading-relaxed text-slate-600 dark:text-slate-300 font-normal">
-                Discover pre-screened vacancies with transparent ETB salaries at Ethiopia&apos;s leading tech enterprises, commercial banks, 5-star hotels, international NGOs, and startups. Fast-track placement via Azmera Job Connect.
-              </p>
+          </h1>
 
-              {/* Dual Role Quick Actions */}
-              <div className="flex flex-wrap items-center justify-center lg:justify-start gap-3 pt-1">
+          {/* Centered Subtitle */}
+          <p className="text-sm sm:text-base md:text-lg max-w-2xl mx-auto mt-6 text-slate-600 dark:text-slate-300 font-normal leading-relaxed">
+            Discover thousands of verified opportunities from top companies across every industry. Connecting talent with opportunity with transparent ETB salaries.
+          </p>
+
+          {/* Centerpiece: The Floating Search Capsule (3 distinct fields + orange button) */}
+          <form
+            onSubmit={handleHeroSearch}
+            className="mt-10 p-2 sm:p-2.5 rounded-2xl md:rounded-full bg-white dark:bg-[#101E33] border border-slate-200/90 dark:border-slate-700/80 shadow-2xl shadow-orange-500/10 dark:shadow-black/60 flex flex-col md:flex-row items-center gap-2 max-w-4xl mx-auto transition-all focus-within:border-[#F59E0B] focus-within:ring-4 focus-within:ring-[#F59E0B]/15"
+          >
+            {/* Field 1: Keyword search */}
+            <div className="flex-1 w-full flex items-center gap-3 px-4 py-2">
+              <Search className="w-5 h-5 text-slate-400 shrink-0" />
+              <input
+                type="text"
+                placeholder="Job title or keyword"
+                value={localSearch}
+                onChange={(e) => setLocalSearch(e.target.value)}
+                className="w-full bg-transparent text-sm sm:text-base text-slate-900 dark:text-white placeholder:text-slate-400 outline-none font-medium"
+              />
+              {localSearch && (
                 <button
-                  onClick={() => setTab("search")}
-                  className="px-6 py-3.5 rounded-2xl bg-[#0A2540] hover:bg-[#07192C] text-white text-xs sm:text-sm font-extrabold shadow-lg shadow-[#0A2540]/25 flex items-center gap-2 cursor-pointer transition-all hover:scale-[1.02]"
+                  type="button"
+                  onClick={() => setLocalSearch("")}
+                  className="text-xs text-slate-400 hover:text-slate-600 p-1 cursor-pointer"
                 >
-                  <Search className="w-4 h-4 text-[#F59E0B]" />
-                  <span>Explore Verified Jobs</span>
-                  <ArrowRight className="w-4 h-4" />
+                  ✕
                 </button>
-
-                <button
-                  onClick={() => {
-                    setRole("employer");
-                    setTab("post-job");
-                  }}
-                  className="px-6 py-3.5 rounded-2xl bg-white dark:bg-[#101E33] hover:bg-slate-50 dark:hover:bg-slate-800 text-slate-900 dark:text-white text-xs sm:text-sm font-extrabold border-2 border-slate-200 dark:border-slate-700 hover:border-[#F59E0B] shadow-sm flex items-center gap-2 cursor-pointer transition-all hover:scale-[1.02]"
-                >
-                  <Building2 className="w-4 h-4 text-[#F59E0B]" />
-                  <span>Hire Talent / Post Vacancy</span>
-                </button>
-              </div>
-
-              {/* Advanced Search Console Bar */}
-              <form
-                onSubmit={handleHeroSearch}
-                className="mt-6 p-2 rounded-2xl sm:rounded-full bg-white dark:bg-[#101E33] border-2 border-slate-200 dark:border-slate-700/80 shadow-2xl shadow-[#0A2540]/8 dark:shadow-black/50 flex flex-col sm:flex-row items-center gap-2 max-w-2xl mx-auto lg:mx-0 transition-all focus-within:border-[#F59E0B] focus-within:ring-4 focus-within:ring-[#F59E0B]/10"
-              >
-                <div className="flex-1 w-full flex items-center gap-2.5 px-4 py-1.5">
-                  <Search className="w-4 h-4 text-[#F59E0B] shrink-0" />
-                  <input
-                    type="text"
-                    placeholder="Search by title, skill, or employer (e.g. Next.js, Skylight, TDRF)..."
-                    value={localSearch}
-                    onChange={(e) => setLocalSearch(e.target.value)}
-                    className="w-full bg-transparent text-xs sm:text-sm text-slate-900 dark:text-white placeholder:text-slate-400 outline-none font-medium"
-                  />
-                </div>
-
-                <div className="hidden sm:block w-px h-8 bg-slate-200 dark:border-slate-700 shrink-0" />
-
-                <div className="w-full sm:w-56 flex items-center gap-2 px-3 py-1.5 border-t sm:border-t-0 border-slate-100 dark:border-slate-800">
-                  <MapPin className="w-4 h-4 text-[#0A2540] dark:text-[#38BDF8] shrink-0" />
-                  <select
-                    value={localLocation}
-                    onChange={(e) => setLocalLocation(e.target.value)}
-                    className="w-full bg-transparent text-xs sm:text-sm text-slate-800 dark:text-slate-200 outline-none cursor-pointer font-medium"
-                  >
-                    <option value="" className="text-slate-900 bg-white dark:bg-[#101E33] dark:text-white">
-                      All Ethiopian Cities
-                    </option>
-                    {ETHIOPIAN_LOCATIONS.filter((l) => !l.includes("All Locations")).map(
-                      (loc) => (
-                        <option
-                          key={loc}
-                          value={loc}
-                          className="text-slate-900 bg-white dark:bg-[#101E33] dark:text-white"
-                        >
-                          {loc}
-                        </option>
-                      )
-                    )}
-                  </select>
-                </div>
-
-                <button
-                  type="submit"
-                  className="w-full sm:w-auto px-7 py-3.5 bg-[#0A2540] hover:bg-[#07192C] text-white font-bold text-xs sm:text-sm rounded-xl sm:rounded-full shadow-md flex items-center justify-center gap-2 cursor-pointer transition-transform hover:scale-[1.02] shrink-0"
-                >
-                  <span>Search</span>
-                  <ArrowRight className="w-4 h-4 text-[#F59E0B]" />
-                </button>
-              </form>
-
-              {/* Quick Search Chips */}
-              <div className="pt-2 flex flex-wrap items-center justify-center lg:justify-start gap-1.5 text-xs">
-                <span className="font-bold text-slate-700 dark:text-slate-300">Popular:</span>
-                {[
-                  "Software & Next.js",
-                  "Skylight Hotel (124 Openings)",
-                  "TDRF Mekelle (NGO)",
-                  "Commercial Bank",
-                  "Bole, Addis Ababa",
-                  "⚡ Fast-Track Direct Apply",
-                ].map((term) => (
-                  <button
-                    key={term}
-                    onClick={() => {
-                      if (term.includes("Fast-Track")) {
-                        setActiveJobTab("direct");
-                        setTab("search");
-                      } else {
-                        setSearchQuery(term);
-                        setTab("search");
-                      }
-                    }}
-                    className="px-3 py-1 rounded-full border border-slate-200 dark:border-slate-700 bg-white dark:bg-[#101E33] text-slate-600 dark:text-slate-300 hover:border-[#F59E0B] hover:text-[#0A2540] dark:hover:text-[#F59E0B] text-[11px] font-semibold transition-colors shadow-2xs"
-                  >
-                    {term}
-                  </button>
-                ))}
-              </div>
+              )}
             </div>
 
-            {/* Right Column: Interactive Live Matchmaking Showcase Card */}
-            <div className="lg:col-span-5 flex justify-center lg:justify-end">
-              <div className="relative w-full max-w-sm sm:max-w-md">
-                {/* Soft ambient backlight */}
-                <div className="absolute inset-0 bg-[#0A2540]/10 dark:bg-[#F59E0B]/15 rounded-3xl blur-2xl -z-10" />
+            {/* Divider 1 */}
+            <div className="hidden md:block w-px h-8 bg-slate-200 dark:bg-slate-700 shrink-0" />
 
-                <div className="p-6 sm:p-7 rounded-3xl border-2 border-slate-200 dark:border-slate-700/80 bg-white dark:bg-[#101E33] shadow-2xl shadow-[#0A2540]/12 dark:shadow-black/60 relative overflow-hidden space-y-5">
-                  {/* Card Header with Verified Status */}
-                  <div className="flex items-center justify-between pb-3.5 border-b border-slate-100 dark:border-slate-800">
-                    <div className="flex items-center gap-2.5">
-                      <div className="w-3 h-3 rounded-full bg-[#10B981] animate-ping" />
-                      <span className="text-xs font-black text-slate-900 dark:text-white">
-                        Azmera Recruitment Radar
-                      </span>
-                    </div>
-                    <span className="text-[10px] font-black px-2.5 py-0.5 rounded-full bg-[#0A2540]/10 text-[#0A2540] dark:bg-[#F59E0B]/20 dark:text-[#FBBF24] border border-[#0A2540]/15 dark:border-[#F59E0B]/30 tracking-wider">
-                      VERIFIED AGENCY
-                    </span>
-                  </div>
-
-                  {/* Mascot Branding Visual */}
-                  <div className="flex flex-col items-center text-center py-2">
-                    <div className="relative group cursor-pointer" onClick={() => setTab("search")}>
-                      <div className="w-44 h-44 sm:w-52 sm:h-52 rounded-full overflow-hidden border-4 border-[#F59E0B] shadow-2xl p-1 bg-white">
-                        <img
-                          src="/azmera-logo.png"
-                          alt="Azmera - Your Trusted Partner in Jobs"
-                          className="w-full h-full object-cover object-top rounded-full transition-transform duration-300 group-hover:scale-105"
-                        />
-                      </div>
-                      <div className="absolute -bottom-2 -right-2 bg-[#0A2540] text-white py-1.5 px-3.5 rounded-2xl shadow-xl border-2 border-[#F59E0B] flex items-center gap-1.5">
-                        <ShieldCheck className="w-4 h-4 text-[#F59E0B]" />
-                        <span className="text-[11px] font-extrabold tracking-wide">
-                          100% Verified
-                        </span>
-                      </div>
-                    </div>
-
-                    <h3 className="mt-4 text-xl font-black text-slate-900 dark:text-white">
-                      Azmera Jobs
-                    </h3>
-                    <p className="text-xs font-black tracking-wider text-[#F59E0B]">
-                      YOUR TRUSTED PARTNER IN JOBS
-                    </p>
-                    <p className="text-xs text-slate-600 dark:text-slate-300 mt-1 max-w-xs font-medium leading-relaxed">
-                      Connecting verified Ethiopian professionals &amp; businesses with fast, direct, and transparent hiring.
-                    </p>
-                  </div>
-
-                  {/* Live Matchmaking Feed (Real placements) */}
-                  <div className="space-y-2 pt-3 border-t border-slate-100 dark:border-slate-800">
-                    <span className="text-[10px] font-bold text-slate-400 uppercase tracking-wider block">
-                      Live Placement Feed Across Ethiopia
-                    </span>
-                    <div className="space-y-1.5">
-                      {[
-                        {
-                          name: "Dawit B.",
-                          role: "Senior Full Stack",
-                          company: "Chapa Technologies",
-                          time: "Just now",
-                        },
-                        {
-                          name: "Rahel T.",
-                          role: "Hospitality Lead (124 Openings)",
-                          company: "Skylight Hotel",
-                          time: "12m ago",
-                        },
-                        {
-                          name: "Kassahun M.",
-                          role: "Executive Director",
-                          company: "TDRF Mekelle",
-                          time: "25m ago",
-                        },
-                      ].map((feed, idx) => (
-                        <div
-                          key={idx}
-                          className="p-2.5 rounded-xl bg-slate-50 dark:bg-slate-900/60 border border-slate-100 dark:border-slate-800/80 flex items-center justify-between text-xs"
-                        >
-                          <div className="flex items-center gap-2 truncate">
-                            <CheckCircle2 className="w-3.5 h-3.5 text-emerald-500 shrink-0" />
-                            <span className="font-extrabold text-slate-900 dark:text-white truncate">
-                              {feed.name}
-                            </span>
-                            <span className="text-[11px] text-slate-500 dark:text-slate-400 truncate">
-                              → {feed.company}
-                            </span>
-                          </div>
-                          <span className="text-[10px] text-slate-400 font-mono shrink-0 ml-2">
-                            {feed.time}
-                          </span>
-                        </div>
-                      ))}
-                    </div>
-                  </div>
-
-                  {/* Fast-Track Direct Apply Banner */}
-                  <div className="p-3 bg-amber-50 dark:bg-amber-950/40 border border-amber-300 dark:border-amber-800 rounded-2xl flex items-center justify-between">
-                    <div className="flex items-center gap-2">
-                      <span className="text-base">⚡</span>
-                      <div>
-                        <span className="text-xs font-black text-amber-950 dark:text-amber-200 block">
-                          Fast-Track Matchmaking
-                        </span>
-                        <span className="text-[10px] text-amber-800 dark:text-amber-300">
-                          Telegram: @AzmeraJobConnect
-                        </span>
-                      </div>
-                    </div>
-                    <a
-                      href="https://t.me/AzmeraJobConnect"
-                      target="_blank"
-                      rel="noopener noreferrer"
-                      className="px-3 py-1 rounded-xl bg-[#0088cc] hover:bg-[#0077b5] text-white text-[11px] font-bold flex items-center gap-1"
+            {/* Field 2: Location dropdown */}
+            <div className="w-full md:w-52 flex items-center gap-2.5 px-4 py-2 border-t md:border-t-0 border-slate-100 dark:border-slate-800">
+              <MapPin className="w-5 h-5 text-[#EA580C] shrink-0" />
+              <select
+                value={localLocation}
+                onChange={(e) => setLocalLocation(e.target.value)}
+                className="w-full bg-transparent text-sm sm:text-base text-slate-800 dark:text-slate-200 outline-none cursor-pointer font-medium"
+              >
+                <option value="" className="text-slate-900 bg-white dark:bg-[#101E33] dark:text-white">
+                  City or remote
+                </option>
+                {ETHIOPIAN_LOCATIONS.filter((l) => !l.includes("All Locations")).map(
+                  (loc) => (
+                    <option
+                      key={loc}
+                      value={loc}
+                      className="text-slate-900 bg-white dark:bg-[#101E33] dark:text-white"
                     >
-                      <Send className="w-3 h-3" />
-                      <span>Join</span>
-                    </a>
-                  </div>
-                </div>
+                      {loc}
+                    </option>
+                  )
+                )}
+              </select>
+            </div>
+
+            {/* Divider 2 */}
+            <div className="hidden md:block w-px h-8 bg-slate-200 dark:bg-slate-700 shrink-0" />
+
+            {/* Field 3: Category dropdown */}
+            <div className="w-full md:w-56 flex items-center gap-2.5 px-4 py-2 border-t md:border-t-0 border-slate-100 dark:border-slate-800">
+              <Layers className="w-5 h-5 text-slate-400 shrink-0" />
+              <select
+                value={localCategory}
+                onChange={(e) => setLocalCategory(e.target.value)}
+                className="w-full bg-transparent text-sm sm:text-base text-slate-800 dark:text-slate-200 outline-none cursor-pointer font-medium"
+              >
+                <option value="All Categories" className="text-slate-900 bg-white dark:bg-[#101E33] dark:text-white">
+                  All Categories
+                </option>
+                {MOCK_CATEGORIES.map((cat) => (
+                  <option
+                    key={cat.id}
+                    value={cat.name}
+                    className="text-slate-900 bg-white dark:bg-[#101E33] dark:text-white"
+                  >
+                    {cat.name}
+                  </option>
+                ))}
+              </select>
+            </div>
+
+            {/* Submit Button */}
+            <button
+              type="submit"
+              className="w-full md:w-auto px-7 py-3.5 bg-gradient-to-r from-[#EA580C] to-[#F59E0B] hover:from-[#C2410C] hover:to-[#D97706] text-white font-extrabold text-sm sm:text-base rounded-xl md:rounded-full shadow-lg shadow-orange-500/25 flex items-center justify-center gap-2 cursor-pointer transition-all hover:scale-[1.02] shrink-0"
+            >
+              <span>Search Jobs</span>
+              <ArrowRight className="w-4 h-4" />
+            </button>
+          </form>
+
+          {/* Popular Search Suggestions */}
+          <div className="mt-4 flex flex-wrap items-center justify-center gap-2 text-xs text-slate-600 dark:text-slate-400">
+            <span className="font-bold text-slate-700 dark:text-slate-300">Popular:</span>
+            {[
+              "Software & Next.js",
+              "Skylight Hotel (124 Openings)",
+              "TDRF Mekelle (NGO)",
+              "Commercial Bank",
+              "Bole, Addis Ababa",
+              "⚡ Fast-Track Direct Apply",
+            ].map((term) => (
+              <button
+                key={term}
+                onClick={() => {
+                  if (term.includes("Fast-Track")) {
+                    setActiveJobTab("direct");
+                    setTab("search");
+                  } else {
+                    setSearchQuery(term);
+                    setTab("search");
+                  }
+                }}
+                className="px-3 py-1 rounded-full border border-slate-200 dark:border-slate-700 bg-white dark:bg-[#101E33] text-slate-600 dark:text-slate-300 hover:border-[#F59E0B] hover:text-[#0A2540] dark:hover:text-[#F59E0B] text-xs font-semibold transition-colors shadow-2xs cursor-pointer"
+              >
+                {term}
+              </button>
+            ))}
+          </div>
+
+          {/* 4-Column Stats Strip directly below the capsule (Exact TalentHub layout) */}
+          <div className="mt-14 max-w-4xl mx-auto grid grid-cols-2 sm:grid-cols-4 divide-y sm:divide-y-0 sm:divide-x divide-slate-200 dark:divide-slate-800 text-center">
+            <div className="py-4 px-3">
+              <div className="text-3xl sm:text-4xl lg:text-5xl font-black text-[#0A2540] dark:text-white tracking-tight">
+                4,200+
+              </div>
+              <div className="text-[11px] sm:text-xs font-bold uppercase tracking-widest text-slate-400 dark:text-slate-400 mt-1">
+                Active Jobs
+              </div>
+            </div>
+            <div className="py-4 px-3">
+              <div className="text-3xl sm:text-4xl lg:text-5xl font-black text-[#0A2540] dark:text-white tracking-tight">
+                850+
+              </div>
+              <div className="text-[11px] sm:text-xs font-bold uppercase tracking-widest text-slate-400 dark:text-slate-400 mt-1">
+                Companies
+              </div>
+            </div>
+            <div className="py-4 px-3">
+              <div className="text-3xl sm:text-4xl lg:text-5xl font-black text-[#0A2540] dark:text-white tracking-tight">
+                92,000+
+              </div>
+              <div className="text-[11px] sm:text-xs font-bold uppercase tracking-widest text-slate-400 dark:text-slate-400 mt-1">
+                Job Seekers
+              </div>
+            </div>
+            <div className="py-4 px-3">
+              <div className="text-3xl sm:text-4xl lg:text-5xl font-black text-[#0A2540] dark:text-white tracking-tight">
+                94%
+              </div>
+              <div className="text-[11px] sm:text-xs font-bold uppercase tracking-widest text-slate-400 dark:text-slate-400 mt-1">
+                Success Rate
               </div>
             </div>
           </div>
 
-          {/* Quick Metrics Bar */}
-          <div className="mt-14 max-w-5xl mx-auto grid grid-cols-2 md:grid-cols-4 gap-4">
-            {[
-              { label: "Active Verified Vacancies", value: "4,200+", icon: Briefcase },
-              { label: "Vetted Employers", value: "850+", icon: Building2 },
-              { label: "Job Seekers Network", value: "92,000+", icon: Users },
-              { label: "Placement Success", value: "94%", icon: Award },
-            ].map((stat, idx) => {
-              const Icon = stat.icon;
-              return (
-                <div
-                  key={idx}
-                  className="p-4 rounded-2xl border border-slate-200 dark:border-slate-800 bg-white dark:bg-[#101E33] shadow-xs flex items-center gap-3.5 hover:border-[#F59E0B] transition-colors"
-                >
-                  <div className="w-11 h-11 rounded-xl bg-[#0A2540]/5 dark:bg-[#F59E0B]/10 text-[#0A2540] dark:text-[#F59E0B] flex items-center justify-center shrink-0">
-                    <Icon className="w-5 h-5" />
-                  </div>
-                  <div>
-                    <div className="text-xl font-extrabold text-slate-900 dark:text-white">
-                      {stat.value}
-                    </div>
-                    <div className="text-xs font-medium text-slate-500 dark:text-slate-400">
-                      {stat.label}
-                    </div>
-                  </div>
+          {/* Azmera Job Matchmaking Banner & Girl Mascot Spotlight */}
+          <div className="mt-12 max-w-4xl mx-auto p-5 sm:p-6 rounded-3xl border-2 border-amber-200 dark:border-amber-900/60 bg-gradient-to-r from-amber-50/90 via-white to-amber-50/90 dark:from-[#111C2E] dark:via-[#132238] dark:to-[#111C2E] shadow-xl flex flex-col md:flex-row items-center justify-between gap-6 text-left">
+            <div className="flex items-center gap-4">
+              <div className="w-16 h-16 sm:w-20 sm:h-20 rounded-full border-3 border-[#F59E0B] shadow-md overflow-hidden bg-white shrink-0">
+                <img
+                  src="/azmera-logo.png"
+                  alt="Azmera Jobs Logo"
+                  className="w-full h-full object-cover object-top"
+                />
+              </div>
+              <div>
+                <div className="flex items-center gap-2">
+                  <span className="text-sm sm:text-base font-black text-slate-900 dark:text-white">
+                    Azmera Job Connect
+                  </span>
+                  <span className="text-[10px] font-extrabold px-2 py-0.5 rounded-full bg-[#0A2540] text-[#F59E0B] dark:bg-[#F59E0B] dark:text-[#0A2540]">
+                    100% VERIFIED
+                  </span>
                 </div>
-              );
-            })}
+                <p className="text-xs text-slate-600 dark:text-slate-300 mt-1 max-w-md font-medium leading-relaxed">
+                  Fast-track your job application directly with our talent matching team for vacancies in Addis Ababa, Mekelle, Hawassa, and nationwide.
+                </p>
+              </div>
+            </div>
+
+            <div className="flex items-center gap-3 w-full md:w-auto shrink-0">
+              <a
+                href="https://t.me/AzmeraJobConnect"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="flex-1 md:flex-initial px-5 py-3 rounded-2xl bg-[#0088cc] hover:bg-[#0077b5] text-white text-xs sm:text-sm font-extrabold flex items-center justify-center gap-2 shadow-md cursor-pointer transition-transform hover:scale-[1.02]"
+              >
+                <Send className="w-4 h-4" />
+                <span>Apply on Telegram</span>
+              </a>
+              <button
+                onClick={() => {
+                  setRole("employer");
+                  setTab("post-job");
+                }}
+                className="flex-1 md:flex-initial px-5 py-3 rounded-2xl bg-[#0A2540] hover:bg-[#07192C] text-white text-xs sm:text-sm font-extrabold flex items-center justify-center gap-2 shadow-md cursor-pointer transition-transform hover:scale-[1.02]"
+              >
+                <Building2 className="w-4 h-4 text-[#F59E0B]" />
+                <span>Post a Job</span>
+              </button>
+            </div>
           </div>
         </div>
       </section>
@@ -629,11 +565,10 @@ export default function LandingView() {
                 <button
                   key={tab.id}
                   onClick={() => setActiveJobTab(tab.id as any)}
-                  className={`px-3.5 py-1.5 rounded-full text-xs font-bold whitespace-nowrap transition-all cursor-pointer ${
-                    activeJobTab === tab.id
-                      ? "bg-[#0A2540] dark:bg-[#F59E0B] text-white dark:text-[#0A2540] shadow-sm"
-                      : "bg-white dark:bg-slate-800 text-slate-700 dark:text-slate-300 border border-slate-200 dark:border-slate-700 hover:border-[#F59E0B]"
-                  }`}
+                  className={`px-3.5 py-1.5 rounded-full text-xs font-bold whitespace-nowrap transition-all cursor-pointer ${activeJobTab === tab.id
+                    ? "bg-[#0A2540] dark:bg-[#F59E0B] text-white dark:text-[#0A2540] shadow-sm"
+                    : "bg-white dark:bg-slate-800 text-slate-700 dark:text-slate-300 border border-slate-200 dark:border-slate-700 hover:border-[#F59E0B]"
+                    }`}
                 >
                   {tab.label}
                 </button>
@@ -677,11 +612,10 @@ export default function LandingView() {
 
                       <button
                         onClick={() => toggleSaveJob(job.id)}
-                        className={`p-2 rounded-xl border transition-colors cursor-pointer shrink-0 ${
-                          saved
-                            ? "bg-amber-50 dark:bg-amber-950/40 border-amber-300 dark:border-amber-700 text-[#D97706]"
-                            : "border-slate-200 dark:border-slate-700 text-slate-400 hover:text-slate-700 dark:hover:text-slate-200 hover:bg-slate-50 dark:hover:bg-slate-800"
-                        }`}
+                        className={`p-2 rounded-xl border transition-colors cursor-pointer shrink-0 ${saved
+                          ? "bg-amber-50 dark:bg-amber-950/40 border-amber-300 dark:border-amber-700 text-[#D97706]"
+                          : "border-slate-200 dark:border-slate-700 text-slate-400 hover:text-slate-700 dark:hover:text-slate-200 hover:bg-slate-50 dark:hover:bg-slate-800"
+                          }`}
                         title={saved ? "Saved" : "Save job"}
                       >
                         <Bookmark
@@ -700,7 +634,7 @@ export default function LandingView() {
 
                     {/* Description Excerpt */}
                     <p className="text-xs text-slate-600 dark:text-slate-400 mt-2 line-clamp-2 leading-relaxed">
-                      {job.description}
+                      {stripRichFormatting(job.description)}
                     </p>
 
                     {/* Tags: Openings, Direct Apply & Type */}
@@ -875,21 +809,19 @@ export default function LandingView() {
               <div className="bg-slate-100 dark:bg-slate-800 p-1 rounded-2xl inline-flex">
                 <button
                   onClick={() => setActiveAudienceTab("seeker")}
-                  className={`px-5 py-2 rounded-xl text-xs font-extrabold transition-all cursor-pointer ${
-                    activeAudienceTab === "seeker"
-                      ? "bg-[#0A2540] text-white shadow-xs"
-                      : "text-slate-600 dark:text-slate-400"
-                  }`}
+                  className={`px-5 py-2 rounded-xl text-xs font-extrabold transition-all cursor-pointer ${activeAudienceTab === "seeker"
+                    ? "bg-[#0A2540] text-white shadow-xs"
+                    : "text-slate-600 dark:text-slate-400"
+                    }`}
                 >
                   For Job Seekers
                 </button>
                 <button
                   onClick={() => setActiveAudienceTab("employer")}
-                  className={`px-5 py-2 rounded-xl text-xs font-extrabold transition-all cursor-pointer ${
-                    activeAudienceTab === "employer"
-                      ? "bg-[#F59E0B] text-[#0A2540] shadow-xs"
-                      : "text-slate-600 dark:text-slate-400"
-                  }`}
+                  className={`px-5 py-2 rounded-xl text-xs font-extrabold transition-all cursor-pointer ${activeAudienceTab === "employer"
+                    ? "bg-[#F59E0B] text-[#0A2540] shadow-xs"
+                    : "text-slate-600 dark:text-slate-400"
+                    }`}
                 >
                   For Employers &amp; HR Teams
                 </button>

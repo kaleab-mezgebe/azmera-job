@@ -25,6 +25,7 @@ import {
   Paperclip,
 } from "lucide-react";
 import ApplyJobModal from "./ApplyJobModal";
+import RichDocumentRenderer from "@/components/common/RichDocumentRenderer";
 
 export default function JobDetailsView() {
   const {
@@ -291,9 +292,7 @@ export default function JobDetailsView() {
           {/* About the Role */}
           <div className="bg-white dark:bg-[#101E33] p-6 sm:p-8 rounded-3xl border border-[#E2E8F0] dark:border-slate-800 space-y-4">
             <h2 className="text-lg font-extrabold text-[#0A1C2E] dark:text-white">Role Overview</h2>
-            <div className="text-xs sm:text-sm text-[#0A1C2E] dark:text-slate-200 leading-relaxed whitespace-pre-wrap font-sans">
-              {selectedJob.description}
-            </div>
+            <RichDocumentRenderer content={selectedJob.description} />
 
             {/* Responsibilities */}
             <div className="pt-4 border-t border-[#E2E8F0] dark:border-slate-800 space-y-3">
