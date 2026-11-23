@@ -83,6 +83,22 @@ export default function ApplyJobModal({ job, onClose }: ApplyJobModalProps) {
         {/* Modal Body */}
         {step === 1 ? (
           <div className="p-6 space-y-5">
+            {job.directAgentApply && (
+              <div className="p-3.5 bg-amber-50 dark:bg-amber-950/40 border border-amber-300 dark:border-amber-800 rounded-2xl flex items-center justify-between text-xs">
+                <div className="flex items-center gap-2.5">
+                  <span className="text-lg">⚡</span>
+                  <div>
+                    <span className="font-bold text-amber-950 dark:text-amber-200 block">
+                      Direct Agent Fast-Track (ናባይ ቀጥታ ኣመልክቱ)
+                    </span>
+                    <span className="text-[11px] text-amber-800 dark:text-amber-300">
+                      Submit online or connect via Telegram ({job.directTelegramHandle || "@AzmeraJobConnect"}) for instant interview scheduling.
+                    </span>
+                  </div>
+                </div>
+              </div>
+            )}
+
             {/* CV Selection */}
             <div>
               <label className="block text-xs font-bold text-slate-900 dark:text-white mb-2">

@@ -2,6 +2,7 @@
 
 import React from "react";
 import { useApp } from "@/context/AppContext";
+import SocialBroadcastCard from "./SocialBroadcastCard";
 import {
   Briefcase,
   Users,
@@ -151,6 +152,9 @@ export default function EmployerDashboardView() {
           </span>
         </div>
       </div>
+
+      {/* Azmera Daily Social Media Broadcast & Customer Intake Center */}
+      <SocialBroadcastCard />
 
       {/* Recruitment Pipeline Performance */}
       <div className="bg-white p-6 rounded-3xl border border-[#E2E8F0] shadow-xs space-y-4">

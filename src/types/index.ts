@@ -22,6 +22,14 @@ export type ExperienceLevel =
   | "Senior Level (5+ yrs)"
   | "Lead / Director";
 
+export interface JobAttachment {
+  id: string;
+  name: string;
+  size: string;
+  type: "pdf" | "docx" | "image";
+  url?: string;
+}
+
 export interface Job {
   id: string;
   title: string;
@@ -39,6 +47,9 @@ export interface Job {
   salaryCurrency: string; // "ETB"
   salaryPeriod: "monthly" | "yearly";
   description: string;
+  richDescriptionHtml?: string;
+  attachments?: JobAttachment[];
+  flyerImage?: string;
   responsibilities: string[];
   qualifications: string[];
   skills: string[];

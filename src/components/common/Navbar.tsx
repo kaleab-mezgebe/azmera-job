@@ -37,11 +37,26 @@ export default function Navbar() {
     markAllNotificationsRead,
     savedJobIds,
     applications,
+    showToast,
   } = useApp();
 
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const [notifOpen, setNotifOpen] = useState(false);
   const [langOpen, setLangOpen] = useState(false);
+  const [howItWorksModalOpen, setHowItWorksModalOpen] = useState(false);
+  const [howItWorksTab, setHowItWorksTab] = useState<"seeker" | "employer">("seeker");
+
+  const handleGuestNavClick = (id: string) => {
+    if (id === "for-employers") {
+      setRole("employer");
+      setTab("employer-dashboard");
+      showToast("Welcome to Employer Recruiter Command Center!");
+    } else if (id === "how-it-works") {
+      setHowItWorksModalOpen(true);
+    } else {
+      setTab(id);
+    }
+  };
 
   const activeAppsCount = applications.filter(
     (a) => a.status !== "Rejected" && a.status !== "Accepted"
@@ -99,12 +114,12 @@ export default function Navbar() {
                 {[
                   { label: "Home", id: "landing" },
                   { label: "Browse Jobs", id: "search" },
-                  { label: "For Employers", id: "role-selection" },
-                  { label: "How It Works", id: "role-selection" },
+                  { label: "For Employers", id: "for-employers" },
+                  { label: "How It Works", id: "how-it-works" },
                 ].map((item) => (
                   <button
                     key={item.label}
-                    onClick={() => setTab(item.id)}
+                    onClick={() => handleGuestNavClick(item.id)}
                     className={`text-sm font-semibold transition-colors cursor-pointer ${
                       tab === item.id
                         ? "text-[#0A2540] dark:text-[#F59E0B]"
@@ -423,16 +438,18 @@ export default function Navbar() {
                 {[
                   { id: "landing", label: "Home" },
                   { id: "search", label: "Browse Jobs" },
-                  { id: "role-selection", label: "Create Account" },
+                  { id: "for-employers", label: "For Employers 💼" },
+                  { id: "how-it-works", label: "How It Works 💡" },
                   { id: "signin", label: "Sign In" },
+                  { id: "role-selection", label: "Create Account" },
                 ].map((item) => (
                   <button
                     key={item.id}
                     onClick={() => {
-                      setTab(item.id);
+                      handleGuestNavClick(item.id);
                       setMobileMenuOpen(false);
                     }}
-                    className="p-2.5 text-xs text-left font-bold rounded-xl bg-slate-50 dark:bg-slate-800 text-slate-800 dark:text-slate-200"
+                    className="p-2.5 text-xs text-left font-bold rounded-xl bg-slate-50 dark:bg-slate-800 text-slate-800 dark:text-slate-200 hover:bg-slate-100"
                   >
                     {item.label}
                   </button>
@@ -499,6 +516,174 @@ export default function Navbar() {
           </div>
         )}
       </header>
+
+      {/* ── HOW IT WORKS INTERACTIVE GUIDE MODAL ── */}
+      {howItWorksModalOpen && (
+        <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/60 backdrop-blur-xs">
+          <div className="bg-white dark:bg-[#101E33] rounded-3xl border border-slate-200 dark:border-slate-800 shadow-2xl w-full max-w-2xl max-h-[90vh] overflow-y-auto p-6 sm:p-8 space-y-6">
+            <div className="flex items-center justify-between pb-3 border-b border-slate-100 dark:border-slate-800">
+              <div className="flex items-center gap-2.5">
+                <div className="w-10 h-10 rounded-2xl bg-[#0A2540] text-[#F59E0B] flex items-center justify-center font-black">
+                  💡
+                </div>
+                <div>
+                  <h3 className="font-extrabold text-lg text-slate-900 dark:text-white">
+                    How Azmera Jobs Operates
+                  </h3>
+                  <p className="text-xs text-slate-500 dark:text-slate-400">
+                    Connecting Talent With Opportunity across Ethiopia
+                  </p>
+                </div>
+              </div>
+              <button
+                onClick={() => setHowItWorksModalOpen(false)}
+                className="p-2 rounded-xl text-slate-400 hover:text-slate-700 dark:hover:text-white hover:bg-slate-100 dark:hover:bg-slate-800 cursor-pointer"
+              >
+                ✕
+              </button>
+            </div>
+
+            {/* Audience Tabs */}
+            <div className="flex bg-slate-100 dark:bg-slate-800 p-1.5 rounded-2xl">
+              <button
+                onClick={() => setHowItWorksTab("seeker")}
+                className={`flex-1 py-2 text-xs font-extrabold rounded-xl transition-all cursor-pointer ${
+                  howItWorksTab === "seeker"
+                    ? "bg-[#0A2540] text-white shadow-xs"
+                    : "text-slate-600 dark:text-slate-400"
+                }`}
+              >
+                For Job Seekers (ሥራ ፈላጊዎች)
+              </button>
+              <button
+                onClick={() => setHowItWorksTab("employer")}
+                className={`flex-1 py-2 text-xs font-extrabold rounded-xl transition-all cursor-pointer ${
+                  howItWorksTab === "employer"
+                    ? "bg-[#F59E0B] text-[#0A2540] shadow-xs"
+                    : "text-slate-600 dark:text-slate-400"
+                }`}
+              >
+                For Employers &amp; Recruiters (ቀጣሪዎች)
+              </button>
+            </div>
+
+            {howItWorksTab === "seeker" ? (
+              <div className="space-y-4">
+                {[
+                  {
+                    num: "1",
+                    title: "Create Digital Profile & Verified CV",
+                    desc: "Build your candidate resume with education, work history, and skills in under 2 minutes.",
+                  },
+                  {
+                    num: "2",
+                    title: "Apply Online or Fast-Track via Telegram (ናባይ ቀጥታ)",
+                    desc: "Browse verified vacancies with transparent ETB compensation. For priority roles, message Azmera directly on Telegram (@AzmeraJobConnect) or call (+251 91 100 0000).",
+                  },
+                  {
+                    num: "3",
+                    title: "Interview & Immediate Placement",
+                    desc: "Track application progress in real time (Submitted, Review, Shortlisted, Interview, Accepted) and join top teams.",
+                  },
+                ].map((s) => (
+                  <div
+                    key={s.num}
+                    className="p-4 rounded-2xl bg-slate-50 dark:bg-slate-800/60 border border-slate-100 dark:border-slate-800 flex items-start gap-3.5"
+                  >
+                    <div className="w-8 h-8 rounded-xl bg-[#0A2540] text-[#F59E0B] font-black text-sm flex items-center justify-center shrink-0">
+                      {s.num}
+                    </div>
+                    <div>
+                      <h4 className="text-xs font-bold text-slate-900 dark:text-white">
+                        {s.title}
+                      </h4>
+                      <p className="text-xs text-slate-600 dark:text-slate-300 mt-0.5 leading-relaxed">
+                        {s.desc}
+                      </p>
+                    </div>
+                  </div>
+                ))}
+
+                <div className="pt-2 flex justify-end gap-3">
+                  <button
+                    onClick={() => {
+                      setHowItWorksModalOpen(false);
+                      setTab("landing");
+                      setTimeout(() => {
+                        const el = document.getElementById("how-it-works");
+                        if (el) el.scrollIntoView({ behavior: "smooth" });
+                      }, 100);
+                    }}
+                    className="px-4 py-2 text-xs font-bold text-[#0A2540] dark:text-[#F59E0B] hover:underline cursor-pointer"
+                  >
+                    View on page ↓
+                  </button>
+                  <button
+                    onClick={() => {
+                      setHowItWorksModalOpen(false);
+                      setTab("search");
+                    }}
+                    className="px-5 py-2.5 rounded-xl bg-[#0A2540] text-white text-xs font-extrabold shadow-xs cursor-pointer hover:bg-[#07192C]"
+                  >
+                    Explore Open Vacancies →
+                  </button>
+                </div>
+              </div>
+            ) : (
+              <div className="space-y-4">
+                {[
+                  {
+                    num: "1",
+                    title: "Post Vacancies in Microsoft Word Mode",
+                    desc: "Format complete job specifications with headings, tables, flyer banners, and downloadable official PDF circulars.",
+                  },
+                  {
+                    num: "2",
+                    title: "Azmera Candidate Pre-Screening",
+                    desc: "Our recruitment agency pre-screens and shortlists candidates through direct phone interviews and online CV evaluation.",
+                  },
+                  {
+                    num: "3",
+                    title: "Manage Pipeline & Extend Offers",
+                    desc: "Review candidate profiles, schedule interviews into your calendar, and hire top qualified Ethiopian talent.",
+                  },
+                ].map((s) => (
+                  <div
+                    key={s.num}
+                    className="p-4 rounded-2xl bg-amber-50/50 dark:bg-amber-950/20 border border-amber-200/60 dark:border-amber-900/60 flex items-start gap-3.5"
+                  >
+                    <div className="w-8 h-8 rounded-xl bg-[#F59E0B] text-[#0A2540] font-black text-sm flex items-center justify-center shrink-0">
+                      {s.num}
+                    </div>
+                    <div>
+                      <h4 className="text-xs font-bold text-slate-900 dark:text-white">
+                        {s.title}
+                      </h4>
+                      <p className="text-xs text-slate-600 dark:text-slate-300 mt-0.5 leading-relaxed">
+                        {s.desc}
+                      </p>
+                    </div>
+                  </div>
+                ))}
+
+                <div className="pt-2 flex justify-end gap-3">
+                  <button
+                    onClick={() => {
+                      setHowItWorksModalOpen(false);
+                      setRole("employer");
+                      setTab("post-job");
+                      showToast("Opened Word-style Job Post Form");
+                    }}
+                    className="px-5 py-2.5 rounded-xl bg-[#F59E0B] text-[#0A2540] text-xs font-black shadow-xs hover:bg-[#D97706] cursor-pointer"
+                  >
+                    Post a Vacancy Now →
+                  </button>
+                </div>
+              </div>
+            )}
+          </div>
+        </div>
+      )}
 
       {/* Floating Interactive Persona Switcher for Client Demo / Review */}
       <aside aria-label="Demo Persona Switcher" className="fixed bottom-5 right-5 z-50 flex items-center gap-1.5 p-1.5 rounded-full bg-[#0A2540]/95 backdrop-blur-md border border-[#F59E0B]/40 shadow-2xl text-white">

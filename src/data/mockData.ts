@@ -262,6 +262,23 @@ export const MOCK_JOBS: Job[] = [
     status: "Active",
     featured: true,
     sourceCircular: "TDRF.ORG Official Circular",
+    flyerImage: "https://images.unsplash.com/photo-1532629345422-7515f3d16bb6?w=800&auto=format&fit=crop&q=80",
+    attachments: [
+      {
+        id: "att-1",
+        name: "TDRF_Executive_Director_Terms_of_Reference.pdf",
+        size: "1.4 MB",
+        type: "pdf",
+        url: "#",
+      },
+      {
+        id: "att-2",
+        name: "TDRF_Humanitarian_Framework_2026.docx",
+        size: "620 KB",
+        type: "docx",
+        url: "#",
+      },
+    ],
   },
   {
     id: "job-skylight-124",

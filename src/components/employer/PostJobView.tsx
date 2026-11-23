@@ -2,8 +2,9 @@
 
 import React, { useState } from "react";
 import { useApp } from "@/context/AppContext";
-import { Job, JobType, ExperienceLevel } from "@/types";
+import { Job, JobType, ExperienceLevel, JobAttachment } from "@/types";
 import { ETHIOPIAN_LOCATIONS, MOCK_CATEGORIES } from "@/data/mockData";
+import WordDocumentEditor from "./WordDocumentEditor";
 import {
   Briefcase,
   MapPin,
@@ -33,7 +34,20 @@ export default function PostJobView() {
   const [salaryMax, setSalaryMax] = useState<number>(55000);
   const [deadline, setDeadline] = useState("Dec 31, 2026");
 
-  const [description, setDescription] = useState("");
+  const [description, setDescription] = useState(
+    `# Position Overview & Organizational Mission\n## Executive & Operational Brief\n\nOutline the primary objectives and daily operational responsibilities of this role here in Microsoft Word style. Use headings, bold styling, and bullet points to organize the vacancy notice.\n\n> 📋 **OFFICIAL RECRUITMENT NOTICE**\n> This position offers competitive compensation in ETB with performance bonuses and comprehensive health insurance.\n\n### Key Daily Expectations:\n• Coordinate with cross-functional leadership and department supervisors.\n• Ensure timely delivery of deliverables aligned with Ethiopian operational standards.\n• Maintain strict confidentiality, professional integrity, and team leadership.`
+  );
+  const [attachments, setAttachments] = useState<JobAttachment[]>([
+    {
+      id: "att-default-1",
+      name: "Official_Vacancy_Circular_2026.pdf",
+      size: "1.2 MB",
+      type: "pdf",
+      url: "#",
+    },
+  ]);
+  const [flyerImage, setFlyerImage] = useState<string | undefined>(undefined);
+
   const [responsibilities, setResponsibilities] = useState<string[]>([
     "Build high-performance, responsive web interfaces using modern frameworks.",
     "Collaborate with product designers and backend engineers in agile sprints.",
@@ -54,6 +68,148 @@ export default function PostJobView() {
   const [newSkill, setNewSkill] = useState("");
 
   const [isPreviewOpen, setIsPreviewOpen] = useState(false);
+
+  const handleApplyTemplate = (templateType: "tdrf" | "skylight" | "fintech") => {
+    if (templateType === "tdrf") {
+      setTitle("Executive Director (Consultant) - TDRF");
+      setCategory("Operations & Management");
+      setLocation("Mekelle, Tigray (with field travel)");
+      setWorkplaceType("On-site");
+      setType("Contract");
+      setExperienceLevel("Lead / Director");
+      setSalaryMin(140000);
+      setSalaryMax(195000);
+      setFlyerImage(
+        "https://images.unsplash.com/photo-1532629345422-7515f3d16bb6?w=800&auto=format&fit=crop&q=80"
+      );
+      setDescription(
+        `# Executive Director (Consultant)
+## Tigray Disaster Relief Fund (TDRF) • Mekelle, Tigray
+
+> 📢 **WE'RE HIRING! JOIN THE TDRF TEAM**
+> Tigray Disaster Relief Fund is looking for passionate, committed, and motivated individuals who want to make a meaningful impact. We are growing our team and seeking people who share our commitment to humanitarian service, community empowerment, and supporting vulnerable populations.
+
+---
+
+### Key Assignment Details:
+• **Location:** Mekelle, Tigray, Ethiopia (with field travel across regional woredas)
+• **Duration:** Six-month consultancy, with high possibility of extension
+• **Start Date:** ASAP (Immediate deployment)
+• **Monthly Compensation:** 140,000 - 195,000 ETB + field travel allowances
+
+---
+
+### Core Objectives & Responsibilities:
+1. Provide executive leadership and oversight for all TDRF emergency relief and recovery programs across Tigray.
+2. Lead operational implementation, ensuring accountability, timely reporting, and high humanitarian standards.
+3. Liaise with diaspora leadership, international donors, UN agencies, and local community-based organizations.
+4. Coordinate field missions, rapid vulnerability assessments, and transparent distribution networks.
+
+> ⚡ **FAST-TRACK RECRUITMENT NOTICE (ናባይ ቀጥታ ኣመልክቱ)**
+> Qualified candidates can submit their CV below or apply directly via Azmera Job Connect on Telegram (@AzmeraJobConnect) or Phone (+251 91 100 0000).`
+      );
+      setAttachments([
+        {
+          id: "att-tdrf-1",
+          name: "TDRF_Executive_Director_Terms_of_Reference.pdf",
+          size: "1.4 MB",
+          type: "pdf",
+          url: "#",
+        },
+        {
+          id: "att-tdrf-2",
+          name: "TDRF_Humanitarian_Framework_2026.docx",
+          size: "620 KB",
+          type: "docx",
+          url: "#",
+        },
+      ]);
+      setResponsibilities([
+        "Provide executive leadership and oversight for all TDRF emergency relief programs.",
+        "Lead operational implementation ensuring high humanitarian standards.",
+        "Liaise with diaspora leadership, international donors, and UN agencies.",
+        "Oversee financial budgets, compliance, and transparent reporting.",
+      ]);
+      setQualifications([
+        "Master's degree in Humanitarian Affairs, Development Studies, or related field.",
+        "7+ years of senior executive or program management experience.",
+        "Deep understanding of the humanitarian landscape in Tigray.",
+        "Fluency in English and Tigrigna is required.",
+      ]);
+      setSkills(["Executive Leadership", "Humanitarian Relief", "Program Management", "Tigrigna"]);
+      showToast("Loaded TDRF Humanitarian Circular Template with full Word formatting!");
+    } else if (templateType === "skylight") {
+      setTitle("Hospitality & Hotel Specialists (124 Vacancies)");
+      setCategory("Hospitality & Tourism");
+      setLocation("Bole Skylight, Addis Ababa");
+      setWorkplaceType("On-site");
+      setType("Full-time");
+      setExperienceLevel("Mid Level (2-4 yrs)");
+      setSalaryMin(28000);
+      setSalaryMax(48000);
+      setFlyerImage(
+        "https://images.unsplash.com/photo-1566073771259-6a8506099945?w=800&auto=format&fit=crop&q=80"
+      );
+      setDescription(
+        `# Ethiopian Skylight Hotel • Mass Recruitment Drive
+## 124 Diverse Hospitality & Operations Vacancies
+
+Ethiopian Skylight Hotel (Africa's largest 5-star hotel with 1,024 luxury rooms) invites qualified professionals to join our world-class team across diverse departments.
+
+---
+
+### Openings Breakdown:
+| Department / Position | Number of Vacancies | Experience Required |
+| :--- | :--- | :--- |
+| Food & Beverage Captains | 28 Openings | 2+ years 5-star service |
+| Guest Reception & Concierge | 32 Openings | Fluent English + Amharic |
+| Banquet & Event Coordinators | 24 Openings | Large conference experience |
+| Housekeeping & Facility Attendants | 40 Openings | TVET certificate / High School |
+
+> 🎁 **EMPLOYEE BENEFITS:**
+> • Free international staff dining & luxury transport shuttle
+> • Subsidized family health insurance coverage
+> • World-class Ethiopian Airlines hospitality training certifications`
+      );
+      setAttachments([
+        {
+          id: "att-sky-1",
+          name: "Skylight_Hotel_124_Openings_Intake_Guide.pdf",
+          size: "2.1 MB",
+          type: "pdf",
+          url: "#",
+        },
+      ]);
+      setSkills(["Guest Services", "Front Desk", "Food & Beverage", "Banquet Operations"]);
+      showToast("Loaded Skylight 124 Openings Hotel Template!");
+    } else {
+      setTitle("Senior Full Stack Software Engineer");
+      setCategory("Software & IT");
+      setLocation("Addis Ababa (Bole)");
+      setWorkplaceType("Hybrid");
+      setType("Full-time");
+      setExperienceLevel("Senior Level (5+ yrs)");
+      setSalaryMin(50000);
+      setSalaryMax(75000);
+      setDescription(
+        `# Senior Full Stack Engineer (Next.js & Python)
+## Enterprise Digital Payments & FinTech Switch
+
+We are building high-resilience payment infrastructure powering digital commerce across Ethiopia.
+
+### Technical Stack & Architecture:
+• **Frontend:** Next.js 15, TypeScript, Tailwind CSS, Turbopack
+• **Backend:** Python, FastAPI, PostgreSQL, Redis, Kafka
+• **Integrations:** EthSwitch, Telebirr API, CBE Birr, Visa / Mastercard
+
+> 🚀 **EQUITY & PERKS:**
+> • Competitive monthly ETB base salary with annual FX bonus
+> • Brand new Apple MacBook Pro M3
+> • Flexible hybrid work model (2 days office in Bole, 3 days remote)`
+      );
+      showToast("Loaded FinTech Engineering Template!");
+    }
+  };
 
   const handleAddResp = () => {
     if (newResp.trim()) {
@@ -99,8 +255,11 @@ export default function PostJobView() {
       salaryCurrency: "ETB",
       salaryPeriod: "monthly",
       description,
-      responsibilities: responsibilities.length ? responsibilities : ["Deliver quality software."],
-      qualifications: qualifications.length ? qualifications : ["Relevant university degree."],
+      richDescriptionHtml: description,
+      attachments: attachments.length ? attachments : undefined,
+      flyerImage: flyerImage || undefined,
+      responsibilities: responsibilities.length ? responsibilities : ["Deliver quality operations."],
+      qualifications: qualifications.length ? qualifications : ["Relevant qualifications."],
       skills: skills.length ? skills : ["Communication", "Problem Solving"],
       deadline,
       status: "Active",
@@ -292,28 +451,59 @@ export default function PostJobView() {
           </div>
         </div>
 
-        {/* Section 3: Job Description & Detailed Criteria */}
-        <div className="bg-white p-6 sm:p-8 rounded-3xl border border-[#E2E8F0] shadow-xs space-y-5">
-          <h2 className="text-sm font-extrabold text-[#0A1C2E] uppercase tracking-wider flex items-center gap-2">
-            <span className="w-6 h-6 rounded-lg bg-[#0A2540] text-white flex items-center justify-center text-xs font-black">
-              3
-            </span>
-            Role Description & Qualifications
-          </h2>
+        {/* Section 3: Job Description & Microsoft Word Document Editor */}
+        <div className="bg-white dark:bg-[#101E33] p-6 sm:p-8 rounded-3xl border border-[#E2E8F0] dark:border-slate-800 shadow-xs space-y-5">
+          <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 pb-3 border-b border-slate-100 dark:border-slate-800">
+            <div>
+              <h2 className="text-sm font-extrabold text-[#0A1C2E] dark:text-white uppercase tracking-wider flex items-center gap-2">
+                <span className="w-6 h-6 rounded-lg bg-[#0078D4] text-white flex items-center justify-center text-xs font-black shadow-xs">
+                  W
+                </span>
+                Word Document &amp; Vacancy Circular Editor
+              </h2>
+              <p className="text-xs text-slate-500 dark:text-slate-400 mt-0.5">
+                Full Microsoft Word style editor: format headings, bold/highlight text, insert graphics, and attach PDF circulars
+              </p>
+            </div>
 
-          <div>
-            <label className="block text-xs font-bold text-[#0A1C2E] mb-1">
-              Job Description *
-            </label>
-            <textarea
-              rows={4}
-              required
-              placeholder="Outline what this position accomplishes, team structure, and impact..."
-              value={description}
-              onChange={(e) => setDescription(e.target.value)}
-              className="w-full p-3.5 rounded-xl border border-[#E2E8F0] bg-[#F8FAFC] focus:border-[#0A2540] focus:bg-white text-xs text-[#0A1C2E] outline-none leading-relaxed"
-            />
+            {/* Quick Templates Strip */}
+            <div className="flex items-center gap-1.5 flex-wrap">
+              <span className="text-[11px] font-bold text-slate-500 dark:text-slate-400">
+                Templates:
+              </span>
+              <button
+                type="button"
+                onClick={() => handleApplyTemplate("tdrf")}
+                className="px-2.5 py-1 rounded-lg bg-rose-50 hover:bg-rose-100 text-rose-800 dark:bg-rose-950/50 dark:text-rose-200 text-[11px] font-bold border border-rose-200 dark:border-rose-800 transition-colors cursor-pointer"
+              >
+                🏛️ TDRF NGO
+              </button>
+              <button
+                type="button"
+                onClick={() => handleApplyTemplate("skylight")}
+                className="px-2.5 py-1 rounded-lg bg-amber-50 hover:bg-amber-100 text-amber-800 dark:bg-amber-950/50 dark:text-amber-200 text-[11px] font-bold border border-amber-200 dark:border-amber-800 transition-colors cursor-pointer"
+              >
+                🏨 Skylight 124
+              </button>
+              <button
+                type="button"
+                onClick={() => handleApplyTemplate("fintech")}
+                className="px-2.5 py-1 rounded-lg bg-blue-50 hover:bg-blue-100 text-[#0A2540] dark:bg-blue-950/50 dark:text-blue-200 text-[11px] font-bold border border-blue-200 dark:border-blue-800 transition-colors cursor-pointer"
+              >
+                💻 FinTech
+              </button>
+            </div>
           </div>
+
+          <WordDocumentEditor
+            description={description}
+            onChangeDescription={setDescription}
+            attachments={attachments}
+            onChangeAttachments={setAttachments}
+            flyerImage={flyerImage}
+            onChangeFlyerImage={setFlyerImage}
+            onApplyTemplate={handleApplyTemplate}
+          />
 
           {/* Responsibilities list builder */}
           <div>
