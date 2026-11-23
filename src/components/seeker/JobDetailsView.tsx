@@ -166,43 +166,104 @@ export default function JobDetailsView() {
 
         {/* Quick Highlights Strip */}
         <div className="grid grid-cols-2 sm:grid-cols-4 gap-3 pt-6 border-t border-[#E2E8F0]">
-          <div className="p-3.5 bg-[#F8FAFC] rounded-2xl">
-            <span className="text-[10px] text-[#64748B] block font-medium">
+          <div className="p-3.5 bg-[#F8FAFC] dark:bg-slate-800/60 rounded-2xl">
+            <span className="text-[10px] text-[#64748B] dark:text-slate-400 block font-medium">
               Monthly Compensation
             </span>
-            <span className="text-sm font-extrabold text-[#0A2540]">
+            <span className="text-sm font-extrabold text-[#0A2540] dark:text-[#F59E0B]">
               {selectedJob.salaryMin.toLocaleString()} -{" "}
               {selectedJob.salaryMax.toLocaleString()} ETB
             </span>
           </div>
 
-          <div className="p-3.5 bg-[#F8FAFC] rounded-2xl">
-            <span className="text-[10px] text-[#64748B] block font-medium">
+          <div className="p-3.5 bg-[#F8FAFC] dark:bg-slate-800/60 rounded-2xl">
+            <span className="text-[10px] text-[#64748B] dark:text-slate-400 block font-medium">
               Experience Level
             </span>
-            <span className="text-sm font-bold text-[#0A1C2E]">
+            <span className="text-sm font-bold text-[#0A1C2E] dark:text-white">
               {selectedJob.experienceLevel}
             </span>
           </div>
 
-          <div className="p-3.5 bg-[#F8FAFC] rounded-2xl">
-            <span className="text-[10px] text-[#64748B] block font-medium">
+          <div className="p-3.5 bg-[#F8FAFC] dark:bg-slate-800/60 rounded-2xl">
+            <span className="text-[10px] text-[#64748B] dark:text-slate-400 block font-medium">
               Application Deadline
             </span>
-            <span className="text-sm font-bold text-[#0A1C2E]">
+            <span className="text-sm font-bold text-[#0A1C2E] dark:text-white">
               {selectedJob.deadline}
             </span>
           </div>
 
-          <div className="p-3.5 bg-[#F8FAFC] rounded-2xl">
-            <span className="text-[10px] text-[#64748B] block font-medium">
+          <div className="p-3.5 bg-[#F8FAFC] dark:bg-slate-800/60 rounded-2xl">
+            <span className="text-[10px] text-[#64748B] dark:text-slate-400 block font-medium">
               Applicants So Far
             </span>
-            <span className="text-sm font-bold text-[#0A1C2E]">
+            <span className="text-sm font-bold text-[#0A1C2E] dark:text-white">
               {selectedJob.applicantCount} candidates
             </span>
           </div>
         </div>
+
+        {/* Badges for Openings or Circular */}
+        {(selectedJob.openingsCount || selectedJob.sourceCircular) && (
+          <div className="flex flex-wrap items-center gap-2 pt-2 border-t border-slate-100 dark:border-slate-800">
+            {selectedJob.openingsCount && (
+              <span className="inline-flex items-center gap-1.5 px-3 py-1 rounded-xl text-xs font-black bg-rose-50 text-rose-700 dark:bg-rose-950/60 dark:text-rose-300 border border-rose-200 dark:border-rose-900/60">
+                <Flame className="w-3.5 h-3.5 text-rose-500 fill-rose-500" />
+                {selectedJob.openingsCount} Vacancies Available
+              </span>
+            )}
+            {selectedJob.sourceCircular && (
+              <span className="inline-flex items-center gap-1.5 px-3 py-1 rounded-xl text-xs font-semibold bg-slate-100 dark:bg-slate-800 text-slate-700 dark:text-slate-300 border border-slate-200 dark:border-slate-700">
+                📋 Source: {selectedJob.sourceCircular}
+              </span>
+            )}
+          </div>
+        )}
+
+        {/* Direct Fast-Track Apply Card (ናባይ ቀጥታ ኣመልክቱ) */}
+        {selectedJob.directAgentApply && (
+          <div className="bg-gradient-to-br from-amber-500/10 via-amber-500/5 to-transparent border-2 border-[#F59E0B] p-5 sm:p-6 rounded-3xl space-y-3.5">
+            <div className="flex items-start gap-3">
+              <div className="w-10 h-10 rounded-2xl bg-[#F59E0B] text-[#0A2540] flex items-center justify-center font-black text-lg shadow-sm shrink-0">
+                ⚡
+              </div>
+              <div className="space-y-1">
+                <div className="flex items-center gap-2 flex-wrap">
+                  <h3 className="font-extrabold text-base text-slate-900 dark:text-white">
+                    Direct Agent Fast-Track Application
+                  </h3>
+                  <span className="text-xs font-extrabold text-[#D97706] bg-amber-100 dark:bg-amber-950/60 dark:text-[#FBBF24] px-3 py-0.5 rounded-full border border-amber-300 dark:border-amber-800">
+                    ናባይ ቀጥታ ኣመልክቱ
+                  </span>
+                </div>
+                <p className="text-xs text-slate-600 dark:text-slate-300 leading-relaxed">
+                  The employer has assigned Azmera Job Connect to directly screen and place qualified candidates immediately. You can contact Azmera directly via Telegram or Phone for fast scheduling!
+                </p>
+              </div>
+            </div>
+
+            <div className="flex flex-wrap items-center gap-3 pt-1">
+              <a
+                href={`https://t.me/${(selectedJob.directTelegramHandle || "@AzmeraJobConnect").replace("@", "")}`}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="inline-flex items-center gap-2 px-5 py-2.5 rounded-xl bg-[#0088cc] hover:bg-[#0077b5] text-white font-bold text-xs shadow-md shadow-[#0088cc]/20 transition-all hover:scale-[1.02]"
+              >
+                <Send className="w-4 h-4" />
+                <span>Message Azmera on Telegram ({selectedJob.directTelegramHandle || "@AzmeraJobConnect"})</span>
+              </a>
+
+              <a
+                href={`tel:${selectedJob.directContactPhone || "+251911000000"}`}
+                className="inline-flex items-center gap-2 px-5 py-2.5 rounded-xl bg-[#0A2540] dark:bg-[#1E293B] hover:bg-[#071A2E] text-white font-bold text-xs border border-slate-300 dark:border-slate-700 shadow-xs transition-all hover:scale-[1.02]"
+              >
+                <Phone className="w-4 h-4 text-[#F59E0B]" />
+                <span>Call Directly: {selectedJob.directContactPhone || "+251 91 100 0000"}</span>
+              </a>
+            </div>
+          </div>
+        )}
       </div>
 
       {/* Main Details Grid: Content + Company Aside */}

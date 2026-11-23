@@ -371,6 +371,16 @@ export default function JobSearchView() {
                                 Verified
                               </span>
                             )}
+                            {job.directAgentApply && (
+                              <span className="inline-flex items-center gap-1 text-[10px] font-black text-[#D97706] bg-amber-100 dark:bg-amber-950/60 dark:text-[#FBBF24] border border-amber-300 dark:border-amber-800 px-2 py-0.5 rounded-md">
+                                ⚡ Direct Apply (ናባይ ቀጥታ ኣመልክቱ)
+                              </span>
+                            )}
+                            {job.openingsCount && (
+                              <span className="inline-flex items-center gap-1 text-[10px] font-black text-rose-700 bg-rose-50 dark:bg-rose-950/60 dark:text-rose-300 border border-rose-200 dark:border-rose-900/60 px-2 py-0.5 rounded-md">
+                                🔥 {job.openingsCount} Vacancies
+                              </span>
+                            )}
                             <span className="text-[10px] text-slate-400">
                               • {job.postedDate}
                             </span>

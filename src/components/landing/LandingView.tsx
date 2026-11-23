@@ -416,6 +416,16 @@ export default function LandingView() {
 
                     {/* Tags - CLEAN, CRISP CONTRAST */}
                     <div className="flex flex-wrap gap-1.5 mt-3.5">
+                      {job.directAgentApply && (
+                        <span className="px-2.5 py-1 rounded-md text-[11px] font-black bg-[#F59E0B] text-[#0A2540] flex items-center gap-1 shadow-xs">
+                          ⚡ Direct Apply (ናባይ ቀጥታ ኣመልክቱ)
+                        </span>
+                      )}
+                      {job.openingsCount && (
+                        <span className="px-2.5 py-1 rounded-md text-[11px] font-black bg-rose-50 text-rose-700 dark:bg-rose-950/60 dark:text-rose-300 border border-rose-200 dark:border-rose-900/60 flex items-center gap-1">
+                          🔥 {job.openingsCount} Openings
+                        </span>
+                      )}
                       <span className="px-2.5 py-1 rounded-md text-[11px] font-semibold bg-slate-100 dark:bg-slate-800 text-slate-700 dark:text-slate-300 border border-slate-200 dark:border-slate-700">
                         {job.type}
                       </span>
