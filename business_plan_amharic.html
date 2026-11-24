@@ -8,7 +8,7 @@
 
     @page {
       size: A4;
-      margin: 14mm 14mm 14mm 14mm;
+      margin: 12mm 13mm 12mm 13mm;
     }
 
     * {
@@ -21,22 +21,22 @@
       font-family: 'Noto Sans Ethiopic', 'Kefa', 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
       color: #0F172A;
       background-color: #FFFFFF;
-      line-height: 1.6;
-      font-size: 11pt;
+      line-height: 1.55;
+      font-size: 10.5pt;
     }
 
     .header-card {
       background: linear-gradient(135deg, #0A2540 0%, #112F52 100%);
       color: #FFFFFF;
-      padding: 22px 26px;
+      padding: 20px 24px;
       border-radius: 16px;
-      margin-bottom: 22px;
+      margin-bottom: 18px;
       border-left: 6px solid #F59E0B;
       box-shadow: 0 4px 15px rgba(10, 37, 64, 0.12);
     }
 
     .header-card h1 {
-      font-size: 22pt;
+      font-size: 21pt;
       font-weight: 900;
       letter-spacing: -0.5px;
       margin-bottom: 4px;
@@ -48,28 +48,28 @@
     }
 
     .header-card .tagline {
-      font-size: 11pt;
+      font-size: 10.5pt;
       color: #FCD34D;
       font-weight: 700;
-      margin-bottom: 8px;
+      margin-bottom: 6px;
     }
 
     .header-card .meta {
-      font-size: 9.5pt;
+      font-size: 9pt;
       color: #CBD5E1;
       display: flex;
       gap: 16px;
-      margin-top: 8px;
-      padding-top: 8px;
+      margin-top: 6px;
+      padding-top: 6px;
       border-top: 1px solid rgba(255, 255, 255, 0.15);
     }
 
     h2 {
       color: #0A2540;
-      font-size: 14pt;
+      font-size: 13.5pt;
       font-weight: 800;
-      margin-top: 22px;
-      margin-bottom: 10px;
+      margin-top: 18px;
+      margin-bottom: 8px;
       padding-bottom: 4px;
       border-bottom: 2px solid #E2E8F0;
       display: flex;
@@ -80,18 +80,18 @@
     h2 .num {
       background: #0A2540;
       color: #F59E0B;
-      width: 26px;
-      height: 26px;
-      border-radius: 8px;
+      width: 24px;
+      height: 24px;
+      border-radius: 7px;
       display: inline-flex;
       align-items: center;
       justify-content: center;
-      font-size: 10pt;
+      font-size: 9.5pt;
       font-weight: 900;
     }
 
     p {
-      margin-bottom: 10px;
+      margin-bottom: 8px;
       color: #334155;
       text-align: justify;
     }
@@ -100,8 +100,8 @@
       background: #F8FAFC;
       border: 1px solid #E2E8F0;
       border-radius: 12px;
-      padding: 14px 18px;
-      margin-bottom: 14px;
+      padding: 12px 16px;
+      margin-bottom: 12px;
       page-break-inside: avoid;
     }
 
@@ -117,11 +117,17 @@
       border-left: 5px solid #10B981;
     }
 
+    .card-navy {
+      background: #F1F6FB;
+      border: 1px solid #D1E1F0;
+      border-left: 5px solid #0A2540;
+    }
+
     table {
       width: 100%;
       border-collapse: collapse;
-      margin: 12px 0 16px 0;
-      font-size: 10pt;
+      margin: 10px 0 14px 0;
+      font-size: 9.5pt;
       page-break-inside: avoid;
       background: #FFFFFF;
       border-radius: 8px;
@@ -130,7 +136,7 @@
     }
 
     th, td {
-      padding: 10px 12px;
+      padding: 8px 11px;
       text-align: left;
       border-bottom: 1px solid #E2E8F0;
     }
@@ -139,7 +145,7 @@
       background-color: #0A2540;
       color: #FFFFFF;
       font-weight: 800;
-      font-size: 9.5pt;
+      font-size: 9pt;
       text-transform: uppercase;
       letter-spacing: 0.5px;
     }
@@ -150,9 +156,9 @@
 
     .badge {
       display: inline-block;
-      padding: 2px 8px;
+      padding: 2px 7px;
       border-radius: 6px;
-      font-size: 8.5pt;
+      font-size: 8pt;
       font-weight: 700;
     }
 
@@ -176,8 +182,8 @@
 
     .grid-2 {
       display: flex;
-      gap: 14px;
-      margin-bottom: 14px;
+      gap: 12px;
+      margin-bottom: 12px;
       page-break-inside: avoid;
     }
 
@@ -188,21 +194,21 @@
     .step-box {
       display: flex;
       align-items: flex-start;
-      gap: 12px;
-      padding: 10px 12px;
+      gap: 10px;
+      padding: 8px 12px;
       background: #FFFFFF;
       border: 1px solid #E2E8F0;
       border-radius: 10px;
-      margin-bottom: 8px;
+      margin-bottom: 6px;
     }
 
     .step-num {
       background: #0A2540;
       color: #F59E0B;
       font-weight: 900;
-      font-size: 11pt;
-      width: 28px;
-      height: 28px;
+      font-size: 10.5pt;
+      width: 26px;
+      height: 26px;
       border-radius: 50%;
       display: flex;
       align-items: center;
@@ -211,21 +217,46 @@
     }
 
     .step-text h4 {
-      font-size: 10.5pt;
+      font-size: 10pt;
       color: #0A2540;
       font-weight: 800;
       margin-bottom: 2px;
     }
 
     .step-text p {
-      font-size: 9.5pt;
+      font-size: 9pt;
       margin-bottom: 0;
       color: #64748B;
     }
 
+    .feature-list {
+      list-style: none;
+      padding: 0;
+      margin: 0;
+    }
+
+    .feature-item {
+      display: flex;
+      align-items: flex-start;
+      gap: 8px;
+      padding: 7px 0;
+      border-bottom: 1px solid #F1F5F9;
+      font-size: 9.5pt;
+    }
+
+    .feature-item:last-child {
+      border-bottom: none;
+    }
+
+    .feature-icon {
+      font-size: 11pt;
+      line-height: 1.2;
+      flex-shrink: 0;
+    }
+
     .footer {
-      margin-top: 24px;
-      padding-top: 12px;
+      margin-top: 20px;
+      padding-top: 10px;
       border-top: 1px solid #E2E8F0;
       display: flex;
       justify-content: space-between;
@@ -236,17 +267,17 @@
     .quote-box {
       background: #0A2540;
       color: #FFFFFF;
-      padding: 16px 20px;
+      padding: 14px 18px;
       border-radius: 12px;
       border-left: 6px solid #F59E0B;
-      margin-top: 16px;
+      margin-top: 14px;
       page-break-inside: avoid;
     }
 
     .quote-box p {
       color: #F1F5F9;
-      font-size: 10.5pt;
-      line-height: 1.6;
+      font-size: 10pt;
+      line-height: 1.55;
       margin: 0;
     }
 
@@ -275,11 +306,11 @@
   </p>
   <div class="grid-2">
     <div class="card card-highlight">
-      <strong style="color: #92400E; display: block; margin-bottom: 4px;">👤 ለሥራ ፈላጊዎች፡</strong>
+      <strong style="color: #92400E; display: block; margin-bottom: 3px;">👤 ለሥራ ፈላጊዎች፡</strong>
       ያለ ምንም ማጭበርበር፣ ትክክለኛውን የወር ደመወዝ በግልጽ እያዩ በነፃ የሚያመለክቱበትና በ48 ሰዓት ውስጥ ሥራ የሚያገኙበት አስተማማኝ መድረክ ነው።
     </div>
     <div class="card card-success">
-      <strong style="color: #166534; display: block; margin-bottom: 4px;">🏢 ለቀጣሪ ድርጅቶች፡</strong>
+      <strong style="color: #166534; display: block; margin-bottom: 3px;">🏢 ለቀጣሪ ድርጅቶች፡</strong>
       ባልተሟላ እና ብቃት በሌለው ሰው ጊዜ ከማጥፋት ይልቅ፣ የተጣራ፣ የተረጋገጠና ብቁ ሠራተኛ በፈጣን ሁኔታ የሚያገኙበት ቀልጣፋ አማራጭ ነው።
     </div>
   </div>
@@ -291,7 +322,7 @@
   </p>
   <div class="card">
     <strong style="color: #0A2540;">የአዝመራ ጆብስ ፍትሃዊ መፍትሄ፡</strong>
-    <ul style="margin-left: 20px; margin-top: 6px; font-size: 10pt; color: #334155;">
+    <ul style="margin-left: 20px; margin-top: 5px; font-size: 9.5pt; color: #334155;">
       <li><strong>ሥራ ፈላጊው ድረ-ገጹ ላይ ለመመዝገብ እና ለማመልከት 0 ብር (100% ነፃ) ነው።</strong> ይህ በሺዎች የሚቆጠሩ ሰዎችን በፍጥነት ይስባል፤ ትልቅ የቴሌግራም እና የድረ-ገጽ ተጠቃሚ ቤተሰብ ይፈጥራል።</li>
       <li><strong>ዋናው የክፍያ ጫና በቀጣሪ ድርጅቶች ላይ ይሆናል።</strong> ድርጅቶች የቅጥር በጀት አላቸው፤ ጥራት ያለው ሠራተኛ ካገኙ ክፍያ ለመክፈል ፈቃደኞች ናቸው።</li>
       <li><strong>ከሥራ ፈላጊው የሚገኝ ክፍያ ከተቀጠረ በኋላ ብቻ ነው።</strong> ሥራ አግኝቶ የመጀመሪያውን ወር ደመወዝ ከተቀበለ በኋላ ብቻ በፈቃደኝነት የሚከፈል አነስተኛ ኮሚሽን ይሆናል።</li>
@@ -330,7 +361,7 @@
   <!-- SECTION 4 -->
   <h2><span class="num">4</span> ተጨባጭ የዋጋ ዝርዝር (በኢትዮጵያ ብር)</h2>
 
-  <h3 style="font-size: 11pt; color: #0A2540; margin: 10px 0 6px 0;">ሀ. የቀጣሪ ድርጅቶች የስኬት ኮሚሽን (የ14 ቀናት የተተኪ ዋስትናን ጨምሮ)</h3>
+  <h3 style="font-size: 10.5pt; color: #0A2540; margin: 8px 0 5px 0;">ሀ. የቀጣሪ ድርጅቶች የስኬት ኮሚሽን (የ14 ቀናት የተተኪ ዋስትናን ጨምሮ)</h3>
   <table>
     <thead>
       <tr>
@@ -362,26 +393,26 @@
     </tbody>
   </table>
 
-  <!-- PAGE BREAK FOR CLEAN PRINTING -->
-  <div class="page-break"></div>
+  <!-- PAGE BREAK -->
+  
 
-  <h3 style="font-size: 11pt; color: #0A2540; margin: 10px 0 6px 0;">ለ. የማህበራዊ ሚዲያ ማስታወቂያ ክፍያ (Paid Social Broadcast)</h3>
+  <h3 style="font-size: 10.5pt; color: #0A2540; margin: 8px 0 5px 0;">ለ. የማህበራዊ ሚዲያ ማስታወቂያ ክፍያ (Paid Social Broadcast)</h3>
   <div class="grid-2">
     <div class="card">
-      <strong style="color: #0A2540; font-size: 10.5pt;">📢 የ1 ቀን የቴሌግራም/ፌስቡክ ማስታወቂያ: 500 ብር</strong>
-      <p style="font-size: 9.5pt; margin-top: 4px;">
+      <strong style="color: #0A2540; font-size: 10pt;">📢 የ1 ቀን የቴሌግራም/ፌስቡክ ማስታወቂያ: 500 ብር</strong>
+      <p style="font-size: 9pt; margin-top: 3px;">
         በቴሌግራም ቻናል ላይ ለ24 ሰዓት Pinned ተደርጎ ይቆያል (በአማርኛ፣ ትግርኛ እና እንግሊዝኛ)። ቀጥታ ወደ አዝመራ ስልክ/ቴሌግራም የሚያገናኝ ማስፈንጠሪያ ይኖረዋል።
       </p>
     </div>
     <div class="card card-highlight">
-      <strong style="color: #92400E; font-size: 10.5pt;">🔥 የ3 ቀናት አስቸኳይ ቅጥር ማስታወቂያ: 1,000 ብር</strong>
-      <p style="font-size: 9.5pt; margin-top: 4px;">
+      <strong style="color: #92400E; font-size: 10pt;">🔥 የ3 ቀናት አስቸኳይ ቅጥር ማስታወቂያ: 1,000 ብር</strong>
+      <p style="font-size: 9pt; margin-top: 3px;">
         በቴሌግራም ለ72 ሰዓት Pinned ሆኖ ይቆያል + በድረ-ገጹ ላይ ጎልቶ Featured ሆኖ ይታያል + በፌስቡክ ይለጠፋል።
       </p>
     </div>
   </div>
 
-  <h3 style="font-size: 11pt; color: #0A2540; margin: 10px 0 6px 0;">ሐ. ለሆቴሎችና ካፌዎች ወርሃዊ ቋሚ ውል (VIP Monthly Retainer)</h3>
+  <h3 style="font-size: 10.5pt; color: #0A2540; margin: 8px 0 5px 0;">ሐ. ለሆቴሎችና ካፌዎች ወርሃዊ ቋሚ ውል (VIP Monthly Retainer)</h3>
   <table>
     <thead>
       <tr>
@@ -479,7 +510,7 @@
       <tr style="background: #EEF4FA; border-top: 2px solid #0A2540;">
         <td><strong>ጠቅላላ ወርሃዊ ገቢ (Gross Revenue)</strong></td>
         <td></td>
-        <td style="text-align: right; font-weight: 900; color: #0A2540; font-size: 11pt;">65,500 ብር</td>
+        <td style="text-align: right; font-weight: 900; color: #0A2540; font-size: 10.5pt;">65,500 ብር</td>
       </tr>
       <tr>
         <td style="color: #DC2626;">የኢንተርኔት እና የስልክ ወጪ</td>
@@ -487,15 +518,154 @@
         <td style="text-align: right; color: #DC2626; font-weight: 700;">- 2,500 ብር</td>
       </tr>
       <tr style="background: #ECFDF5; border-top: 2px solid #10B981;">
-        <td><strong style="color: #065F46; font-size: 11pt;">የተጣራ ወርሃዊ ትርፍ (Net Profit)</strong></td>
+        <td><strong style="color: #065F46; font-size: 10.5pt;">የተጣራ ወርሃዊ ትርፍ (Net Profit)</strong></td>
         <td></td>
-        <td style="text-align: right; font-weight: 900; color: #065F46; font-size: 12pt;">~ 63,000 ብር / በወር</td>
+        <td style="text-align: right; font-weight: 900; color: #065F46; font-size: 11pt;">~ 63,000 ብር / በወር</td>
       </tr>
     </tbody>
   </table>
 
-  <!-- SECTION 7 -->
-  <h2><span class="num">7</span> አዝመራ ጆብስን ከባህላዊ ደላሎች የላቀ የሚያደርገው ምንድን ነው?</h2>
+  <!-- PAGE BREAK FOR FEATURES SECTION -->
+  
+
+  <!-- SECTION 7: MAIN SYSTEM FEATURES (ADMIN vs SEEKER) -->
+  <h2><span class="num">7</span> የአዝመራ ጆብስ ድረ-ገጽ ዋና ዋና የቴክኖሎጂ ገጽታዎች (Main System Features)</h2>
+  <p>
+    የአዝመራ ጆብስ መድረክ ለእያንዳንዱ ተጠቃሚ የተለየ፣ ምቹ እና ዘመናዊ መቆጣጠሪያ ማዕከል አለው፡
+  </p>
+
+  <div class="grid-2">
+    <!-- COLUMN 1: ADMIN & EMPLOYER -->
+    <div class="card card-navy">
+      <div style="display: flex; align-items: center; gap: 8px; margin-bottom: 10px; border-bottom: 2px solid #CBD5E1; padding-bottom: 6px;">
+        <span style="font-size: 16pt;">👑</span>
+        <div>
+          <h3 style="font-size: 11pt; color: #0A2540; font-weight: 900;">ለአድሚን እና ለቀጣሪ ድርጅቶች (Admin & Employers)</h3>
+          <small style="color: #64748B;">የቅጥር ማዘዣ እና ቁጥጥር ማዕከል</small>
+        </div>
+      </div>
+
+      <ul class="feature-list">
+        <li class="feature-item">
+          <span class="feature-icon">📊</span>
+          <div>
+            <strong style="color: #0A2540;">የቀጥታ ቅጥር ዳሽቦርድ (Command Dashboard)፡</strong>
+            የነቁ ስራዎችን፣ አጠቃላይ አመልካቾችን፣ የተመረጡ እጩዎችን እና የቃለ-መጠይቆችን ቁጥር በአንድ ቦታ ማየት።
+          </div>
+        </li>
+        <li class="feature-item">
+          <span class="feature-icon">📝</span>
+          <div>
+            <strong style="color: #0A2540;">የማይክሮሶፍት ዎርድ ስታይል አርታኢ (Word Job Editor)፡</strong>
+            ልክ በWord እንደሚሰራ በደማቅ ጽሁፍ፣ ርዕስ፣ ሰንጠረዥ፣ ፎቶ እና የወረደ PDF ዶክመንት ማያያዣዎች ማስታወቂያ ማዘጋጀት።
+          </div>
+        </li>
+        <li class="feature-item">
+          <span class="feature-icon">📢</span>
+          <div>
+            <strong style="color: #0A2540;">የ1-ጠቅታ ማህበራዊ ሚዲያ መበተኛ (1-Click Broadcast)፡</strong>
+            ለቴሌግራም እና ፌስቡክ የተዘጋጀ ጽሁፍ በትግርኛ፣ አማርኛ እና እንግሊዝኛ ወዲያውኑ ኮፒ አድርጎ ማሰራጨት።
+          </div>
+        </li>
+        <li class="feature-item">
+          <span class="feature-icon">⚡</span>
+          <div>
+            <strong style="color: #0A2540;">ፈጣን የደንበኛ ትዕዛዝ መመዝገቢያ (Quick Intake)፡</strong>
+            በስልክ ወይም በቴሌግራም የሚመጡ ቀጥታ የሠራተኛ ጥያቄዎችን በ1 ደቂቃ ውስጥ መዝግቦ መጀመር።
+          </div>
+        </li>
+        <li class="feature-item">
+          <span class="feature-icon">👥</span>
+          <div>
+            <strong style="color: #0A2540;">የሲቪ ማጣሪያና ደረጃ መስጠት (Candidate Pipeline)፡</strong>
+            የአመልካቾችን ሲቪ በቀጥታ መመልከት፣ ማጣራት (Shortlist) እና የቅጥር ደረጃቸውን መቀየር።
+          </div>
+        </li>
+        <li class="feature-item">
+          <span class="feature-icon">📅</span>
+          <div>
+            <strong style="color: #0A2540;">የቃለ-መጠይቅ መርሐ-ግብር (Interview Management)፡</strong>
+            ቀን፣ ሰዓት እና የGoogle Meet ቪዲዮ ወይም የአካል አድራሻ በቀጥታ መመደብ።
+          </div>
+        </li>
+      </ul>
+    </div>
+
+    <!-- COLUMN 2: JOB SEEKERS -->
+    <div class="card card-highlight">
+      <div style="display: flex; align-items: center; gap: 8px; margin-bottom: 10px; border-bottom: 2px solid #FCD34D; padding-bottom: 6px;">
+        <span style="font-size: 16pt;">👤</span>
+        <div>
+          <h3 style="font-size: 11pt; color: #92400E; font-weight: 900;">ለሥራ ፈላጊዎች (Job Seekers / ዕጩዎች)</h3>
+          <small style="color: #B45309;">ቀላል፣ ነፃ እና ፈጣን የሥራ ማግኛ</small>
+        </div>
+      </div>
+
+      <ul class="feature-list">
+        <li class="feature-item">
+          <span class="feature-icon">📄</span>
+          <div>
+            <strong style="color: #92400E;">ነፃ ዲጂታል ሲቪ መገንቢያ (Profile & CV Builder)፡</strong>
+            የትምህርት፣ የሥራ ልምድ እና የክህሎት መረጃዎችን የያዘ ማራኪ ዲጂታል ሲቪ በነፃ መገንባት።
+          </div>
+        </li>
+        <li class="feature-item">
+          <span class="feature-icon">💰</span>
+          <div>
+            <strong style="color: #92400E;">የደመወዝ ግልጽነት እና ማጣሪያ (Salary Transparency)፡</strong>
+            ደመወዙ በግልጽ በኢትዮጵያ ብር (ETB) የተቀመጠበትን ክፍት ቦታ በከተማ እና በዘርፍ ማጣራት።
+          </div>
+        </li>
+        <li class="feature-item">
+          <span class="feature-icon">🚀</span>
+          <div>
+            <strong style="color: #92400E;">ቀጥታ በቴሌግራም ማመልከት (Fast-Track Telegram Apply)፡</strong>
+            ያለ ረጅም ቅጽ መሙላት ወዲያውኑ በአዝመራ ቴሌግራም እና ስልክ በቀጥታ ማመልከት።
+          </div>
+        </li>
+        <li class="feature-item">
+          <span class="feature-icon">🔔</span>
+          <div>
+            <strong style="color: #92400E;">የማመልከቻ ሁኔታ መከታተያ (Status Tracking)፡</strong>
+            ማመልከቻው በምን ደረጃ ላይ እንዳለ (በግምገማ ላይ፣ የተመረጠ/Shortlisted፣ ቃለ-መጠይቅ) ማየት።
+          </div>
+        </li>
+        <li class="feature-item">
+          <span class="feature-icon">🔖</span>
+          <div>
+            <strong style="color: #92400E;">የተመረጡ ስራዎችን ማስቀመጥ (Bookmark Jobs)፡</strong>
+            የሚወዷቸውን የስራ ማስታወቂያዎች አስቀምጦ በፈለጉት ጊዜ መከታተልና ማመልከት።
+          </div>
+        </li>
+        <li class="feature-item">
+          <span class="feature-icon">📱</span>
+          <div>
+            <strong style="color: #92400E;">100% የሞባይል ምቾት (Mobile Optimized)፡</strong>
+            በስልክ ላይ ልክ እንደ ሞባይል አፕሊኬሽን የሚሰራ የታችኛው ዳሰሳ (Bottom Navigation Bar)።
+          </div>
+        </li>
+      </ul>
+    </div>
+  </div>
+
+  <!-- INNOVATION HIGHLIGHTS -->
+  <div class="card card-success" style="margin-top: 6px;">
+    <strong style="color: #065F46; font-size: 10.5pt; display: block; margin-bottom: 4px;">✨ የመድረኩ ልዩ ቴክኖሎጂያዊ ብልጫዎች (Platform Innovations)፡</strong>
+    <div style="display: flex; gap: 12px; font-size: 9pt; color: #166534;">
+      <div style="flex: 1;">
+        <strong>🌙 የጨለማና ብርሃን ገጽታ (Dark/Light):</strong> ለዓይን እረፍት የሚሰጥና በምሽትም በቀን ፍጹም ንባብ የሚሰጥ።
+      </div>
+      <div style="flex: 1;">
+        <strong>🌍 ባለ 3 ቋንቋ (Trilingual):</strong> አማርኛ፣ ትግርኛ እና እንግሊዝኛን አቀናጅቶ የተዘጋጀ።
+      </div>
+      <div style="flex: 1;">
+        <strong>🔄 የ1-ጠቅታ ማንነት መቀያየሪያ (Persona Switcher):</strong> በጎብኝ፣ በሥራ ፈላጊ እና በአሰሪ እይታዎች መካከል ወዲያውኑ መቀያየር።
+      </div>
+    </div>
+  </div>
+
+  <!-- SECTION 8 -->
+  <h2><span class="num">8</span> አዝመራ ጆብስን ከባህላዊ ደላሎች የላቀ የሚያደርገው ምንድን ነው?</h2>
   <table>
     <thead>
       <tr>
@@ -530,7 +700,7 @@
 
   <!-- PITCH QUOTE -->
   <div class="quote-box">
-    <strong style="color: #FCD34D; font-size: 11pt; display: block; margin-bottom: 6px;">💼 ለደንበኛዋ (ለባለቤቷ) የሚነገር አጭር ንግግር (Client Pitch)፡</strong>
+    <strong style="color: #FCD34D; font-size: 10.5pt; display: block; margin-bottom: 5px;">💼 ለደንበኛዋ (ለባለቤቷ) የሚነገር አጭር ንግግር (Client Pitch)፡</strong>
     <p>
       «አዝመራ ጆብስ በኢትዮጵያ ውስጥ በጣም ታማኝና ተወዳጅ የቅጥር መድረክ እንዲሆን ተደርጎ ነው የተሰራው። ሥራ ፈላጊዎች በነፃ እንዲያመለክቱ በማድረግ በሺዎች የሚቆጠሩ ሰዎችን እንሰበስባለን፤ ይህም የቀጣሪዎችን ትኩረት ይስባል። ቀጣሪዎች ሠራተኛ አግኝተው ሥራ ሲያስጀምሩ ብቻ ፍትሃዊ የቅጥር ኮሚሽን (1,500 – 2,500 ብር) ይከፍላሉ፤ እኛም የ14 ቀናት የተተኪ ዋስትና እንሰጣቸዋለን። በተጨማሪም አስቸኳይ ክፍት ቦታዎችን በቴሌግራም ቻናላችን በመለጠፍ በየቀኑ በቴሌብር እና በCBE ቋሚ ገቢ እናገኛለን። ይህ አሰራር ለሥራ ፈላጊውም እፎይታ ነው፣ ለቀጣሪውም ፈጣን መፍትሄ ነው፣ ለአዝመራ ጆብስም ከፍተኛ ወርሃዊ ትርፍ ያስገኛል!»
     </p>
@@ -538,8 +708,8 @@
 
   <div class="footer">
     <span>Azmera Jobs • Your Trusted Partner in Jobs</span>
-    <span>ገጽ 2 / 2</span>
     <span>https://kaleab-mezgebe.github.io/azmera-job/</span>
+    <span>ገጽ 3 / 3</span>
   </div>
 
 </body>
