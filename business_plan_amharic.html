@@ -284,7 +284,40 @@
     .page-break {
       page-break-before: always;
     }
-  </style>
+  
+    @page {
+      size: A4;
+      margin: 14mm 14mm 14mm 14mm;
+    }
+    body {
+      font-size: 9pt;
+      line-height: 1.45;
+    }
+    h2 {
+      font-size: 11pt;
+      margin: 10px 0 6px 0;
+    }
+    .card {
+      padding: 9px 12px;
+      margin-bottom: 8px;
+    }
+    table {
+      margin: 6px 0 10px 0;
+      font-size: 8.5pt;
+    }
+    th, td {
+      padding: 6px 9px;
+    }
+    .feature-item {
+      font-size: 8.5pt;
+      margin-bottom: 6px;
+    }
+    .quote-box {
+      padding: 10px 14px;
+      margin-top: 8px;
+    }
+
+</style>
 </head>
 <body>
 
@@ -528,8 +561,45 @@
   <!-- PAGE BREAK FOR FEATURES SECTION -->
   
 
+  <!-- SECTION 8 -->
+  <h2><span class="num">7</span> አዝመራ ጆብስን ከባህላዊ ደላሎች የላቀ የሚያደርገው ምንድን ነው?</h2>
+  <table>
+    <thead>
+      <tr>
+        <th style="width: 30%;">ባህላዊ ደላላ</th>
+        <th style="width: 35%;">ትላልቅ ዌብሳይቶች (Ethiojobs)</th>
+        <th style="width: 35%;">አዝመራ ጆብስ (Azmera Jobs)</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td>ሥራ ፈላጊውን አስቀድሞ ያስከፍላል (ሰው ይጠላል)</td>
+        <td>ለሆቴልና ለአነስተኛ ድርጅቶች በጣም ውድ ነው</td>
+        <td><strong>ሥራ ፈላጊው በነፃ ያመለክታል (ከፍተኛ ተወዳጅነት)</strong></td>
+      </tr>
+      <tr>
+        <td>ዌብሳይት የለውም፣ በወረቀትና በስልክ ብቻ</td>
+        <td>ቀርፋፋና ውስብስብ ነው</td>
+        <td><strong>ዘመናዊ ድረ-ገጽ + የቴሌግራም ፈጣን ቅልጥፍና</strong></td>
+      </tr>
+      <tr>
+        <td>ሠራተኛው ቢጠፋ ዋስትና አይሰጥም</td>
+        <td>የግል ክትትልና ማጣራት የለውም</td>
+        <td><strong>የ14 ቀናት የተተኪ ሠራተኛ ዋስትና ይሰጣል</strong></td>
+      </tr>
+      <tr>
+        <td>አንድ ቋንቋ ብቻ</td>
+        <td>አብዛኛውን ጊዜ በእንግሊዝኛ ብቻ</td>
+        <td><strong>በአማርኛ፣ ትግርኛ እና እንግሊዝኛ የተደራጀ</strong></td>
+      </tr>
+    </tbody>
+  </table>
+
+  
+  <div class="page-break"></div>
+
   <!-- SECTION 7: MAIN SYSTEM FEATURES (ADMIN vs SEEKER) -->
-  <h2><span class="num">7</span> የአዝመራ ጆብስ ድረ-ገጽ ዋና ዋና የቴክኖሎጂ ገጽታዎች (Main System Features)</h2>
+  <h2><span class="num">8</span> የአዝመራ ጆብስ ድረ-ገጽ ዋና ዋና የቴክኖሎጂ ገጽታዎች (Main System Features)</h2>
   <p>
     የአዝመራ ጆብስ መድረክ ለእያንዳንዱ ተጠቃሚ የተለየ፣ ምቹ እና ዘመናዊ መቆጣጠሪያ ማዕከል አለው፡
   </p>
@@ -664,43 +734,9 @@
     </div>
   </div>
 
-  <!-- SECTION 8 -->
-  <h2><span class="num">8</span> አዝመራ ጆብስን ከባህላዊ ደላሎች የላቀ የሚያደርገው ምንድን ነው?</h2>
-  <table>
-    <thead>
-      <tr>
-        <th style="width: 30%;">ባህላዊ ደላላ</th>
-        <th style="width: 35%;">ትላልቅ ዌብሳይቶች (Ethiojobs)</th>
-        <th style="width: 35%;">አዝመራ ጆብስ (Azmera Jobs)</th>
-      </tr>
-    </thead>
-    <tbody>
-      <tr>
-        <td>ሥራ ፈላጊውን አስቀድሞ ያስከፍላል (ሰው ይጠላል)</td>
-        <td>ለሆቴልና ለአነስተኛ ድርጅቶች በጣም ውድ ነው</td>
-        <td><strong>ሥራ ፈላጊው በነፃ ያመለክታል (ከፍተኛ ተወዳጅነት)</strong></td>
-      </tr>
-      <tr>
-        <td>ዌብሳይት የለውም፣ በወረቀትና በስልክ ብቻ</td>
-        <td>ቀርፋፋና ውስብስብ ነው</td>
-        <td><strong>ዘመናዊ ድረ-ገጽ + የቴሌግራም ፈጣን ቅልጥፍና</strong></td>
-      </tr>
-      <tr>
-        <td>ሠራተኛው ቢጠፋ ዋስትና አይሰጥም</td>
-        <td>የግል ክትትልና ማጣራት የለውም</td>
-        <td><strong>የ14 ቀናት የተተኪ ሠራተኛ ዋስትና ይሰጣል</strong></td>
-      </tr>
-      <tr>
-        <td>አንድ ቋንቋ ብቻ</td>
-        <td>አብዛኛውን ጊዜ በእንግሊዝኛ ብቻ</td>
-        <td><strong>በአማርኛ፣ ትግርኛ እና እንግሊዝኛ የተደራጀ</strong></td>
-      </tr>
-    </tbody>
-  </table>
-
   <!-- PITCH QUOTE -->
   <div class="quote-box">
-    <strong style="color: #FCD34D; font-size: 10.5pt; display: block; margin-bottom: 5px;">💼 ለደንበኛዋ (ለባለቤቷ) የሚነገር አጭር ንግግር (Client Pitch)፡</strong>
+    <strong style="color: #FCD34D; font-size: 10.5pt; display: block; margin-bottom: 5px;">💼 የማጠቃለያ መልዕክት (Executive Summary)፡</strong>
     <p>
       «አዝመራ ጆብስ በኢትዮጵያ ውስጥ በጣም ታማኝና ተወዳጅ የቅጥር መድረክ እንዲሆን ተደርጎ ነው የተሰራው። ሥራ ፈላጊዎች በነፃ እንዲያመለክቱ በማድረግ በሺዎች የሚቆጠሩ ሰዎችን እንሰበስባለን፤ ይህም የቀጣሪዎችን ትኩረት ይስባል። ቀጣሪዎች ሠራተኛ አግኝተው ሥራ ሲያስጀምሩ ብቻ ፍትሃዊ የቅጥር ኮሚሽን (1,500 – 2,500 ብር) ይከፍላሉ፤ እኛም የ14 ቀናት የተተኪ ዋስትና እንሰጣቸዋለን። በተጨማሪም አስቸኳይ ክፍት ቦታዎችን በቴሌግራም ቻናላችን በመለጠፍ በየቀኑ በቴሌብር እና በCBE ቋሚ ገቢ እናገኛለን። ይህ አሰራር ለሥራ ፈላጊውም እፎይታ ነው፣ ለቀጣሪውም ፈጣን መፍትሄ ነው፣ ለአዝመራ ጆብስም ከፍተኛ ወርሃዊ ትርፍ ያስገኛል!»
     </p>
