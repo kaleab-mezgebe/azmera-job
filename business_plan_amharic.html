@@ -1,0 +1,546 @@
+<!DOCTYPE html>
+<html lang="am">
+<head>
+  <meta charset="UTF-8">
+  <title>የአዝመራ ጆብስ (Azmera Jobs) የተሟላ የቢዝነስ ፕላን</title>
+  <style>
+    @import url('https://fonts.googleapis.com/css2?family=Noto+Sans+Ethiopic:wght@400;500;600;700;800;900&family=Inter:wght@400;600;700;800;900&display=swap');
+
+    @page {
+      size: A4;
+      margin: 14mm 14mm 14mm 14mm;
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    body {
+      font-family: 'Noto Sans Ethiopic', 'Kefa', 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+      color: #0F172A;
+      background-color: #FFFFFF;
+      line-height: 1.6;
+      font-size: 11pt;
+    }
+
+    .header-card {
+      background: linear-gradient(135deg, #0A2540 0%, #112F52 100%);
+      color: #FFFFFF;
+      padding: 22px 26px;
+      border-radius: 16px;
+      margin-bottom: 22px;
+      border-left: 6px solid #F59E0B;
+      box-shadow: 0 4px 15px rgba(10, 37, 64, 0.12);
+    }
+
+    .header-card h1 {
+      font-size: 22pt;
+      font-weight: 900;
+      letter-spacing: -0.5px;
+      margin-bottom: 4px;
+      color: #FFFFFF;
+    }
+
+    .header-card h1 span {
+      color: #F59E0B;
+    }
+
+    .header-card .tagline {
+      font-size: 11pt;
+      color: #FCD34D;
+      font-weight: 700;
+      margin-bottom: 8px;
+    }
+
+    .header-card .meta {
+      font-size: 9.5pt;
+      color: #CBD5E1;
+      display: flex;
+      gap: 16px;
+      margin-top: 8px;
+      padding-top: 8px;
+      border-top: 1px solid rgba(255, 255, 255, 0.15);
+    }
+
+    h2 {
+      color: #0A2540;
+      font-size: 14pt;
+      font-weight: 800;
+      margin-top: 22px;
+      margin-bottom: 10px;
+      padding-bottom: 4px;
+      border-bottom: 2px solid #E2E8F0;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    h2 .num {
+      background: #0A2540;
+      color: #F59E0B;
+      width: 26px;
+      height: 26px;
+      border-radius: 8px;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 10pt;
+      font-weight: 900;
+    }
+
+    p {
+      margin-bottom: 10px;
+      color: #334155;
+      text-align: justify;
+    }
+
+    .card {
+      background: #F8FAFC;
+      border: 1px solid #E2E8F0;
+      border-radius: 12px;
+      padding: 14px 18px;
+      margin-bottom: 14px;
+      page-break-inside: avoid;
+    }
+
+    .card-highlight {
+      background: #FFFBEB;
+      border: 1px solid #FDE68A;
+      border-left: 5px solid #F59E0B;
+    }
+
+    .card-success {
+      background: #F0FDF4;
+      border: 1px solid #BBF7D0;
+      border-left: 5px solid #10B981;
+    }
+
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      margin: 12px 0 16px 0;
+      font-size: 10pt;
+      page-break-inside: avoid;
+      background: #FFFFFF;
+      border-radius: 8px;
+      overflow: hidden;
+      box-shadow: 0 1px 3px rgba(0,0,0,0.05);
+    }
+
+    th, td {
+      padding: 10px 12px;
+      text-align: left;
+      border-bottom: 1px solid #E2E8F0;
+    }
+
+    th {
+      background-color: #0A2540;
+      color: #FFFFFF;
+      font-weight: 800;
+      font-size: 9.5pt;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+    }
+
+    tr:nth-child(even) {
+      background-color: #F8FAFC;
+    }
+
+    .badge {
+      display: inline-block;
+      padding: 2px 8px;
+      border-radius: 6px;
+      font-size: 8.5pt;
+      font-weight: 700;
+    }
+
+    .badge-amber {
+      background: #FEF3C7;
+      color: #92400E;
+      border: 1px solid #FCD34D;
+    }
+
+    .badge-green {
+      background: #DCFCE7;
+      color: #166534;
+      border: 1px solid #86EFAC;
+    }
+
+    .badge-navy {
+      background: #EEF4FA;
+      color: #0A2540;
+      border: 1px solid #CBD5E1;
+    }
+
+    .grid-2 {
+      display: flex;
+      gap: 14px;
+      margin-bottom: 14px;
+      page-break-inside: avoid;
+    }
+
+    .grid-2 > div {
+      flex: 1;
+    }
+
+    .step-box {
+      display: flex;
+      align-items: flex-start;
+      gap: 12px;
+      padding: 10px 12px;
+      background: #FFFFFF;
+      border: 1px solid #E2E8F0;
+      border-radius: 10px;
+      margin-bottom: 8px;
+    }
+
+    .step-num {
+      background: #0A2540;
+      color: #F59E0B;
+      font-weight: 900;
+      font-size: 11pt;
+      width: 28px;
+      height: 28px;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-shrink: 0;
+    }
+
+    .step-text h4 {
+      font-size: 10.5pt;
+      color: #0A2540;
+      font-weight: 800;
+      margin-bottom: 2px;
+    }
+
+    .step-text p {
+      font-size: 9.5pt;
+      margin-bottom: 0;
+      color: #64748B;
+    }
+
+    .footer {
+      margin-top: 24px;
+      padding-top: 12px;
+      border-top: 1px solid #E2E8F0;
+      display: flex;
+      justify-content: space-between;
+      font-size: 8.5pt;
+      color: #94A3B8;
+    }
+
+    .quote-box {
+      background: #0A2540;
+      color: #FFFFFF;
+      padding: 16px 20px;
+      border-radius: 12px;
+      border-left: 6px solid #F59E0B;
+      margin-top: 16px;
+      page-break-inside: avoid;
+    }
+
+    .quote-box p {
+      color: #F1F5F9;
+      font-size: 10.5pt;
+      line-height: 1.6;
+      margin: 0;
+    }
+
+    .page-break {
+      page-break-before: always;
+    }
+  </style>
+</head>
+<body>
+
+  <!-- HEADER BANNER -->
+  <div class="header-card">
+    <div class="tagline">🌟 በሥራ ፍለጋ አስተማማኝ አጋርዎ • YOUR TRUSTED PARTNER IN JOBS</div>
+    <h1>የአዝመራ ጆብስ <span>(Azmera Jobs)</span> የተሟላ የቢዝነስ ፕላን</h1>
+    <div class="meta">
+      <span>🌐 ድረ-ገጽ: kaleab-mezgebe.github.io/azmera-job/</span>
+      <span>📍 አዲስ አበባ | መቐለ | ሐዋሳ</span>
+      <span>📅 2026 እ.ኤ.አ</span>
+    </div>
+  </div>
+
+  <!-- SECTION 1 -->
+  <h2><span class="num">1</span> የአዝመራ ጆብስ ዋና ዓላማ እና ራዕይ</h2>
+  <p>
+    <strong>አዝመራ ጆብስ</strong> ባህላዊውን አድካሚ የሥራ ደላላ አሰራር በማስቀረት፣ <strong>የቴሌግራም እና የፌስቡክን ፈጣን ተደራሽነት ከዘመናዊ ድረ-ገጽ አስተማማኝነት ጋር ያጣመረ</strong> የኢትዮጵያ ቀዳሚ የሥራ ማገናኛ መድረክ ነው።
+  </p>
+  <div class="grid-2">
+    <div class="card card-highlight">
+      <strong style="color: #92400E; display: block; margin-bottom: 4px;">👤 ለሥራ ፈላጊዎች፡</strong>
+      ያለ ምንም ማጭበርበር፣ ትክክለኛውን የወር ደመወዝ በግልጽ እያዩ በነፃ የሚያመለክቱበትና በ48 ሰዓት ውስጥ ሥራ የሚያገኙበት አስተማማኝ መድረክ ነው።
+    </div>
+    <div class="card card-success">
+      <strong style="color: #166534; display: block; margin-bottom: 4px;">🏢 ለቀጣሪ ድርጅቶች፡</strong>
+      ባልተሟላ እና ብቃት በሌለው ሰው ጊዜ ከማጥፋት ይልቅ፣ የተጣራ፣ የተረጋገጠና ብቁ ሠራተኛ በፈጣን ሁኔታ የሚያገኙበት ቀልጣፋ አማራጭ ነው።
+    </div>
+  </div>
+
+  <!-- SECTION 2 -->
+  <h2><span class="num">2</span> የሁለቱም ወገን ተጠቃሚነት (Win-Win) ፍልስፍና</h2>
+  <p>
+    በኢትዮጵያ ውስጥ ባህላዊ ደላሎች ሥራ ፈላጊዎችን ገና ሳይቀጠሩ <strong>ከ200–300 ብር የመመዝገቢያ</strong> ያስከፍላሉ። ሰው ከከፈለ በኋላ ሥራ ካላገኘ እንደተጭበረበረ ስለሚሰማው ጥላቻና አለመተማመን ይፈጠራል።
+  </p>
+  <div class="card">
+    <strong style="color: #0A2540;">የአዝመራ ጆብስ ፍትሃዊ መፍትሄ፡</strong>
+    <ul style="margin-left: 20px; margin-top: 6px; font-size: 10pt; color: #334155;">
+      <li><strong>ሥራ ፈላጊው ድረ-ገጹ ላይ ለመመዝገብ እና ለማመልከት 0 ብር (100% ነፃ) ነው።</strong> ይህ በሺዎች የሚቆጠሩ ሰዎችን በፍጥነት ይስባል፤ ትልቅ የቴሌግራም እና የድረ-ገጽ ተጠቃሚ ቤተሰብ ይፈጥራል።</li>
+      <li><strong>ዋናው የክፍያ ጫና በቀጣሪ ድርጅቶች ላይ ይሆናል።</strong> ድርጅቶች የቅጥር በጀት አላቸው፤ ጥራት ያለው ሠራተኛ ካገኙ ክፍያ ለመክፈል ፈቃደኞች ናቸው።</li>
+      <li><strong>ከሥራ ፈላጊው የሚገኝ ክፍያ ከተቀጠረ በኋላ ብቻ ነው።</strong> ሥራ አግኝቶ የመጀመሪያውን ወር ደመወዝ ከተቀበለ በኋላ ብቻ በፈቃደኝነት የሚከፈል አነስተኛ ኮሚሽን ይሆናል።</li>
+    </ul>
+  </div>
+
+  <!-- SECTION 3 -->
+  <h2><span class="num">3</span> የአዝመራ ጆብስ 3 ዋና ዋና የገቢ ምንጮች</h2>
+  <table>
+    <thead>
+      <tr>
+        <th style="width: 25%;">የገቢ ዓይነት</th>
+        <th style="width: 45%;">የአሰራር ማብራሪያ</th>
+        <th style="width: 30%;">ክፍያ የሚፈጽመው ማን ነው?</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><strong>1. የስኬት ቅጥር ኮሚሽን</strong></td>
+        <td>ሠራተኛው ቃለ-መጠይቅ አልፎ ሥራ ሲጀምር የሚከፈል የስኬት ክፍያ</td>
+        <td><span class="badge badge-navy">ቀጣሪው ድርጅት</span></td>
+      </tr>
+      <tr>
+        <td><strong>2. የማህበራዊ ሚዲያ ማስታወቂያ</strong></td>
+        <td>በቴሌግራም፣ በፌስቡክና ድረ-ገጽ ላይ Pinned ተደርገው የሚለጠፉ ማስታወቂያዎች</td>
+        <td><span class="badge badge-amber">አስቸኳይ ሠራተኛ ፈላጊ ድርጅት</span></td>
+      </tr>
+      <tr>
+        <td><strong>3. የወርሃዊ ቋሚ ውል (Retainer)</strong></td>
+        <td>በየወሩ ሠራተኛ ለሚፈልጉ ካፌዎች፣ ሆቴሎችና ላውንጆች የሚሰጥ ቋሚ አገልግሎት</td>
+        <td><span class="badge badge-green">ሆቴሎችና ሬስቶራንቶች</span></td>
+      </tr>
+    </tbody>
+  </table>
+
+  <!-- SECTION 4 -->
+  <h2><span class="num">4</span> ተጨባጭ የዋጋ ዝርዝር (በኢትዮጵያ ብር)</h2>
+
+  <h3 style="font-size: 11pt; color: #0A2540; margin: 10px 0 6px 0;">ሀ. የቀጣሪ ድርጅቶች የስኬት ኮሚሽን (የ14 ቀናት የተተኪ ዋስትናን ጨምሮ)</h3>
+  <table>
+    <thead>
+      <tr>
+        <th>የሥራ ዘርፍ</th>
+        <th>አማካይ የወር ደመወዝ</th>
+        <th>የአዝመራ ጆብስ ኮሚሽን</th>
+        <th>የክፍያ ሁኔታ</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><strong>መስተንግዶ እና አገልግሎት</strong><br><small>አስተናጋጅ፣ ካሺየር፣ ባሪስታ፣ ፅዳት</small></td>
+        <td>15,000 – 25,000 ብር</td>
+        <td><strong>1,500 – 2,500 ብር</strong> <span class="badge badge-amber">ቋሚ ዋጋ</span></td>
+        <td>ሥራ በጀመረበት ቀን ይከፈላል</td>
+      </tr>
+      <tr>
+        <td><strong>የቢሮ እና መካከለኛ ሙያዎች</strong><br><small>አካውንታንት፣ ሽያጭ፣ የደንበኛ እንክብካቤ</small></td>
+        <td>30,000 – 55,000 ብር</td>
+        <td><strong>3,500 – 5,000 ብር</strong> <span class="badge badge-navy">~10%</span></td>
+        <td>ሥራ በጀመረ በ3 ቀናት ውስጥ</td>
+      </tr>
+      <tr>
+        <td><strong>ከፍተኛ ሙያዎች እና NGOs</strong><br><small>ዳይሬክተር፣ ኢንጂነር፣ ሥራ አስኪያጅ</small></td>
+        <td>70,000 – 190,000 ብር</td>
+        <td><strong>10% – 15%</strong> <span class="badge badge-green">የ1ኛ ወር</span></td>
+        <td>መደበኛ የድርጅት ውል</td>
+      </tr>
+    </tbody>
+  </table>
+
+  <!-- PAGE BREAK FOR CLEAN PRINTING -->
+  <div class="page-break"></div>
+
+  <h3 style="font-size: 11pt; color: #0A2540; margin: 10px 0 6px 0;">ለ. የማህበራዊ ሚዲያ ማስታወቂያ ክፍያ (Paid Social Broadcast)</h3>
+  <div class="grid-2">
+    <div class="card">
+      <strong style="color: #0A2540; font-size: 10.5pt;">📢 የ1 ቀን የቴሌግራም/ፌስቡክ ማስታወቂያ: 500 ብር</strong>
+      <p style="font-size: 9.5pt; margin-top: 4px;">
+        በቴሌግራም ቻናል ላይ ለ24 ሰዓት Pinned ተደርጎ ይቆያል (በአማርኛ፣ ትግርኛ እና እንግሊዝኛ)። ቀጥታ ወደ አዝመራ ስልክ/ቴሌግራም የሚያገናኝ ማስፈንጠሪያ ይኖረዋል።
+      </p>
+    </div>
+    <div class="card card-highlight">
+      <strong style="color: #92400E; font-size: 10.5pt;">🔥 የ3 ቀናት አስቸኳይ ቅጥር ማስታወቂያ: 1,000 ብር</strong>
+      <p style="font-size: 9.5pt; margin-top: 4px;">
+        በቴሌግራም ለ72 ሰዓት Pinned ሆኖ ይቆያል + በድረ-ገጹ ላይ ጎልቶ Featured ሆኖ ይታያል + በፌስቡክ ይለጠፋል።
+      </p>
+    </div>
+  </div>
+
+  <h3 style="font-size: 11pt; color: #0A2540; margin: 10px 0 6px 0;">ሐ. ለሆቴሎችና ካፌዎች ወርሃዊ ቋሚ ውል (VIP Monthly Retainer)</h3>
+  <table>
+    <thead>
+      <tr>
+        <th>የፓኬጅ ዓይነት</th>
+        <th>የወር ክፍያ</th>
+        <th>የሚያካትተው አገልግሎት</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><strong>የነሐስ ፓኬጅ (Bronze)</strong></td>
+        <td><strong>3,500 ብር / በወር</strong></td>
+        <td>በወር ውስጥ እስከ 3 ሠራተኞችን ማሟላት + ማጣራት</td>
+      </tr>
+      <tr>
+        <td><strong>የብር ፓኬጅ (Silver)</strong></td>
+        <td><strong>6,500 ብር / በወር</strong></td>
+        <td>በወር ውስጥ እስከ 6 ሠራተኞችን ማሟላት + ያልተገደበ ማስታወቂያ</td>
+      </tr>
+      <tr>
+        <td><strong>የወርቅ ፓኬጅ (Gold)</strong></td>
+        <td><strong>12,000 ብር / በወር</strong></td>
+        <td>ያልተገደበ የሠራተኛ ምትክ ዋስትና + ሙሉ ማጣሪያና ቅድሚያ ማግኘት</td>
+      </tr>
+    </tbody>
+  </table>
+
+  <!-- SECTION 5 -->
+  <h2><span class="num">5</span> የእለት ተእለት የስራ ሂደት (ቀላል 4 ደረጃዎች)</h2>
+  <div class="step-box">
+    <div class="step-num">1</div>
+    <div class="step-text">
+      <h4>ክፍት የስራ ቦታ መቀበል</h4>
+      <p>ቀጣሪው በስልክ ወይም በቴሌግራም ይደውላል፡ "ቦሌ ለሚገኝ ሬስቶራንት 2 አስተናጋጆች አስቸኳይ እፈልጋለሁ።"</p>
+    </div>
+  </div>
+  <div class="step-box">
+    <div class="step-num">2</div>
+    <div class="step-text">
+      <h4>መመዝገብና ማስታወቂያውን በ1 ጠቅታ መበተን</h4>
+      <p>በአዝመራ ጆብስ ድረ-ገጽ ላይ ባለው "Quick Intake" ይመዘግባል፤ በ1 ጠቅታ የተዘጋጀውን ጽሁፍ ቴሌግራም ላይ ይለጥፋል።</p>
+    </div>
+  </div>
+  <div class="step-box">
+    <div class="step-num">3</div>
+    <div class="step-text">
+      <h4>አመልካቾችን ማጣራት</h4>
+      <p>ከቴሌግራም እና ድረ-ገጽ የሚመጡትን አመልካቾች አይቶ የተሻሉትን 3-4 ብቁ እጩዎች ለቀጣሪው ይልካል።</p>
+    </div>
+  </div>
+  <div class="step-box">
+    <div class="step-num">4</div>
+    <div class="step-text">
+      <h4>ማገናኘትና ክፍያ በቴሌብር መቀበል</h4>
+      <p>እጩዎቹ ቃለ-መጠይቅ አድርገው ሥራ ሲጀምሩ፣ ቀጣሪው ኮሚሽኑን በቴሌብር (Telebirr) ወይም በCBE Birr ይከፍላል!</p>
+    </div>
+  </div>
+
+  <!-- SECTION 6 -->
+  <h2><span class="num">6</span> ተጨባጭ የወርሃዊ ገቢ እና ትርፍ ትንበያ (በወር 15-20 ቅጥሮች ሲኖሩ)</h2>
+  <table>
+    <thead>
+      <tr>
+        <th>የገቢ ዘርፍ</th>
+        <th>ስሌት</th>
+        <th style="text-align: right;">ወርሃዊ ገቢ (ብር)</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td>የሆቴልና መስተንግዶ ቅጥሮች</td>
+        <td>10 ቅጥሮች × 2,000 ብር</td>
+        <td style="text-align: right; font-weight: 700;">20,000 ብር</td>
+      </tr>
+      <tr>
+        <td>የቢሮና የባለሙያ ቅጥሮች</td>
+        <td>3 ቅጥሮች × 5,000 ብር</td>
+        <td style="text-align: right; font-weight: 700;">15,000 ብር</td>
+      </tr>
+      <tr>
+        <td>የቴሌግራም/ፌስቡክ ማስታወቂያ</td>
+        <td>10 ማስታወቂያዎች × 800 ብር</td>
+        <td style="text-align: right; font-weight: 700;">8,000 ብር</td>
+      </tr>
+      <tr>
+        <td>ወርሃዊ ቋሚ ውል (ሆቴሎች/ካፌዎች)</td>
+        <td>3 ድርጅቶች × 5,000 ብር</td>
+        <td style="text-align: right; font-weight: 700;">15,000 ብር</td>
+      </tr>
+      <tr>
+        <td>ከሥራ ፈላጊዎች (ደመወዝ ሲቀበሉ)</td>
+        <td>5 ሰዎች × 1,500 ብር</td>
+        <td style="text-align: right; font-weight: 700;">7,500 ብር</td>
+      </tr>
+      <tr style="background: #EEF4FA; border-top: 2px solid #0A2540;">
+        <td><strong>ጠቅላላ ወርሃዊ ገቢ (Gross Revenue)</strong></td>
+        <td></td>
+        <td style="text-align: right; font-weight: 900; color: #0A2540; font-size: 11pt;">65,500 ብር</td>
+      </tr>
+      <tr>
+        <td style="color: #DC2626;">የኢንተርኔት እና የስልክ ወጪ</td>
+        <td></td>
+        <td style="text-align: right; color: #DC2626; font-weight: 700;">- 2,500 ብር</td>
+      </tr>
+      <tr style="background: #ECFDF5; border-top: 2px solid #10B981;">
+        <td><strong style="color: #065F46; font-size: 11pt;">የተጣራ ወርሃዊ ትርፍ (Net Profit)</strong></td>
+        <td></td>
+        <td style="text-align: right; font-weight: 900; color: #065F46; font-size: 12pt;">~ 63,000 ብር / በወር</td>
+      </tr>
+    </tbody>
+  </table>
+
+  <!-- SECTION 7 -->
+  <h2><span class="num">7</span> አዝመራ ጆብስን ከባህላዊ ደላሎች የላቀ የሚያደርገው ምንድን ነው?</h2>
+  <table>
+    <thead>
+      <tr>
+        <th style="width: 30%;">ባህላዊ ደላላ</th>
+        <th style="width: 35%;">ትላልቅ ዌብሳይቶች (Ethiojobs)</th>
+        <th style="width: 35%;">አዝመራ ጆብስ (Azmera Jobs)</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td>ሥራ ፈላጊውን አስቀድሞ ያስከፍላል (ሰው ይጠላል)</td>
+        <td>ለሆቴልና ለአነስተኛ ድርጅቶች በጣም ውድ ነው</td>
+        <td><strong>ሥራ ፈላጊው በነፃ ያመለክታል (ከፍተኛ ተወዳጅነት)</strong></td>
+      </tr>
+      <tr>
+        <td>ዌብሳይት የለውም፣ በወረቀትና በስልክ ብቻ</td>
+        <td>ቀርፋፋና ውስብስብ ነው</td>
+        <td><strong>ዘመናዊ ድረ-ገጽ + የቴሌግራም ፈጣን ቅልጥፍና</strong></td>
+      </tr>
+      <tr>
+        <td>ሠራተኛው ቢጠፋ ዋስትና አይሰጥም</td>
+        <td>የግል ክትትልና ማጣራት የለውም</td>
+        <td><strong>የ14 ቀናት የተተኪ ሠራተኛ ዋስትና ይሰጣል</strong></td>
+      </tr>
+      <tr>
+        <td>አንድ ቋንቋ ብቻ</td>
+        <td>አብዛኛውን ጊዜ በእንግሊዝኛ ብቻ</td>
+        <td><strong>በአማርኛ፣ ትግርኛ እና እንግሊዝኛ የተደራጀ</strong></td>
+      </tr>
+    </tbody>
+  </table>
+
+  <!-- PITCH QUOTE -->
+  <div class="quote-box">
+    <strong style="color: #FCD34D; font-size: 11pt; display: block; margin-bottom: 6px;">💼 ለደንበኛዋ (ለባለቤቷ) የሚነገር አጭር ንግግር (Client Pitch)፡</strong>
+    <p>
+      «አዝመራ ጆብስ በኢትዮጵያ ውስጥ በጣም ታማኝና ተወዳጅ የቅጥር መድረክ እንዲሆን ተደርጎ ነው የተሰራው። ሥራ ፈላጊዎች በነፃ እንዲያመለክቱ በማድረግ በሺዎች የሚቆጠሩ ሰዎችን እንሰበስባለን፤ ይህም የቀጣሪዎችን ትኩረት ይስባል። ቀጣሪዎች ሠራተኛ አግኝተው ሥራ ሲያስጀምሩ ብቻ ፍትሃዊ የቅጥር ኮሚሽን (1,500 – 2,500 ብር) ይከፍላሉ፤ እኛም የ14 ቀናት የተተኪ ዋስትና እንሰጣቸዋለን። በተጨማሪም አስቸኳይ ክፍት ቦታዎችን በቴሌግራም ቻናላችን በመለጠፍ በየቀኑ በቴሌብር እና በCBE ቋሚ ገቢ እናገኛለን። ይህ አሰራር ለሥራ ፈላጊውም እፎይታ ነው፣ ለቀጣሪውም ፈጣን መፍትሄ ነው፣ ለአዝመራ ጆብስም ከፍተኛ ወርሃዊ ትርፍ ያስገኛል!»
+    </p>
+  </div>
+
+  <div class="footer">
+    <span>Azmera Jobs • Your Trusted Partner in Jobs</span>
+    <span>ገጽ 2 / 2</span>
+    <span>https://kaleab-mezgebe.github.io/azmera-job/</span>
+  </div>
+
+</body>
+</html>
