@@ -3,24 +3,35 @@
 import React from "react";
 import { useApp } from "@/context/AppContext";
 import { t } from "@/lib/i18n";
+import { MOCK_COMPANIES } from "@/data/mockData";
 import {
   LayoutDashboard, Search, FileCheck2, Bookmark, User,
   Building2, Briefcase, Users, CalendarCheck, PlusCircle,
-  Sparkles, LogOut, ChevronRight, ShieldCheck,
+  Sparkles, LogOut, ChevronRight, ShieldCheck, CreditCard,
 } from "lucide-react";
 
 export default function Sidebar() {
   const {
-    role, setRole, tab, setTab, lang,
+    role, tab, setTab, lang,
     seeker, company, savedJobIds, applications, jobs, candidates, interviews,
+    logout,
   } = useApp();
 
   if (role === "guest") return null;
 
+  const adminNavItems = [
+    { id: "admin-dashboard", label: t(lang, "adminConsole"), icon: LayoutDashboard, badge: "Live" },
+    { id: "admin-approvals", label: t(lang, "jobApprovals"), icon: Briefcase, badge: `${jobs.length}` },
+    { id: "admin-payments", label: t(lang, "paymentAudit"), icon: CreditCard, badge: "ETB Pay", badgeVariant: "green" },
+    { id: "admin-companies", label: t(lang, "verifiedEmployers"), icon: Building2, badge: `${MOCK_COMPANIES.length}` },
+    { id: "admin-talent", label: t(lang, "talentDirectory"), icon: Users, badge: `${candidates.length}` },
+  ];
+
   const seekerNavItems = [
-    { id: "dashboard", label: t(lang, "home"), icon: LayoutDashboard, badge: null },
+    { id: "dashboard", label: t(lang, "dashboard"), icon: LayoutDashboard, badge: null },
     { id: "search", label: t(lang, "exploreJobs"), icon: Search, badge: `${jobs.length}` },
     { id: "applications", label: t(lang, "applications"), icon: FileCheck2, badge: `${applications.length}` },
+    { id: "messages", label: t(lang, "messages"), icon: Users, badge: "2", badgeVariant: "amber" },
     { id: "saved", label: t(lang, "savedJobs"), icon: Bookmark, badge: `${savedJobIds.length}` },
     { id: "profile", label: t(lang, "myProfile"), icon: User, badge: `${seeker.profileCompletion}%`, badgeVariant: "green" },
   ];
@@ -29,11 +40,14 @@ export default function Sidebar() {
     { id: "employer-dashboard", label: t(lang, "dashboard"), icon: LayoutDashboard, badge: null },
     { id: "manage-jobs", label: t(lang, "manageJobs"), icon: Briefcase, badge: `${jobs.filter((j) => j.companyId === company.id).length}` },
     { id: "applicants", label: t(lang, "applicants"), icon: Users, badge: `${candidates.length}` },
+    { id: "talent-sourcing", label: t(lang, "findTalent"), icon: Search, badge: `${candidates.length} Profiles`, badgeVariant: "green" },
+    { id: "messages", label: t(lang, "messages"), icon: Users, badge: "3", badgeVariant: "amber" },
     { id: "interviews", label: t(lang, "interviews"), icon: CalendarCheck, badge: `${interviews.filter((i) => i.status === "Scheduled").length}`, badgeVariant: "amber" },
+    { id: "billing", label: t(lang, "billingGateways"), icon: CreditCard, badge: "ETB Pay", badgeVariant: "green" },
     { id: "company-profile", label: t(lang, "companyProfile"), icon: Building2, badge: "✓ Verified", badgeVariant: "green" },
   ];
 
-  const items = role === "seeker" ? seekerNavItems : employerNavItems;
+  const items = role === "admin" ? adminNavItems : role === "seeker" ? seekerNavItems : employerNavItems;
 
   return (
     <aside
@@ -42,7 +56,24 @@ export default function Sidebar() {
     >
       {/* Profile card */}
       <div className="mb-6 p-3.5 rounded-2xl border" style={{ background: "var(--bg)", borderColor: "var(--border)" }}>
-        {role === "seeker" ? (
+        {role === "admin" ? (
+          <div className="flex items-center gap-3">
+            <div className="w-11 h-11 rounded-2xl bg-[#0A2540] dark:bg-[#F59E0B] text-[#F59E0B] dark:text-[#0A2540] flex items-center justify-center font-black shadow-md shrink-0">
+              <ShieldCheck className="w-6 h-6" />
+            </div>
+            <div className="overflow-hidden">
+              <h3 className="font-extrabold text-sm truncate text-slate-900 dark:text-white">
+                Azmera Admin
+              </h3>
+              <p className="text-[11px] truncate text-[#F59E0B] font-bold">
+                {t(lang, "administrator")}
+              </p>
+              <span className="inline-block mt-1 text-[9px] font-black uppercase rounded-md px-1.5 py-0.5 bg-amber-100 text-amber-800 dark:bg-amber-950 dark:text-amber-300">
+                Governance Root
+              </span>
+            </div>
+          </div>
+        ) : role === "seeker" ? (
           <div className="flex items-center gap-3">
             <img src={seeker.avatar} alt={seeker.name} className="w-11 h-11 rounded-full object-cover border-2 border-[#F59E0B] shadow-xs" />
             <div className="overflow-hidden">
@@ -85,7 +116,7 @@ export default function Sidebar() {
       {/* Nav list */}
       <div className="space-y-1 flex-1">
         <p className="px-3 pb-2 text-[10px] font-bold uppercase tracking-wider" style={{ color: "var(--text-muted)" }}>
-          {role === "seeker" ? "Job Seeker Workspace" : "Recruitment Console"}
+          {role === "admin" ? "Azmera Governance Console" : role === "seeker" ? "Job Seeker Workspace" : "Recruitment Console"}
         </p>
 
         {items.map((item) => {
@@ -131,24 +162,11 @@ export default function Sidebar() {
       {/* Footer */}
       <div className="pt-4 border-t space-y-2" style={{ borderColor: "var(--border)" }}>
         <button
-          onClick={() => setRole(role === "seeker" ? "employer" : "seeker")}
-          className="w-full flex items-center justify-between p-2.5 rounded-xl text-xs font-semibold transition-colors"
-          style={{ background: "var(--bg)", color: "var(--text)" }}
-        >
-          <span className="flex items-center gap-2">
-            <Sparkles className="w-3.5 h-3.5" style={{ color: "var(--primary)" }} />
-            Switch to {role === "seeker" ? "Employer" : "Job Seeker"}
-          </span>
-          <ChevronRight className="w-3.5 h-3.5" style={{ color: "var(--text-muted)" }} />
-        </button>
-
-        <button
-          onClick={() => setRole("guest")}
-          className="w-full flex items-center gap-2 p-2.5 rounded-xl text-xs font-medium transition-colors hover:bg-red-50 hover:text-red-600"
-          style={{ color: "var(--text-muted)" }}
+          onClick={logout}
+          className="w-full flex items-center gap-2 p-2.5 rounded-xl text-xs font-semibold text-rose-600 hover:bg-rose-50 dark:hover:bg-rose-950/40 rounded-xl transition-colors cursor-pointer"
         >
           <LogOut className="w-3.5 h-3.5" />
-          <span>Exit to Public Portal</span>
+          <span>{t(lang, "signOut")}</span>
         </button>
       </div>
     </aside>

@@ -2,6 +2,7 @@
 
 import React from "react";
 import { useApp } from "@/context/AppContext";
+import { t } from "@/lib/i18n";
 import SocialBroadcastCard from "./SocialBroadcastCard";
 import {
   Briefcase,
@@ -21,13 +22,17 @@ import {
 export default function EmployerDashboardView() {
   const {
     company,
+    companies,
+    switchEmployerCompany,
     jobs,
     applications,
     candidates,
     interviews,
     setTab,
+    setEditingJob,
     selectCandidate,
     updateApplicationStatus,
+    lang,
   } = useApp();
 
   const companyJobs = jobs.filter((j) => j.companyId === company.id);
@@ -59,18 +64,40 @@ export default function EmployerDashboardView() {
               )}
             </div>
             <p className="text-xs text-slate-500 dark:text-slate-400 mt-1">
-              Recruitment Command Center • {company.location}
+              {t(lang, "employerDashboardTitle")} • {company.location}
             </p>
           </div>
         </div>
 
-        <div className="flex items-center gap-3">
+        <div className="flex items-center gap-3 flex-wrap w-full sm:w-auto">
+          <select
+            value={company.id}
+            onChange={(e) => switchEmployerCompany(e.target.value)}
+            title={t(lang, "switchOrganization")}
+            className="w-full sm:w-auto max-w-full px-3 py-2.5 rounded-2xl border border-slate-200 dark:border-slate-700 bg-slate-50 dark:bg-slate-800 text-xs font-bold text-slate-800 dark:text-white outline-none cursor-pointer"
+          >
+            {companies.map((c) => (
+              <option key={c.id} value={c.id} className="bg-white dark:bg-[#101E33]">
+                {c.name}
+              </option>
+            ))}
+          </select>
           <button
-            onClick={() => setTab("post-job")}
+            onClick={() => setTab("billing")}
+            className="px-4 py-3 rounded-2xl bg-emerald-50 dark:bg-emerald-950/60 hover:bg-emerald-100 dark:hover:bg-emerald-900/60 border border-emerald-200 dark:border-emerald-800 text-emerald-800 dark:text-emerald-300 text-xs font-bold flex items-center gap-2 transition-all cursor-pointer"
+          >
+            <span className="w-2 h-2 rounded-full bg-emerald-500 animate-pulse" />
+            <span>{t(lang, "billingGateways")}</span>
+          </button>
+          <button
+            onClick={() => {
+              setEditingJob(null);
+              setTab("post-job");
+            }}
             className="px-5 py-3 rounded-2xl bg-[#0A2540] hover:bg-[#07192C] dark:bg-[#F59E0B] dark:hover:bg-[#D97706] text-white dark:text-[#0A2540] text-xs font-bold shadow-md shadow-[#0A2540]/20 flex items-center gap-2 transition-all cursor-pointer hover:scale-[1.02]"
           >
             <PlusCircle className="w-4 h-4 text-[#F59E0B] dark:text-[#0A2540]" />
-            <span>Post New Vacancy</span>
+            <span>{t(lang, "postNewVacancy")}</span>
           </button>
         </div>
       </div>
@@ -82,7 +109,7 @@ export default function EmployerDashboardView() {
           className="p-5 rounded-2xl border border-slate-200 dark:border-slate-800 bg-white dark:bg-[#101E33] shadow-xs hover:border-[#F59E0B] transition-all cursor-pointer"
         >
           <div className="flex items-center justify-between">
-            <span className="text-xs font-bold text-slate-500 dark:text-slate-400">Total Active Jobs</span>
+            <span className="text-xs font-bold text-slate-500 dark:text-slate-400">{t(lang, "totalActiveJobs")}</span>
             <div className="w-9 h-9 rounded-xl bg-[#0A2540]/5 dark:bg-[#F59E0B]/15 text-[#0A2540] dark:text-[#F59E0B] flex items-center justify-center">
               <Briefcase className="w-4 h-4" />
             </div>
@@ -101,7 +128,7 @@ export default function EmployerDashboardView() {
           style={{ background: "var(--surface)", borderColor: "var(--border)" }}
         >
           <div className="flex items-center justify-between">
-            <span className="text-xs font-bold" style={{ color: "var(--text-muted)" }}>Total Applicants</span>
+            <span className="text-xs font-bold" style={{ color: "var(--text-muted)" }}>{t(lang, "totalApplicants")}</span>
             <div className="w-9 h-9 rounded-xl bg-blue-50 dark:bg-blue-950/40 text-blue-600 dark:text-blue-400 flex items-center justify-center border border-blue-200 dark:border-blue-800">
               <Users className="w-4 h-4" />
             </div>
@@ -120,7 +147,7 @@ export default function EmployerDashboardView() {
           style={{ background: "var(--surface)", borderColor: "var(--border)" }}
         >
           <div className="flex items-center justify-between">
-            <span className="text-xs font-bold" style={{ color: "var(--text-muted)" }}>Shortlisted</span>
+            <span className="text-xs font-bold" style={{ color: "var(--text-muted)" }}>{t(lang, "shortlisted")}</span>
             <div className="w-9 h-9 rounded-xl bg-emerald-50 dark:bg-emerald-950/40 text-emerald-600 dark:text-emerald-400 flex items-center justify-center border border-emerald-200 dark:border-emerald-800">
               <CheckCircle2 className="w-4 h-4" />
             </div>
@@ -139,7 +166,7 @@ export default function EmployerDashboardView() {
           style={{ background: "var(--surface)", borderColor: "var(--border)" }}
         >
           <div className="flex items-center justify-between">
-            <span className="text-xs font-bold" style={{ color: "var(--text-muted)" }}>Interviews Scheduled</span>
+            <span className="text-xs font-bold" style={{ color: "var(--text-muted)" }}>{t(lang, "interviewsScheduled")}</span>
             <div className="w-9 h-9 rounded-xl bg-amber-50 dark:bg-amber-950/40 text-amber-700 dark:text-amber-400 flex items-center justify-center border border-amber-200 dark:border-amber-800">
               <CalendarCheck className="w-4 h-4" />
             </div>
@@ -161,7 +188,7 @@ export default function EmployerDashboardView() {
         <div className="flex items-center justify-between">
           <div>
             <h2 className="text-base font-extrabold text-slate-900 dark:text-white">
-              Job Performance Overview
+              {t(lang, "jobPerformanceOverview")}
             </h2>
             <p className="text-xs text-slate-500 dark:text-slate-400">
               Views, applicants, and candidate progression across active postings
@@ -208,7 +235,7 @@ export default function EmployerDashboardView() {
         <div className="p-6 border-b border-slate-100 dark:border-slate-800 flex items-center justify-between">
           <div>
             <h2 className="text-base font-extrabold text-slate-900 dark:text-white">
-              Recent Candidate Applications
+              {t(lang, "recentApplications")}
             </h2>
             <p className="text-xs text-slate-500 dark:text-slate-400">
               Latest applications received for {company.name} positions
@@ -219,7 +246,7 @@ export default function EmployerDashboardView() {
             onClick={() => setTab("applicants")}
             className="text-xs font-bold text-[#0A2540] dark:text-[#F59E0B] hover:underline flex items-center gap-1 cursor-pointer"
           >
-            <span>View All Applicants</span>
+            <span>{t(lang, "viewAllApplicants")}</span>
             <ChevronRight className="w-3.5 h-3.5" />
           </button>
         </div>

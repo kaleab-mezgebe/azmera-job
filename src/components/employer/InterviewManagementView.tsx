@@ -2,6 +2,7 @@
 
 import React, { useState } from "react";
 import { useApp } from "@/context/AppContext";
+import { t, tStatus } from "@/lib/i18n";
 import { Interview } from "@/types";
 import {
   CalendarCheck,
@@ -18,7 +19,7 @@ import {
 import ScheduleInterviewModal from "./ScheduleInterviewModal";
 
 export default function InterviewManagementView() {
-  const { interviews, candidates, showToast } = useApp();
+  const { interviews, candidates, showToast, lang } = useApp();
   const [filter, setFilter] = useState<"All" | "Scheduled" | "Completed">("All");
   const [isScheduleOpen, setIsScheduleOpen] = useState(false);
 
@@ -33,7 +34,7 @@ export default function InterviewManagementView() {
       <div className="bg-white dark:bg-[#101E33] p-6 sm:p-8 rounded-3xl border border-slate-200 dark:border-slate-800 shadow-xs flex flex-col sm:flex-row sm:items-center justify-between gap-4">
         <div>
           <h1 className="text-xl sm:text-2xl font-extrabold text-slate-900 dark:text-white">
-            Interview Management & Coordination
+            {t(lang, "interviewManagementTitle")}
           </h1>
           <p className="text-xs text-slate-500 dark:text-slate-400 mt-1">
             Track scheduled video conferences, phone calls, and in-person interviews in
@@ -46,7 +47,7 @@ export default function InterviewManagementView() {
           className="px-5 py-2.5 rounded-2xl bg-[#0A2540] hover:bg-[#071A2E] dark:bg-[#F59E0B] dark:hover:bg-[#D97706] text-white dark:text-[#0A2540] text-xs font-bold shadow-md shadow-[#0A2540]/20 flex items-center gap-2 transition-all cursor-pointer self-start sm:self-auto"
         >
           <PlusCircle className="w-4 h-4" />
-          <span>Schedule New Interview</span>
+          <span>{t(lang, "schedule")}</span>
         </button>
       </div>
 
@@ -62,7 +63,7 @@ export default function InterviewManagementView() {
                 : "bg-white dark:bg-[#101E33] text-slate-600 dark:text-slate-300 border border-slate-200 dark:border-slate-700 hover:bg-slate-50 dark:hover:bg-slate-800"
             }`}
           >
-            {st} (
+            {st === "All" ? tStatus(lang, "All") : st} (
             {interviews.filter((i) => st === "All" || i.status === st).length})
           </button>
         ))}

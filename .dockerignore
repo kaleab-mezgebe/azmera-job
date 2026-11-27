@@ -1,0 +1,10 @@
+node_modules
+.next
+out
+azmera-data
+.env
+.env.*
+*.pdf
+*.html
+.git
+.DS_Store

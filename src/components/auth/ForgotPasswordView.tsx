@@ -2,27 +2,86 @@
 
 import React, { useState } from "react";
 import { useApp } from "@/context/AppContext";
+import { t } from "@/lib/i18n";
 import { Mail, Phone, ArrowRight, ArrowLeft, KeyRound, CheckCircle2 } from "lucide-react";
 
 export default function ForgotPasswordView() {
-  const { setTab, showToast } = useApp();
+  const { setTab, showToast, lang } = useApp();
   const [method, setMethod] = useState<"phone" | "email">("phone");
   const [identifier, setIdentifier] = useState("+251 91 144 8822");
   const [codeSent, setCodeSent] = useState(false);
   const [otp, setOtp] = useState(["", "", "", "", "", ""]);
+  const [devOtpHint, setDevOtpHint] = useState<string | null>(null);
   const [newPassword, setNewPassword] = useState("");
+  const [submitting, setSubmitting] = useState(false);
   const [success, setSuccess] = useState(false);
 
-  const handleSendCode = (e: React.FormEvent) => {
+  const handleSendCode = async (e: React.FormEvent) => {
     e.preventDefault();
-    setCodeSent(true);
-    showToast(`Verification code sent to ${identifier}`);
+    if (!identifier.trim()) return;
+    setSubmitting(true);
+    try {
+      const res = await fetch("/api/auth/otp/request", {
+        method: "POST",
+        credentials: "include",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ identifier: identifier.trim(), purpose: "reset" }),
+      });
+      const data = (await res.json()) as { ok?: boolean; error?: string; devCode?: string };
+      if (!res.ok || !data?.ok) {
+        showToast(data?.error || "Could not send verification code.", "error");
+        setSubmitting(false);
+        return;
+      }
+      if (data.devCode && data.devCode.length === 6) {
+        setOtp(data.devCode.split(""));
+        setDevOtpHint(data.devCode);
+        showToast(`Verification code sent (test code: ${data.devCode})`, "info");
+      } else {
+        setOtp(["", "", "", "", "", ""]);
+        setDevOtpHint(null);
+        showToast(`Verification code sent to ${identifier}`, "info");
+      }
+      setCodeSent(true);
+    } catch {
+      showToast("Network error sending code.", "error");
+    } finally {
+      setSubmitting(false);
+    }
   };
 
-  const handleVerifyReset = (e: React.FormEvent) => {
+  const handleVerifyReset = async (e: React.FormEvent) => {
     e.preventDefault();
-    setSuccess(true);
-    showToast("Password reset successfully! You can now sign in.");
+    const code = otp.join("").trim();
+    if (code.length !== 6) {
+      showToast("Please enter the 6-digit verification code.", "error");
+      return;
+    }
+    if (newPassword.length < 8) {
+      showToast("New password must be at least 8 characters.", "error");
+      return;
+    }
+    setSubmitting(true);
+    try {
+      const res = await fetch("/api/auth/reset-password", {
+        method: "POST",
+        credentials: "include",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ identifier: identifier.trim(), code, newPassword }),
+      });
+      const data = (await res.json()) as { ok?: boolean; error?: string };
+      if (!res.ok || !data?.ok) {
+        showToast(data?.error || "Failed to reset password.", "error");
+        setSubmitting(false);
+        return;
+      }
+      setSuccess(true);
+      showToast("Password reset successfully! You can now sign in.", "success");
+    } catch {
+      showToast("Network error resetting password.", "error");
+    } finally {
+      setSubmitting(false);
+    }
   };
 
   return (
@@ -34,7 +93,7 @@ export default function ForgotPasswordView() {
           className="inline-flex items-center gap-1.5 text-xs font-semibold text-slate-500 dark:text-slate-400 hover:text-[#0A2540] dark:hover:text-[#F59E0B] mb-4 transition-colors cursor-pointer"
         >
           <ArrowLeft className="w-4 h-4" />
-          <span>Back to Sign In</span>
+          <span>{t(lang, "backToSignIn")}</span>
         </button>
 
         <div className="text-center mb-6">
@@ -46,7 +105,7 @@ export default function ForgotPasswordView() {
               ? "Password Updated!"
               : codeSent
               ? "Verify Code & Reset"
-              : "Reset Password"}
+              : t(lang, "resetPassword")}
           </h1>
           <p className="text-xs text-slate-500 dark:text-slate-400 mt-1">
             {success
@@ -121,9 +180,10 @@ export default function ForgotPasswordView() {
 
             <button
               type="submit"
-              className="w-full py-3 px-4 rounded-xl font-bold text-sm text-white dark:text-[#0A2540] bg-[#0A2540] hover:bg-[#071A2E] dark:bg-[#F59E0B] dark:hover:bg-[#D97706] shadow-md shadow-[#0A2540]/20 flex items-center justify-center gap-2 transition-all cursor-pointer"
+              disabled={submitting}
+              className="w-full py-3 px-4 rounded-xl font-bold text-sm text-white dark:text-[#0A2540] bg-[#0A2540] hover:bg-[#071A2E] dark:bg-[#F59E0B] dark:hover:bg-[#D97706] shadow-md shadow-[#0A2540]/20 flex items-center justify-center gap-2 transition-all cursor-pointer disabled:opacity-60"
             >
-              <span>Send Verification Code</span>
+              <span>{submitting ? "Sending..." : "Send Verification Code"}</span>
               <ArrowRight className="w-4 h-4" />
             </button>
           </form>
@@ -139,11 +199,20 @@ export default function ForgotPasswordView() {
                     key={i}
                     type="text"
                     maxLength={1}
-                    defaultValue={i === 0 ? "7" : i === 1 ? "4" : i === 2 ? "1" : ""}
+                    value={otp[i]}
+                    onChange={(e) => {
+                      const val = e.target.value.replace(/\D/g, "").slice(-1);
+                      setOtp((prev) => prev.map((d, idx) => (idx === i ? val : d)));
+                    }}
                     className="w-11 h-12 text-center font-bold text-base bg-slate-50 dark:bg-slate-800 border border-slate-200 dark:border-slate-700 text-slate-900 dark:text-white focus:border-[#0A2540] dark:focus:border-[#F59E0B] focus:bg-white dark:focus:bg-[#101E33] rounded-xl outline-none"
                   />
                 ))}
               </div>
+              {devOtpHint && (
+                <p className="text-[11px] text-amber-600 dark:text-amber-400 text-center mt-1.5">
+                  Dev test code: <span className="font-mono font-bold">{devOtpHint}</span>
+                </p>
+              )}
             </div>
 
             <div>
@@ -153,6 +222,7 @@ export default function ForgotPasswordView() {
               <input
                 type="password"
                 required
+                minLength={8}
                 placeholder="At least 8 characters"
                 value={newPassword}
                 onChange={(e) => setNewPassword(e.target.value)}
@@ -162,9 +232,10 @@ export default function ForgotPasswordView() {
 
             <button
               type="submit"
-              className="w-full py-3 px-4 rounded-xl font-bold text-sm text-white dark:text-[#0A2540] bg-[#0A2540] hover:bg-[#071A2E] dark:bg-[#F59E0B] dark:hover:bg-[#D97706] shadow-md shadow-[#0A2540]/20 flex items-center justify-center gap-2 cursor-pointer transition-all"
+              disabled={submitting}
+              className="w-full py-3 px-4 rounded-xl font-bold text-sm text-white dark:text-[#0A2540] bg-[#0A2540] hover:bg-[#071A2E] dark:bg-[#F59E0B] dark:hover:bg-[#D97706] shadow-md shadow-[#0A2540]/20 flex items-center justify-center gap-2 cursor-pointer transition-all disabled:opacity-60"
             >
-              <span>Update Password</span>
+              <span>{submitting ? "Updating..." : "Update Password"}</span>
               <ArrowRight className="w-4 h-4" />
             </button>
 

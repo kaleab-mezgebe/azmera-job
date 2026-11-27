@@ -16,13 +16,15 @@ import {
   XCircle,
   Download,
   Video,
+  ShieldCheck,
+  Zap,
 } from "lucide-react";
 
 interface CandidateProfileModalProps {
   candidate: Candidate;
   application?: Application;
   onClose: () => void;
-  onScheduleInterview: (cand: Candidate) => void;
+  onScheduleInterview?: (cand: Candidate) => void;
 }
 
 export default function CandidateProfileModal({
@@ -31,7 +33,8 @@ export default function CandidateProfileModal({
   onClose,
   onScheduleInterview,
 }: CandidateProfileModalProps) {
-  const { updateApplicationStatus, showToast } = useApp();
+  const { updateApplicationStatus, showToast, openPaymentModal } = useApp();
+  const [isHiredOrUnlocked, setIsHiredOrUnlocked] = useState(false);
 
   return (
     <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/60 backdrop-blur-xs">
@@ -83,14 +86,60 @@ export default function CandidateProfileModal({
         <div className="p-6 space-y-6">
           {/* Quick Actions Bar */}
           <div className="flex flex-wrap items-center gap-2.5 p-3 bg-slate-50 dark:bg-slate-800/60 rounded-2xl border border-slate-200 dark:border-slate-700">
+            {onScheduleInterview && (
+              <button
+                onClick={() => {
+                  onScheduleInterview(candidate);
+                }}
+                className="px-4 py-2 bg-[#0A2540] hover:bg-[#071A2E] dark:bg-[#F59E0B] dark:hover:bg-[#D97706] text-white dark:text-[#0A2540] text-xs font-bold rounded-xl flex items-center gap-1.5 shadow-xs transition-colors cursor-pointer"
+              >
+                <CalendarCheck className="w-4 h-4" />
+                <span>Schedule Interview</span>
+              </button>
+            )}
+
+            {/* Direct Hire / Placement Monetization Button */}
             <button
               onClick={() => {
-                onScheduleInterview(candidate);
+                if (isHiredOrUnlocked) {
+                  showToast(`${candidate.name} is already hired with 14-day replacement active.`);
+                  return;
+                }
+                openPaymentModal({
+                  amount: 2000,
+                  purpose: "talent_unlock",
+                  purposeLabel: `Direct Talent Placement & Guarantee (${candidate.name})`,
+                  title: `Hire ${candidate.name} (Direct Placement)`,
+                  description: `Settle placement fee via Telebirr, CBE Bank, or M-Pesa. Includes 14-Day Free Candidate Replacement Guarantee.`,
+                  metadata: {
+                    candidateId: candidate.id,
+                    candidateName: candidate.name,
+                  },
+                  onSuccess: () => {
+                    setIsHiredOrUnlocked(true);
+                    if (application) {
+                      updateApplicationStatus(application.id, "Hired", "Hired via Azmera Fast-Track Placement.");
+                    }
+                  },
+                });
               }}
-              className="px-4 py-2 bg-[#0A2540] hover:bg-[#071A2E] dark:bg-[#F59E0B] dark:hover:bg-[#D97706] text-white dark:text-[#0A2540] text-xs font-bold rounded-xl flex items-center gap-1.5 shadow-xs transition-colors cursor-pointer"
+              className={`px-3.5 py-2 rounded-xl text-xs font-black flex items-center gap-1.5 transition-all cursor-pointer ${
+                isHiredOrUnlocked
+                  ? "bg-emerald-600 text-white shadow-xs"
+                  : "bg-gradient-to-r from-amber-500 to-amber-600 hover:from-amber-600 hover:to-amber-700 text-[#0A2540] shadow-md shadow-amber-500/20"
+              }`}
             >
-              <CalendarCheck className="w-4 h-4" />
-              <span>Schedule Interview</span>
+              {isHiredOrUnlocked ? (
+                <>
+                  <CheckCircle2 className="w-4 h-4" />
+                  <span>Hired • 14-Day Guarantee Active</span>
+                </>
+              ) : (
+                <>
+                  <Zap className="w-4 h-4 fill-current" />
+                  <span>Direct Hire (2,000 ETB)</span>
+                </>
+              )}
             </button>
 
             {application && application.status !== "Shortlisted" && (

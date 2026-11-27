@@ -2,10 +2,11 @@
 
 import React from "react";
 import { useApp } from "@/context/AppContext";
+import { t, tCategory, tJobType } from "@/lib/i18n";
 import { Bookmark, MapPin, ShieldCheck, Trash2, ArrowRight } from "lucide-react";
 
 export default function SavedJobsView() {
-  const { jobs, savedJobIds, toggleSaveJob, selectJob, setTab } = useApp();
+  const { jobs, savedJobIds, toggleSaveJob, selectJob, setTab, lang } = useApp();
 
   const savedJobs = jobs.filter((job) => savedJobIds.includes(job.id));
 
@@ -14,7 +15,7 @@ export default function SavedJobsView() {
       <div className="bg-white dark:bg-[#101E33] p-6 rounded-3xl border border-slate-200 dark:border-slate-800 shadow-xs flex flex-col sm:flex-row sm:items-center justify-between gap-4">
         <div>
           <h1 className="text-xl sm:text-2xl font-extrabold text-slate-900 dark:text-white">
-            Saved Jobs ({savedJobs.length})
+            {t(lang, "savedJobsTitle")} ({savedJobs.length})
           </h1>
           <p className="text-xs text-slate-500 dark:text-slate-400 mt-1">
             Keep track of job openings you want to review and apply to later.
@@ -25,7 +26,7 @@ export default function SavedJobsView() {
           onClick={() => setTab("search")}
           className="px-4 py-2 bg-[#0A2540] hover:bg-[#07192C] dark:bg-[#F59E0B] dark:hover:bg-[#D97706] text-white dark:text-[#0A2540] text-xs font-bold rounded-xl transition-colors cursor-pointer self-start sm:self-auto"
         >
-          Find More Jobs
+          {t(lang, "findMoreJobs")}
         </button>
       </div>
 
@@ -34,7 +35,7 @@ export default function SavedJobsView() {
           <div className="w-12 h-12 rounded-2xl bg-slate-100 dark:bg-slate-800 text-slate-500 dark:text-slate-400 flex items-center justify-center mx-auto">
             <Bookmark className="w-6 h-6" />
           </div>
-          <h3 className="font-bold text-sm text-slate-900 dark:text-white">No saved jobs yet</h3>
+          <h3 className="font-bold text-sm text-slate-900 dark:text-white">{t(lang, "noSavedJobs")}</h3>
           <p className="text-xs text-slate-500 dark:text-slate-400">
             When you find a vacancy you like, tap the bookmark icon to save it here.
           </p>
@@ -42,7 +43,7 @@ export default function SavedJobsView() {
             onClick={() => setTab("search")}
             className="mt-2 px-4 py-2 bg-[#0A2540] hover:bg-[#07192C] dark:bg-[#F59E0B] dark:hover:bg-[#D97706] text-white dark:text-[#0A2540] text-xs font-bold rounded-xl cursor-pointer"
           >
-            Explore Jobs
+            {t(lang, "exploreJobs")}
           </button>
         </div>
       ) : (
@@ -94,10 +95,10 @@ export default function SavedJobsView() {
 
                 <div className="flex flex-wrap gap-1.5 mt-2.5">
                   <span className="px-2 py-0.5 rounded text-[10px] font-semibold bg-slate-100 dark:bg-slate-800 text-slate-700 dark:text-slate-300 border border-slate-200 dark:border-slate-700">
-                    {job.type}
+                    {tJobType(lang, job.type)}
                   </span>
                   <span className="px-2 py-0.5 rounded text-[10px] font-bold bg-amber-50 dark:bg-amber-950/40 text-amber-900 dark:text-amber-300 border border-amber-200/80 dark:border-amber-900/60">
-                    {job.category}
+                    {tCategory(lang, job.category)}
                   </span>
                 </div>
               </div>
@@ -111,7 +112,7 @@ export default function SavedJobsView() {
                   onClick={() => selectJob(job.id)}
                   className="px-3.5 py-1.5 rounded-xl bg-[#0A2540] hover:bg-[#07192C] dark:bg-[#F59E0B] dark:hover:bg-[#D97706] text-white dark:text-[#0A2540] text-xs font-bold transition-all flex items-center gap-1 cursor-pointer hover:scale-[1.02]"
                 >
-                  <span>Apply Now</span>
+                  <span>{t(lang, "applyNow")}</span>
                   <ArrowRight className="w-3.5 h-3.5 text-[#F59E0B] dark:text-[#0A2540]" />
                 </button>
               </div>

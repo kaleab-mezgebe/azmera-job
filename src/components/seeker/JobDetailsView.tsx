@@ -2,6 +2,7 @@
 
 import React, { useState } from "react";
 import { useApp } from "@/context/AppContext";
+import { t, tJobType, tWorkplaceType } from "@/lib/i18n";
 import {
   MapPin,
   Briefcase,
@@ -37,9 +38,11 @@ export default function JobDetailsView() {
     jobs,
     selectJob,
     showToast,
+    lang,
   } = useApp();
 
   const [isApplyModalOpen, setIsApplyModalOpen] = useState(false);
+  const [shareMenuOpen, setShareMenuOpen] = useState(false);
 
   if (!selectedJob) {
     return (
@@ -59,13 +62,21 @@ export default function JobDetailsView() {
   const applied = hasApplied(selectedJob.id);
 
   const handleShare = () => {
+    setShareMenuOpen((prev) => !prev);
+  };
+
+  const copyJobLink = () => {
     if (navigator.clipboard) {
       navigator.clipboard.writeText(window.location.href);
       showToast("Job link copied to clipboard!");
     } else {
       showToast("Job link ready to share!");
     }
+    setShareMenuOpen(false);
   };
+
+  const shareText = `${selectedJob.title} at ${selectedJob.companyName} (${selectedJob.location}) — ${selectedJob.salaryMin.toLocaleString()}–${selectedJob.salaryMax.toLocaleString()} ETB on Azmera Jobs`;
+  const shareUrl = typeof window !== "undefined" ? window.location.href : "https://azmerajobs.com";
 
   const similarJobs = jobs
     .filter((j) => j.id !== selectedJob.id && j.category === selectedJob.category)
@@ -79,7 +90,7 @@ export default function JobDetailsView() {
         className="inline-flex items-center gap-1.5 text-xs font-bold text-slate-500 dark:text-slate-400 hover:text-slate-900 dark:hover:text-white transition-colors cursor-pointer"
       >
         <ArrowLeft className="w-4 h-4" />
-        <span>Back to Vacancies</span>
+        <span>{t(lang, "backToVacancies")}</span>
       </button>
 
       {/* Hero Header Card */}
@@ -99,7 +110,7 @@ export default function JobDetailsView() {
                 {selectedJob.verified && (
                   <span className="inline-flex items-center gap-1 text-[11px] font-bold text-[#0A2540] dark:text-[#38BDF8] bg-blue-50 dark:bg-blue-950/60 border border-blue-200/60 dark:border-blue-900/60 px-2 py-0.5 rounded-md">
                     <ShieldCheck className="w-3.5 h-3.5" />
-                    Verified Employer
+                    {t(lang, "verifiedEmployer")}
                   </span>
                 )}
               </div>
@@ -116,26 +127,79 @@ export default function JobDetailsView() {
                 <span>•</span>
                 <span className="flex items-center gap-1">
                   <Briefcase className="w-4 h-4 text-[#0A2540] dark:text-[#F59E0B]" />
-                  {selectedJob.type} ({selectedJob.workplaceType})
+                  {tJobType(lang, selectedJob.type)} ({tWorkplaceType(lang, selectedJob.workplaceType)})
                 </span>
                 <span>•</span>
                 <span className="flex items-center gap-1">
                   <Clock className="w-4 h-4 text-[#0A2540] dark:text-[#F59E0B]" />
-                  Posted {selectedJob.postedDate}
+                  {selectedJob.postedDate}
                 </span>
               </div>
             </div>
           </div>
 
           {/* Action Buttons */}
-          <div className="flex items-center gap-2.5 self-start shrink-0">
-            <button
-              onClick={handleShare}
-              className="p-3 rounded-2xl border border-slate-200 dark:border-slate-700 bg-white dark:bg-slate-800 hover:bg-slate-50 dark:hover:bg-slate-700 text-slate-600 dark:text-slate-300 transition-colors cursor-pointer"
-              title="Share job"
-            >
-              <Share2 className="w-4 h-4" />
-            </button>
+          <div className="flex items-center gap-2.5 self-start shrink-0 relative">
+            <div className="relative">
+              <button
+                onClick={handleShare}
+                className="p-3 rounded-2xl border border-slate-200 dark:border-slate-700 bg-white dark:bg-slate-800 hover:bg-slate-50 dark:hover:bg-slate-700 text-slate-600 dark:text-slate-300 transition-colors cursor-pointer"
+                title="Share job"
+              >
+                <Share2 className="w-4 h-4" />
+              </button>
+
+              {shareMenuOpen && (
+                <div className="absolute right-0 mt-2 w-56 rounded-2xl shadow-2xl border border-slate-200 dark:border-slate-700 bg-white dark:bg-[#101E33] p-2 z-40 animate-scale-in space-y-1">
+                  <div className="px-2.5 py-1 text-[10px] font-black uppercase tracking-wider text-slate-400">
+                    Share Opportunity
+                  </div>
+                  <a
+                    href={`https://t.me/share/url?url=${encodeURIComponent(shareUrl)}&text=${encodeURIComponent(shareText)}`}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    onClick={() => setShareMenuOpen(false)}
+                    className="block px-3 py-2 rounded-xl text-xs font-bold text-slate-700 dark:text-slate-200 hover:bg-[#0088cc]/10 hover:text-[#0088cc] transition-colors"
+                  >
+                    Telegram
+                  </a>
+                  <a
+                    href={`https://wa.me/?text=${encodeURIComponent(`${shareText} ${shareUrl}`)}`}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    onClick={() => setShareMenuOpen(false)}
+                    className="block px-3 py-2 rounded-xl text-xs font-bold text-slate-700 dark:text-slate-200 hover:bg-[#25D366]/10 hover:text-[#25D366] transition-colors"
+                  >
+                    WhatsApp
+                  </a>
+                  <a
+                    href={`https://www.linkedin.com/sharing/share-offsite/?url=${encodeURIComponent(shareUrl)}`}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    onClick={() => setShareMenuOpen(false)}
+                    className="block px-3 py-2 rounded-xl text-xs font-bold text-slate-700 dark:text-slate-200 hover:bg-[#0A66C2]/10 hover:text-[#0A66C2] transition-colors"
+                  >
+                    LinkedIn
+                  </a>
+                  <a
+                    href={`https://www.facebook.com/sharer/sharer.php?u=${encodeURIComponent(shareUrl)}`}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    onClick={() => setShareMenuOpen(false)}
+                    className="block px-3 py-2 rounded-xl text-xs font-bold text-slate-700 dark:text-slate-200 hover:bg-[#1877F2]/10 hover:text-[#1877F2] transition-colors"
+                  >
+                    Facebook
+                  </a>
+                  <button
+                    type="button"
+                    onClick={copyJobLink}
+                    className="w-full text-left px-3 py-2 rounded-xl text-xs font-bold text-[#0A2540] dark:text-[#F59E0B] bg-slate-50 dark:bg-slate-800/80 hover:bg-slate-100 dark:hover:bg-slate-800 transition-colors cursor-pointer"
+                  >
+                    Copy Job Link
+                  </button>
+                </div>
+              )}
+            </div>
 
             <button
               onClick={() => toggleSaveJob(selectedJob.id)}
@@ -155,14 +219,14 @@ export default function JobDetailsView() {
                 className="px-6 py-3 rounded-2xl bg-emerald-50 dark:bg-emerald-950/40 text-emerald-800 dark:text-emerald-300 border border-emerald-200 dark:border-emerald-800 text-xs font-bold flex items-center gap-1.5 cursor-default"
               >
                 <CheckCircle2 className="w-4 h-4 text-emerald-600" />
-                <span>Application Submitted</span>
+                <span>{t(lang, "applicationSubmitted")}</span>
               </button>
             ) : (
               <button
                 onClick={() => setIsApplyModalOpen(true)}
                 className="px-6 py-3 rounded-2xl bg-[#0A2540] hover:bg-[#071A2E] dark:bg-[#F59E0B] dark:hover:bg-[#D97706] text-white dark:text-[#0A2540] text-xs font-bold shadow-md shadow-[#0A2540]/20 transition-all cursor-pointer hover:scale-[1.02]"
               >
-                Apply for Position
+                {t(lang, "applyForPosition")}
               </button>
             )}
           </div>
@@ -172,7 +236,7 @@ export default function JobDetailsView() {
         <div className="grid grid-cols-2 sm:grid-cols-4 gap-3 pt-6 border-t border-slate-100 dark:border-slate-800">
           <div className="p-3.5 bg-slate-50 dark:bg-slate-800/60 rounded-2xl">
             <span className="text-[10px] text-slate-500 dark:text-slate-400 block font-medium">
-              Monthly Compensation
+              {t(lang, "monthlyCompensation")}
             </span>
             <span className="text-sm font-extrabold text-[#0A2540] dark:text-[#F59E0B]">
               {selectedJob.salaryMin.toLocaleString()} -{" "}
@@ -182,7 +246,7 @@ export default function JobDetailsView() {
 
           <div className="p-3.5 bg-slate-50 dark:bg-slate-800/60 rounded-2xl">
             <span className="text-[10px] text-slate-500 dark:text-slate-400 block font-medium">
-              Experience Level
+              {t(lang, "experienceLevel")}
             </span>
             <span className="text-sm font-bold text-slate-900 dark:text-white">
               {selectedJob.experienceLevel}
@@ -191,7 +255,7 @@ export default function JobDetailsView() {
 
           <div className="p-3.5 bg-slate-50 dark:bg-slate-800/60 rounded-2xl">
             <span className="text-[10px] text-slate-500 dark:text-slate-400 block font-medium">
-              Application Deadline
+              {t(lang, "applicationDeadline")}
             </span>
             <span className="text-sm font-bold text-slate-900 dark:text-white">
               {selectedJob.deadline}
@@ -200,10 +264,10 @@ export default function JobDetailsView() {
 
           <div className="p-3.5 bg-slate-50 dark:bg-slate-800/60 rounded-2xl">
             <span className="text-[10px] text-slate-500 dark:text-slate-400 block font-medium">
-              Applicants So Far
+              {t(lang, "applicantsSoFar")}
             </span>
             <span className="text-sm font-bold text-slate-900 dark:text-white">
-              {selectedJob.applicantCount} candidates
+              {selectedJob.applicantCount}
             </span>
           </div>
         </div>
@@ -238,7 +302,7 @@ export default function JobDetailsView() {
                     Direct Agent Fast-Track Application
                   </h3>
                   <span className="text-xs font-extrabold text-[#D97706] bg-amber-100 dark:bg-amber-950/60 dark:text-[#FBBF24] px-3 py-0.5 rounded-full border border-amber-300 dark:border-amber-800">
-                    ናባይ ቀጥታ ኣመልክቱ
+                    {t(lang, "directApplyBadge")}
                   </span>
                 </div>
                 <p className="text-xs text-slate-600 dark:text-slate-300 leading-relaxed">
@@ -284,19 +348,19 @@ export default function JobDetailsView() {
               />
               <div className="absolute bottom-3 left-3 bg-[#0A2540]/90 text-white px-3.5 py-1.5 rounded-xl text-xs font-bold flex items-center gap-2 shadow-lg border border-white/10 backdrop-blur-xs">
                 <FileText className="w-3.5 h-3.5 text-[#F59E0B]" />
-                <span>Official Vacancy Circular Flyer (የስራ ማስታወቂያ)</span>
+                <span>{t(lang, "officialCircular")}</span>
               </div>
             </div>
           )}
 
           {/* About the Role */}
           <div className="bg-white dark:bg-[#101E33] p-6 sm:p-8 rounded-3xl border border-[#E2E8F0] dark:border-slate-800 space-y-4">
-            <h2 className="text-lg font-extrabold text-[#0A1C2E] dark:text-white">Role Overview</h2>
+            <h2 className="text-lg font-extrabold text-[#0A1C2E] dark:text-white">{t(lang, "roleOverview")}</h2>
             <RichDocumentRenderer content={selectedJob.description} />
 
             {/* Responsibilities */}
             <div className="pt-4 border-t border-[#E2E8F0] dark:border-slate-800 space-y-3">
-              <h3 className="text-sm font-bold text-[#0A1C2E] dark:text-white">Key Responsibilities</h3>
+              <h3 className="text-sm font-bold text-[#0A1C2E] dark:text-white">{t(lang, "keyResponsibilities")}</h3>
               <ul className="space-y-2.5">
                 {selectedJob.responsibilities.map((resp, i) => (
                   <li

@@ -2,6 +2,7 @@
 
 import React, { useState } from "react";
 import { useApp } from "@/context/AppContext";
+import { t } from "@/lib/i18n";
 import {
   User,
   Building2,
@@ -14,7 +15,7 @@ import {
 } from "lucide-react";
 
 export default function RoleSelectionView() {
-  const { setRole, setTab } = useApp();
+  const { setRole, setTab, lang } = useApp();
   const [selected, setSelected] = useState<"seeker" | "employer">("seeker");
 
   const handleContinue = () => {
@@ -30,10 +31,10 @@ export default function RoleSelectionView() {
         <div className="text-center max-w-md mx-auto mb-8">
           <div className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-[#0A2540]/5 dark:bg-[#F59E0B]/10 text-[#0A2540] dark:text-[#FBBF24] border border-[#0A2540]/15 dark:border-[#F59E0B]/30 text-xs font-bold mb-3">
             <Sparkles className="w-3.5 h-3.5 text-[#F59E0B]" />
-            <span>Join Azmera Jobs</span>
+            <span>{t(lang, "joinAzmera")}</span>
           </div>
           <h1 className="text-2xl sm:text-3xl font-extrabold text-slate-900 dark:text-white">
-            How do you plan to use Azmera Jobs?
+            {t(lang, "selectAccountType")}
           </h1>
           <p className="text-xs sm:text-sm text-slate-500 dark:text-slate-400 mt-2">
             Select your account type to personalize your experience. You can easily
@@ -82,7 +83,7 @@ export default function RoleSelectionView() {
               </div>
 
               <h3 className="font-extrabold text-base text-slate-900 dark:text-white">
-                I am looking for a job
+                {t(lang, "lookingForJob")}
               </h3>
               <p className="text-xs mt-1.5 leading-relaxed text-slate-500 dark:text-slate-400">
                 Explore thousands of verified vacancies, build your professional CV, and
@@ -146,7 +147,7 @@ export default function RoleSelectionView() {
               </div>
 
               <h3 className="font-extrabold text-base text-slate-900 dark:text-white">
-                I want to hire employees
+                {t(lang, "hiringTalent")}
               </h3>
               <p className="text-xs mt-1.5 leading-relaxed text-slate-500 dark:text-slate-400">
                 Post job openings, screen qualified Ethiopian candidates, review CVs, and
@@ -178,17 +179,17 @@ export default function RoleSelectionView() {
             onClick={handleContinue}
             className="w-full py-4 px-6 rounded-2xl font-black text-sm text-white bg-[#0A2540] hover:bg-[#07192C] dark:bg-[#F59E0B] dark:hover:bg-[#D97706] dark:text-[#0A2540] shadow-lg shadow-[#0A2540]/20 dark:shadow-[#F59E0B]/20 flex items-center justify-center gap-2 transition-all cursor-pointer hover:scale-[1.01]"
           >
-            <span>Continue as {selected === "seeker" ? "Job Seeker" : "Employer"}</span>
+            <span>{t(lang, "continueBtn")} ({selected === "seeker" ? t(lang, "jobSeeker") : t(lang, "employer")})</span>
             <ArrowRight className="w-4 h-4 text-[#F59E0B] dark:text-[#0A2540]" />
           </button>
 
           <div className="text-center">
-            <span className="text-xs" style={{ color: "var(--text-muted)" }}>Already have an account? </span>
+            <span className="text-xs" style={{ color: "var(--text-muted)" }}>{t(lang, "alreadyHaveAccount")} </span>
             <button
               onClick={() => setTab("signin")}
-              className="text-xs font-bold text-[#F59E0B] hover:underline"
+              className="text-xs font-bold text-[#F59E0B] hover:underline cursor-pointer"
             >
-              Sign In
+              {t(lang, "signIn")}
             </button>
           </div>
         </div>

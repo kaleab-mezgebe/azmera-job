@@ -2,6 +2,7 @@
 
 import React, { useState } from "react";
 import { useApp } from "@/context/AppContext";
+import { t, tCategory, tJobType, tWorkplaceType } from "@/lib/i18n";
 import { MOCK_CATEGORIES, ETHIOPIAN_LOCATIONS } from "@/data/mockData";
 import { BASE_PATH } from "@/lib/constants";
 import {
@@ -38,6 +39,7 @@ export default function SeekerDashboardView() {
     isJobSaved,
     setSearchQuery,
     setSelectedLocation,
+    lang,
   } = useApp();
 
   const [localSearch, setLocalSearch] = useState("");
@@ -88,15 +90,15 @@ export default function SeekerDashboardView() {
         <div className="relative z-10 max-w-2xl space-y-3">
           <div className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-white/10 text-[#F59E0B] text-xs font-bold backdrop-blur-xs border border-[#F59E0B]/20">
             <Sparkles className="w-3.5 h-3.5" />
-            <span>Azmera Jobs • Your Trusted Partner in Jobs</span>
+            <span>Azmera Jobs • {t(lang, "tagline")}</span>
           </div>
 
           <h1 className="text-2xl sm:text-4xl font-black tracking-tight">
-            Selam, {seeker.name.split(" ")[0]}! 👋
+            {t(lang, "welcome")}, {seeker.name.split(" ")[0]}! 👋
           </h1>
           <p className="text-xs sm:text-sm text-slate-200 leading-relaxed">
-            There are <strong className="font-bold underline text-[#F59E0B]">{jobs.length} verified vacancies</strong>{" "}
-            matching your profile in Addis Ababa and surrounding hubs.
+            <strong className="font-bold underline text-[#F59E0B]">{jobs.length}</strong>{" "}
+            {t(lang, "showingJobs")}
           </p>
 
           {/* Quick Search */}
@@ -108,7 +110,7 @@ export default function SeekerDashboardView() {
               <Search className="w-4 h-4 text-[#F59E0B] shrink-0" />
               <input
                 type="text"
-                placeholder="Search job title, skill (e.g. Next.js, Python)..."
+                placeholder={t(lang, "searchPlaceholder")}
                 value={localSearch}
                 onChange={(e) => setLocalSearch(e.target.value)}
                 className="w-full text-xs text-[#0A2540] outline-none"
@@ -121,7 +123,7 @@ export default function SeekerDashboardView() {
                 onChange={(e) => setLocalLocation(e.target.value)}
                 className="w-full text-xs text-[#0A2540] outline-none cursor-pointer"
               >
-                <option value="">All Locations</option>
+                <option value="">{t(lang, "allLocations")}</option>
                 {ETHIOPIAN_LOCATIONS.filter((l) => !l.includes("All Locations")).map(
                   (loc) => (
                     <option key={loc} value={loc}>
@@ -135,7 +137,7 @@ export default function SeekerDashboardView() {
               type="submit"
               className="px-5 py-2.5 bg-[#F59E0B] hover:bg-[#D97706] text-[#0A2540] font-black text-xs rounded-xl shadow-xs transition-colors shrink-0"
             >
-              Search
+              {t(lang, "findJobs")}
             </button>
           </form>
         </div>
@@ -149,7 +151,7 @@ export default function SeekerDashboardView() {
           style={{ background: "var(--surface)", borderColor: "var(--border)" }}
         >
           <div className="flex items-center justify-between">
-            <span className="text-xs font-semibold" style={{ color: "var(--text-muted)" }}>Total Applied</span>
+            <span className="text-xs font-semibold" style={{ color: "var(--text-muted)" }}>{t(lang, "totalApplied")}</span>
             <div className="w-8 h-8 rounded-lg flex items-center justify-center" style={{ background: "var(--bg)", color: "var(--text)" }}>
               <FileCheck2 className="w-4 h-4" />
             </div>
@@ -158,7 +160,7 @@ export default function SeekerDashboardView() {
             {applications.length}
           </div>
           <span className="text-[11px] font-medium flex items-center gap-1 mt-1" style={{ color: "var(--primary)" }}>
-            Active candidacies <ChevronRight className="w-3 h-3" />
+            {t(lang, "activeCandidacies")} <ChevronRight className="w-3 h-3" />
           </span>
         </div>
 
@@ -168,7 +170,7 @@ export default function SeekerDashboardView() {
           style={{ background: "var(--surface)", borderColor: "var(--border)" }}
         >
           <div className="flex items-center justify-between">
-            <span className="text-xs font-semibold" style={{ color: "var(--text-muted)" }}>Under Review</span>
+            <span className="text-xs font-semibold" style={{ color: "var(--text-muted)" }}>{t(lang, "underReview")}</span>
             <div className="w-8 h-8 rounded-lg bg-blue-50 text-blue-600 flex items-center justify-center">
               <Clock className="w-4 h-4" />
             </div>
@@ -177,7 +179,7 @@ export default function SeekerDashboardView() {
             {underReviewCount}
           </div>
           <span className="text-[11px] text-blue-600 font-medium mt-1 block">
-            HR Screening phase
+            {t(lang, "hrScreening")}
           </span>
         </div>
 
@@ -187,7 +189,7 @@ export default function SeekerDashboardView() {
           style={{ background: "var(--surface)", borderColor: "var(--border)" }}
         >
           <div className="flex items-center justify-between">
-            <span className="text-xs font-semibold" style={{ color: "var(--text-muted)" }}>Shortlisted</span>
+            <span className="text-xs font-semibold" style={{ color: "var(--text-muted)" }}>{t(lang, "shortlisted")}</span>
             <div className="w-8 h-8 rounded-lg badge-green flex items-center justify-center">
               <CheckCircle2 className="w-4 h-4" style={{ color: "var(--primary)" }} />
             </div>
@@ -196,7 +198,7 @@ export default function SeekerDashboardView() {
             {shortlistedCount}
           </div>
           <span className="text-[11px] font-medium mt-1 block" style={{ color: "var(--primary)" }}>
-            Passed qualifications
+            {t(lang, "passedQualifications")}
           </span>
         </div>
 
@@ -206,7 +208,7 @@ export default function SeekerDashboardView() {
           style={{ background: "var(--surface)", borderColor: "var(--border)" }}
         >
           <div className="flex items-center justify-between">
-            <span className="text-xs font-semibold" style={{ color: "var(--text-muted)" }}>Interviews</span>
+            <span className="text-xs font-semibold" style={{ color: "var(--text-muted)" }}>{t(lang, "interviews")}</span>
             <div className="w-8 h-8 rounded-lg bg-amber-50 text-amber-700 flex items-center justify-center">
               <CalendarCheck className="w-4 h-4" />
             </div>
@@ -215,7 +217,7 @@ export default function SeekerDashboardView() {
             {interviewCount}
           </div>
           <span className="text-[11px] text-amber-700 font-bold mt-1 block">
-            Action required
+            {t(lang, "actionRequired")}
           </span>
         </div>
       </div>
@@ -249,7 +251,7 @@ export default function SeekerDashboardView() {
 
           <div>
             <h3 className="text-sm font-extrabold" style={{ color: "var(--text)" }}>
-              Profile Strength: Excellent
+              {t(lang, "profileStrength")}: {seeker.profileCompletion}%
             </h3>
             <p className="text-xs mt-0.5" style={{ color: "var(--text-muted)" }}>
               Add your portfolio link and university honors to achieve 100% visibility to
@@ -262,7 +264,7 @@ export default function SeekerDashboardView() {
           onClick={() => setTab("profile")}
           className="px-4 py-2 rounded-xl bg-[#0A2540] hover:bg-[#07192C] dark:bg-[#F59E0B] dark:hover:bg-[#D97706] text-white dark:text-[#0A2540] font-bold text-xs transition-colors shrink-0 shadow-xs cursor-pointer"
         >
-          Complete Profile
+          {t(lang, "completeProfile")}
         </button>
       </div>
 
@@ -271,17 +273,17 @@ export default function SeekerDashboardView() {
         <div className="flex items-center justify-between mb-4">
           <div>
             <span className="text-[11px] font-bold text-[#0A2540] dark:text-[#FBBF24] uppercase tracking-wider">
-              Matches your skills
+              {t(lang, "matchesYourSkills")}
             </span>
             <h2 className="text-xl font-extrabold text-slate-900 dark:text-white">
-              Recommended Vacancies For You
+              {t(lang, "recommendedForYou")}
             </h2>
           </div>
           <button
             onClick={() => setTab("search")}
             className="text-xs font-bold text-[#0A2540] dark:text-[#F59E0B] hover:underline flex items-center gap-1 cursor-pointer"
           >
-            <span>See All</span>
+            <span>{t(lang, "seeAll")}</span>
             <ChevronRight className="w-3.5 h-3.5" />
           </button>
         </div>

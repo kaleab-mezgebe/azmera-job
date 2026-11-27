@@ -2,9 +2,11 @@
 
 import React, { useState } from "react";
 import { useApp } from "@/context/AppContext";
+import { t, tCategory, tWorkplaceType, tJobType } from "@/lib/i18n";
 import { MOCK_CATEGORIES, ETHIOPIAN_LOCATIONS } from "@/data/mockData";
 import { BASE_PATH } from "@/lib/constants";
 import { stripRichFormatting } from "@/components/common/RichDocumentRenderer";
+import FeatureQuickHub from "@/components/common/FeatureQuickHub";
 import {
   Search,
   MapPin,
@@ -42,9 +44,9 @@ import {
 
 export default function LandingView() {
   const {
+    role,
     jobs,
     candidates,
-    setRole,
     setTab,
     selectJob,
     toggleSaveJob,
@@ -56,7 +58,18 @@ export default function LandingView() {
     selectedCategory,
     setSelectedCategory,
     showToast,
+    openPaymentModal,
+    lang,
   } = useApp();
+
+  const goEmployerTab = (targetTab: string, customMsg?: string) => {
+    if (role === "employer") {
+      setTab(targetTab);
+    } else {
+      showToast(customMsg || "Please sign in with an Employer account to continue.", "info");
+      setTab("signin");
+    }
+  };
 
   const [localSearch, setLocalSearch] = useState(searchQuery);
   const [localLocation, setLocalLocation] = useState(
@@ -147,22 +160,22 @@ export default function LandingView() {
           {/* Top Pill Tag - Exactly like TalentHub #1 Job Portal Platform */}
           <div className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-[#FFF4ED] dark:bg-[#F59E0B]/15 border border-[#FFE1CF] dark:border-[#F59E0B]/30 text-xs font-bold text-[#EA580C] dark:text-[#FBBF24] shadow-xs mb-6">
             <span className="text-[#EA580C] dark:text-[#FBBF24]">✦</span>
-            <span>#1 JOB PORTAL PLATFORM 2026 • ETHIOPIA</span>
+            <span>{t(lang, "heroBadge")}</span>
           </div>
 
           {/* Centered High-Impact Headline with Underline Bar */}
           <h1 className="text-4xl sm:text-6xl lg:text-7xl font-black text-[#0A2540] dark:text-white tracking-tight leading-[1.15] max-w-4xl mx-auto">
-            Find Your Dream Job
+            {t(lang, "heroTitlePart1")}
             <br />
             <span className="relative inline-block mt-2 sm:mt-3">
-              In Ethiopia
+              {t(lang, "heroTitlePart2")}
               <span className="absolute -bottom-1 sm:-bottom-2 left-0 right-0 h-2 sm:h-3 bg-[#F59E0B] rounded-full" />
             </span>
           </h1>
 
           {/* Centered Subtitle */}
           <p className="text-sm sm:text-base md:text-lg max-w-2xl mx-auto mt-6 text-slate-600 dark:text-slate-300 font-normal leading-relaxed">
-            Discover thousands of verified opportunities from top companies across every industry. Connecting talent with opportunity with transparent ETB salaries.
+            {t(lang, "heroSubtitle")}
           </p>
 
           {/* Centerpiece: The Floating Search Capsule (3 distinct fields + orange button) */}
@@ -175,7 +188,7 @@ export default function LandingView() {
               <Search className="w-5 h-5 text-slate-400 shrink-0" />
               <input
                 type="text"
-                placeholder="Job title or keyword"
+                placeholder={t(lang, "heroSearchPlaceholder")}
                 value={localSearch}
                 onChange={(e) => setLocalSearch(e.target.value)}
                 className="w-full bg-transparent text-sm sm:text-base text-slate-900 dark:text-white placeholder:text-slate-400 outline-none font-medium"
@@ -203,7 +216,7 @@ export default function LandingView() {
                 className="w-full bg-transparent text-sm sm:text-base text-slate-800 dark:text-slate-200 outline-none cursor-pointer font-medium"
               >
                 <option value="" className="text-slate-900 bg-white dark:bg-[#101E33] dark:text-white">
-                  City or remote
+                  {t(lang, "heroLocationPlaceholder")}
                 </option>
                 {ETHIOPIAN_LOCATIONS.filter((l) => !l.includes("All Locations")).map(
                   (loc) => (
@@ -231,7 +244,7 @@ export default function LandingView() {
                 className="w-full bg-transparent text-sm sm:text-base text-slate-800 dark:text-slate-200 outline-none cursor-pointer font-medium"
               >
                 <option value="All Categories" className="text-slate-900 bg-white dark:bg-[#101E33] dark:text-white">
-                  All Categories
+                  {t(lang, "allCategories")}
                 </option>
                 {MOCK_CATEGORIES.map((cat) => (
                   <option
@@ -239,7 +252,7 @@ export default function LandingView() {
                     value={cat.name}
                     className="text-slate-900 bg-white dark:bg-[#101E33] dark:text-white"
                   >
-                    {cat.name}
+                    {tCategory(lang, cat.name)}
                   </option>
                 ))}
               </select>
@@ -250,14 +263,14 @@ export default function LandingView() {
               type="submit"
               className="w-full md:w-auto px-7 py-3.5 bg-gradient-to-r from-[#EA580C] to-[#F59E0B] hover:from-[#C2410C] hover:to-[#D97706] text-white font-extrabold text-sm sm:text-base rounded-xl md:rounded-full shadow-lg shadow-orange-500/25 flex items-center justify-center gap-2 cursor-pointer transition-all hover:scale-[1.02] shrink-0"
             >
-              <span>Search Jobs</span>
+              <span>{t(lang, "searchJobs")}</span>
               <ArrowRight className="w-4 h-4" />
             </button>
           </form>
 
           {/* Popular Search Suggestions */}
           <div className="mt-4 flex flex-wrap items-center justify-center gap-2 text-xs text-slate-600 dark:text-slate-400">
-            <span className="font-bold text-slate-700 dark:text-slate-300">Popular:</span>
+            <span className="font-bold text-slate-700 dark:text-slate-300">{t(lang, "popular")}</span>
             {[
               "Software & Next.js",
               "Skylight Hotel (124 Openings)",
@@ -291,7 +304,7 @@ export default function LandingView() {
                 4,200+
               </div>
               <div className="text-[11px] sm:text-xs font-bold uppercase tracking-widest text-slate-400 dark:text-slate-400 mt-1">
-                Active Jobs
+                {t(lang, "activeJobs")}
               </div>
             </div>
             <div className="py-4 px-3">
@@ -299,7 +312,7 @@ export default function LandingView() {
                 850+
               </div>
               <div className="text-[11px] sm:text-xs font-bold uppercase tracking-widest text-slate-400 dark:text-slate-400 mt-1">
-                Companies
+                {t(lang, "companies")}
               </div>
             </div>
             <div className="py-4 px-3">
@@ -307,7 +320,7 @@ export default function LandingView() {
                 92,000+
               </div>
               <div className="text-[11px] sm:text-xs font-bold uppercase tracking-widest text-slate-400 dark:text-slate-400 mt-1">
-                Job Seekers
+                {t(lang, "jobSeekersCount")}
               </div>
             </div>
             <div className="py-4 px-3">
@@ -315,7 +328,7 @@ export default function LandingView() {
                 94%
               </div>
               <div className="text-[11px] sm:text-xs font-bold uppercase tracking-widest text-slate-400 dark:text-slate-400 mt-1">
-                Success Rate
+                {t(lang, "successRate")}
               </div>
             </div>
           </div>
@@ -336,11 +349,11 @@ export default function LandingView() {
                     Azmera Job Connect
                   </span>
                   <span className="text-[10px] font-extrabold px-2 py-0.5 rounded-full bg-[#0A2540] text-[#F59E0B] dark:bg-[#F59E0B] dark:text-[#0A2540]">
-                    100% VERIFIED
+                    {t(lang, "verifiedOnly")}
                   </span>
                 </div>
                 <p className="text-xs text-slate-600 dark:text-slate-300 mt-1 max-w-md font-medium leading-relaxed">
-                  Fast-track your job application directly with our talent matching team for vacancies in Addis Ababa, Mekelle, Hawassa, and nationwide.
+                  {t(lang, "jobMatchDesc")}
                 </p>
               </div>
             </div>
@@ -353,19 +366,21 @@ export default function LandingView() {
                 className="flex-1 md:flex-initial px-5 py-3 rounded-2xl bg-[#0088cc] hover:bg-[#0077b5] text-white text-xs sm:text-sm font-extrabold flex items-center justify-center gap-2 shadow-md cursor-pointer transition-transform hover:scale-[1.02]"
               >
                 <Send className="w-4 h-4" />
-                <span>Apply on Telegram</span>
+                <span>{t(lang, "applyTelegram")}</span>
               </a>
               <button
-                onClick={() => {
-                  setRole("employer");
-                  setTab("post-job");
-                }}
+                onClick={() => goEmployerTab("post-job", "Sign in with an Employer account to post a job.")}
                 className="flex-1 md:flex-initial px-5 py-3 rounded-2xl bg-[#0A2540] hover:bg-[#07192C] text-white text-xs sm:text-sm font-extrabold flex items-center justify-center gap-2 shadow-md cursor-pointer transition-transform hover:scale-[1.02]"
               >
                 <Building2 className="w-4 h-4 text-[#F59E0B]" />
-                <span>Post a Job</span>
+                <span>{t(lang, "postJobNavy")}</span>
               </button>
             </div>
+          </div>
+
+          {/* Core Feature Launcher & Ethiopian Usability Hub */}
+          <div className="mt-12 text-left">
+            <FeatureQuickHub />
           </div>
         </div>
       </section>
@@ -374,7 +389,7 @@ export default function LandingView() {
       <section className="py-10 border-b border-slate-200 dark:border-slate-800 bg-white dark:bg-[#070F1A]">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <p className="text-center text-xs font-extrabold uppercase tracking-widest text-slate-400 dark:text-slate-500 mb-6">
-            TRUSTED BY ETHIOPIA&apos;S INDUSTRY LEADERS &amp; GLOBAL DEVELOPMENT PARTNERS
+            {t(lang, "trustedBy")}
           </p>
 
           <div className="grid grid-cols-2 sm:grid-cols-4 lg:grid-cols-6 gap-4 items-center justify-center">
@@ -414,13 +429,13 @@ export default function LandingView() {
         <div className="text-center max-w-3xl mx-auto mb-12 space-y-2">
           <div className="inline-flex items-center gap-2 px-3.5 py-1 rounded-full bg-[#0A2540]/5 dark:bg-[#F59E0B]/10 text-xs font-bold text-[#0A2540] dark:text-[#FBBF24]">
             <Zap className="w-3.5 h-3.5 text-[#F59E0B]" />
-            <span>THE MODERN RECRUITMENT STANDARD</span>
+            <span>{t(lang, "modernRecruitmentStandard")}</span>
           </div>
           <h2 className="text-2xl sm:text-4xl font-black text-slate-900 dark:text-white tracking-tight">
-            Why Top Ethiopian Employers &amp; Talent Choose Azmera
+            {t(lang, "recruitmentAdvantageTitle")}
           </h2>
           <p className="text-sm text-slate-600 dark:text-slate-400">
-            A purpose-built platform engineered to eliminate ghost jobs, accelerate candidate screening, and offer 100% salary transparency.
+            {t(lang, "recruitmentAdvantageSubtitle")}
           </p>
         </div>
 
@@ -433,21 +448,21 @@ export default function LandingView() {
                   ⚡
                 </div>
                 <span className="px-3 py-1 rounded-full bg-[#F59E0B] text-[#0A2540] font-black text-xs">
-                  EXCLUSIVE FEATURE
+                  {t(lang, "verifiedOnly")}
                 </span>
               </div>
               <h3 className="text-xl sm:text-2xl font-black text-slate-900 dark:text-white">
-                Direct Agent Screening &amp; Fast-Track Application
+                {t(lang, "directScreeningTitle")}
               </h3>
               <p className="text-xs sm:text-sm text-slate-700 dark:text-slate-300 leading-relaxed font-normal max-w-xl">
-                Skip the resume black hole. For direct customer orders (such as hospitality staff at Skylight, cashier ticketing in Mekelle, or restaurant hosts in 22 Mazoria), candidates apply directly to Azmera via Telegram (<code className="text-amber-800 dark:text-amber-300 font-bold">@AzmeraJobConnect</code>) or direct phone, getting matched with hiring managers in under 48 hours.
+                {t(lang, "directScreeningDesc")}
               </p>
             </div>
 
             <div className="pt-4 border-t border-amber-200 dark:border-amber-900/60 flex flex-wrap items-center justify-between gap-3">
               <div className="flex items-center gap-2 text-xs font-bold text-amber-900 dark:text-amber-200">
                 <CheckCircle2 className="w-4 h-4 text-emerald-600" />
-                <span>Zero agency fee for job seekers • Fast telephone screening</span>
+                <span>{t(lang, "zeroAgencyFee")}</span>
               </div>
               <button
                 onClick={() => {
@@ -456,7 +471,7 @@ export default function LandingView() {
                 }}
                 className="px-4 py-2 rounded-xl bg-[#0A2540] text-white text-xs font-bold hover:bg-[#07192C] flex items-center gap-1.5 cursor-pointer shadow-xs"
               >
-                <span>View Fast-Track Openings</span>
+                <span>{t(lang, "viewFastTrack")}</span>
                 <ArrowRight className="w-3.5 h-3.5 text-[#F59E0B]" />
               </button>
             </div>
@@ -469,10 +484,10 @@ export default function LandingView() {
                 <Award className="w-6 h-6" />
               </div>
               <h3 className="text-lg sm:text-xl font-black text-slate-900 dark:text-white">
-                Guaranteed ETB Salary Transparency
+                {t(lang, "salaryTransparencyTitle")}
               </h3>
               <p className="text-xs sm:text-sm text-slate-600 dark:text-slate-400 leading-relaxed">
-                Every vacancy mandates clear monthly compensation in ETB. No more hidden compensation or awkward final interviews.
+                {t(lang, "salaryTransparencyDesc")}
               </p>
             </div>
 
@@ -493,16 +508,16 @@ export default function LandingView() {
                 W
               </div>
               <h3 className="text-lg sm:text-xl font-black text-slate-900 dark:text-white">
-                Microsoft Word-Style Job Circulars
+                {t(lang, "wordCircularTitle")}
               </h3>
               <p className="text-xs sm:text-sm text-slate-600 dark:text-slate-400 leading-relaxed">
-                Employers author complete vacancies with rich headings, bullets, tables, flyer banners, and downloadable official PDF circulars.
+                {t(lang, "wordCircularDesc")}
               </p>
             </div>
 
             <div className="flex items-center gap-2 text-xs font-bold text-slate-700 dark:text-slate-300">
               <FileCheck className="w-4 h-4 text-[#0078D4]" />
-              <span>Downloadable Terms of Reference (ToR)</span>
+              <span>{t(lang, "downloadToR")}</span>
             </div>
           </div>
 
@@ -518,10 +533,10 @@ export default function LandingView() {
                 </span>
               </div>
               <h3 className="text-xl sm:text-2xl font-black text-slate-900 dark:text-white">
-                Multi-Regional Coverage &amp; Local Languages
+                {t(lang, "multiRegionalTitle")}
               </h3>
               <p className="text-xs sm:text-sm text-slate-600 dark:text-slate-400 leading-relaxed max-w-xl">
-                Active employment pipelines serving Addis Ababa (Bole, Kazanchis, Summit 72), Mekelle (Tigray), Hawassa, and Dire Dawa with complete multilingual support in English, Amharic, and Tigrigna.
+                {t(lang, "multiRegionalDesc")}
               </p>
             </div>
 
@@ -552,7 +567,7 @@ export default function LandingView() {
                 HANDPICKED VERIFIED OPENINGS
               </span>
               <h2 className="text-2xl sm:text-3xl font-black text-slate-900 dark:text-white mt-1">
-                Featured Vacancies in Ethiopia
+                {t(lang, "featuredVacancies")}
               </h2>
             </div>
 
@@ -645,7 +660,7 @@ export default function LandingView() {
                     <div className="flex flex-wrap gap-1.5 mt-3.5">
                       {job.directAgentApply && (
                         <span className="px-2.5 py-1 rounded-lg text-[11px] font-black bg-[#F59E0B] text-[#0A2540] flex items-center gap-1 shadow-2xs">
-                          ⚡ Direct Apply (ናባይ ቀጥታ)
+                          ⚡ {t(lang, "directApplyBadge")}
                         </span>
                       )}
                       {job.openingsCount && (
@@ -654,10 +669,10 @@ export default function LandingView() {
                         </span>
                       )}
                       <span className="px-2.5 py-1 rounded-lg text-[11px] font-semibold bg-slate-100 dark:bg-slate-800 text-slate-700 dark:text-slate-300 border border-slate-200 dark:border-slate-700">
-                        {job.type}
+                        {tJobType(lang, job.type)}
                       </span>
                       <span className="px-2.5 py-1 rounded-lg text-[11px] font-semibold bg-blue-50 dark:bg-blue-950/50 text-[#0A2540] dark:text-blue-300 border border-blue-200/70 dark:border-blue-900/60">
-                        {job.workplaceType}
+                        {tWorkplaceType(lang, job.workplaceType)}
                       </span>
                     </div>
                   </div>
@@ -666,7 +681,7 @@ export default function LandingView() {
                   <div className="pt-4 mt-4 border-t border-slate-100 dark:border-slate-800 flex items-center justify-between">
                     <div>
                       <span className="text-[10px] text-slate-500 dark:text-slate-400 block font-semibold uppercase tracking-wider">
-                        Monthly ETB Salary
+                        {t(lang, "salary")}
                       </span>
                       <span className="text-xs sm:text-sm font-black text-slate-900 dark:text-[#FBBF24]">
                         {job.salaryMin.toLocaleString()} - {job.salaryMax.toLocaleString()}{" "}
@@ -680,7 +695,7 @@ export default function LandingView() {
                       onClick={() => selectJob(job.id)}
                       className="px-4 py-2 rounded-xl bg-[#0A2540] hover:bg-[#071A2E] text-white text-xs font-bold transition-all shadow-xs hover:shadow-md flex items-center gap-1.5 cursor-pointer hover:scale-[1.02]"
                     >
-                      <span>View &amp; Apply</span>
+                      <span>{t(lang, "viewDetails")}</span>
                       <ArrowRight className="w-3.5 h-3.5 text-[#F59E0B]" />
                     </button>
                   </div>
@@ -718,10 +733,7 @@ export default function LandingView() {
           </div>
 
           <button
-            onClick={() => {
-              setRole("employer");
-              setTab("applicants");
-            }}
+            onClick={() => goEmployerTab("applicants", "Sign in with an Employer account to view candidates.")}
             className="text-xs sm:text-sm font-bold text-[#0A2540] dark:text-[#F59E0B] hover:underline flex items-center gap-1 self-start sm:self-auto cursor-pointer"
           >
             <span>View Full Talent Pipeline</span>
@@ -779,11 +791,7 @@ export default function LandingView() {
 
               <div className="pt-4 mt-4 border-t border-slate-100 dark:border-slate-800">
                 <button
-                  onClick={() => {
-                    setRole("employer");
-                    setTab("applicants");
-                    showToast(`Contacting recruiter regarding ${cand.name}`);
-                  }}
+                  onClick={() => goEmployerTab("applicants", `Sign in as an Employer to view ${cand.name}'s profile.`)}
                   className="w-full py-2.5 rounded-xl bg-slate-100 dark:bg-slate-800 hover:bg-[#0A2540] hover:text-white dark:hover:bg-[#F59E0B] dark:hover:text-[#0A2540] text-xs font-bold text-slate-800 dark:text-white transition-colors cursor-pointer"
                 >
                   Request Candidate Profile
@@ -802,10 +810,10 @@ export default function LandingView() {
               STREAMLINED TWO-SIDED PLATFORM
             </span>
             <h2 className="text-2xl sm:text-4xl font-black text-slate-900 dark:text-white">
-              How Azmera Jobs Delivers Results
+              {t(lang, "howItWorksTitle")}
             </h2>
             <p className="text-sm text-slate-600 dark:text-slate-400">
-              Select your path to see how our end-to-end matchmaking operates.
+              {t(lang, "howItWorksSubtitle")}
             </p>
 
             {/* Audience Switcher Tabs */}
@@ -818,7 +826,7 @@ export default function LandingView() {
                     : "text-slate-600 dark:text-slate-400"
                     }`}
                 >
-                  For Job Seekers
+                  {t(lang, "jobSeeker")}
                 </button>
                 <button
                   onClick={() => setActiveAudienceTab("employer")}
@@ -827,7 +835,7 @@ export default function LandingView() {
                     : "text-slate-600 dark:text-slate-400"
                     }`}
                 >
-                  For Employers &amp; HR Teams
+                  {t(lang, "forEmployers")}
                 </button>
               </div>
             </div>
@@ -991,6 +999,237 @@ export default function LandingView() {
         </div>
       </section>
 
+      {/* ── PRICING & PAYMENT GATEWAYS (TELEBIRR, CBE, M-PESA) ── */}
+      <section id="pricing" className="py-16 md:py-20 border-t border-slate-200 dark:border-slate-800 bg-slate-50/50 dark:bg-[#070F1A]">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 space-y-12">
+          {/* Header */}
+          <div className="text-center max-w-2xl mx-auto space-y-2">
+            <span className="text-xs font-extrabold text-[#0A2540] dark:text-[#F59E0B] uppercase tracking-wider">
+              ETHIOPIAN MONETIZATION &amp; PAYMENT GATEWAYS
+            </span>
+            <h2 className="text-2xl sm:text-4xl font-black text-slate-900 dark:text-white">
+              {t(lang, "pricingTitle")}
+            </h2>
+            <p className="text-sm text-slate-600 dark:text-slate-400">
+              {t(lang, "pricingSubtitle")}
+            </p>
+          </div>
+
+          {/* 3 Payment Methods Visual Banner */}
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+            {/* Telebirr Card */}
+            <div className="p-5 rounded-3xl bg-white dark:bg-[#101E33] border border-emerald-500/30 shadow-xs flex items-center justify-between">
+              <div className="flex items-center gap-3.5">
+                <div className="w-12 h-12 rounded-2xl bg-[#00843D] text-white flex items-center justify-center font-black text-sm shadow-md shadow-[#00843D]/20">
+                  tb
+                </div>
+                <div>
+                  <div className="flex items-center gap-1.5">
+                    <h3 className="font-extrabold text-sm text-slate-900 dark:text-white">telebirr</h3>
+                    <span className="text-[10px] font-bold text-emerald-600 bg-emerald-50 dark:bg-emerald-950 px-1.5 py-0.2 rounded">Fast</span>
+                  </div>
+                  <p className="text-[11px] text-slate-500 dark:text-slate-400">
+                    Merchant ID: <strong>884219</strong> • *127#
+                  </p>
+                </div>
+              </div>
+              <span className="text-xs font-bold text-emerald-600 dark:text-emerald-400">
+                SuperApp QR
+              </span>
+            </div>
+
+            {/* CBE Bank Card */}
+            <div className="p-5 rounded-3xl bg-white dark:bg-[#101E33] border border-pink-500/30 shadow-xs flex items-center justify-between">
+              <div className="flex items-center gap-3.5">
+                <div className="w-12 h-12 rounded-2xl bg-[#8A1538] text-white flex items-center justify-center font-black text-sm shadow-md shadow-[#8A1538]/20">
+                  CBE
+                </div>
+                <div>
+                  <div className="flex items-center gap-1.5">
+                    <h3 className="font-extrabold text-sm text-slate-900 dark:text-white">CBE Bank &amp; CBE Birr</h3>
+                    <span className="text-[10px] font-bold text-[#8A1538] bg-pink-50 dark:bg-pink-950 px-1.5 py-0.2 rounded">#1 Bank</span>
+                  </div>
+                  <p className="text-[11px] text-slate-500 dark:text-slate-400">
+                    Acc: <strong>1000 4829 19283</strong>
+                  </p>
+                </div>
+              </div>
+              <span className="text-xs font-bold text-[#8A1538] dark:text-pink-400">
+                Mobile &amp; USSD
+              </span>
+            </div>
+
+            {/* M-Pesa Card */}
+            <div className="p-5 rounded-3xl bg-white dark:bg-[#101E33] border border-green-500/30 shadow-xs flex items-center justify-between">
+              <div className="flex items-center gap-3.5">
+                <div className="w-12 h-12 rounded-2xl bg-[#00B04F] text-white flex items-center justify-center font-black text-sm shadow-md shadow-[#00B04F]/20">
+                  MP
+                </div>
+                <div>
+                  <div className="flex items-center gap-1.5">
+                    <h3 className="font-extrabold text-sm text-slate-900 dark:text-white">M-Pesa Safaricom</h3>
+                    <span className="text-[10px] font-bold text-green-600 bg-green-50 dark:bg-green-950 px-1.5 py-0.2 rounded">1-Tap STK</span>
+                  </div>
+                  <p className="text-[11px] text-slate-500 dark:text-slate-400">
+                    Till / Shortcode: <strong>782100</strong>
+                  </p>
+                </div>
+              </div>
+              <span className="text-xs font-bold text-green-600 dark:text-green-400">
+                Phone Prompt
+              </span>
+            </div>
+          </div>
+
+          {/* Pricing Grid */}
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+            {/* Standard Post */}
+            <div className="p-6 rounded-3xl bg-white dark:bg-[#101E33] border border-slate-200 dark:border-slate-800 shadow-xs flex flex-col justify-between space-y-4">
+              <div className="space-y-3">
+                <span className="text-[10px] font-bold uppercase tracking-wider text-slate-400">
+                  {t(lang, "standardPlan")}
+                </span>
+                <h3 className="text-lg font-black text-slate-900 dark:text-white">
+                  Standard Vacancy
+                </h3>
+                <div className="flex items-baseline gap-1">
+                  <span className="text-3xl font-black text-slate-900 dark:text-white">500</span>
+                  <span className="text-xs font-bold text-slate-500">ETB / 30 Days</span>
+                </div>
+                <p className="text-xs text-slate-500 dark:text-slate-400 leading-relaxed">
+                  Ideal for single role hiring across cafes, retail, or standard office positions in Ethiopia.
+                </p>
+                <ul className="space-y-2 text-xs pt-2">
+                  <li className="flex items-center gap-2 text-slate-700 dark:text-slate-300">
+                    <CheckCircle2 className="w-4 h-4 text-emerald-500 shrink-0" />
+                    <span>Live on portal for 30 days</span>
+                  </li>
+                  <li className="flex items-center gap-2 text-slate-700 dark:text-slate-300">
+                    <CheckCircle2 className="w-4 h-4 text-emerald-500 shrink-0" />
+                    <span>Candidate application dashboard</span>
+                  </li>
+                  <li className="flex items-center gap-2 text-slate-700 dark:text-slate-300">
+                    <CheckCircle2 className="w-4 h-4 text-emerald-500 shrink-0" />
+                    <span>Pay via Telebirr, CBE, or M-Pesa</span>
+                  </li>
+                </ul>
+              </div>
+
+              <button
+                onClick={() =>
+                  openPaymentModal({
+                    amount: 500,
+                    purpose: "job_post_standard",
+                    purposeLabel: "Standard Vacancy Post (500 ETB)",
+                    title: "Standard Post Payment",
+                  })
+                }
+                className="w-full py-3 rounded-2xl bg-slate-100 dark:bg-slate-800 hover:bg-[#0A2540] hover:text-white text-xs font-bold text-slate-900 dark:text-white transition-colors cursor-pointer"
+              >
+                {t(lang, "chooseStandard")}
+              </button>
+            </div>
+
+            {/* Featured Post (Most Popular) */}
+            <div className="p-6 rounded-3xl bg-white dark:bg-[#101E33] border-2 border-amber-400 shadow-xl shadow-amber-500/10 flex flex-col justify-between space-y-4 relative ring-2 ring-amber-400/20">
+              <div className="absolute -top-3 left-1/2 -translate-x-1/2 px-3 py-1 bg-amber-500 text-white text-[10px] font-black rounded-full uppercase shadow-md">
+                {t(lang, "mostPopular")}
+              </div>
+              <div className="space-y-3">
+                <span className="text-[10px] font-bold uppercase tracking-wider text-amber-600 dark:text-amber-400">
+                  {t(lang, "featuredPlan")}
+                </span>
+                <h3 className="text-lg font-black text-slate-900 dark:text-white">
+                  Featured + Fast-Track
+                </h3>
+                <div className="flex items-baseline gap-1">
+                  <span className="text-3xl font-black text-amber-600 dark:text-amber-400">1,500</span>
+                  <span className="text-xs font-bold text-slate-500">ETB / 30 Days</span>
+                </div>
+                <p className="text-xs text-slate-500 dark:text-slate-400 leading-relaxed">
+                  Maximum visibility with gold badge, pinned to the top of category searches and 48-hour matching.
+                </p>
+                <ul className="space-y-2 text-xs pt-2">
+                  <li className="flex items-center gap-2 text-slate-700 dark:text-slate-300">
+                    <CheckCircle2 className="w-4 h-4 text-emerald-500 shrink-0" />
+                    <span>🔥 Gold FEATURED badge pinned at top</span>
+                  </li>
+                  <li className="flex items-center gap-2 text-slate-700 dark:text-slate-300">
+                    <CheckCircle2 className="w-4 h-4 text-emerald-500 shrink-0" />
+                    <span>Telegram @AzmeraJobConnect alert (92k+ reach)</span>
+                  </li>
+                  <li className="flex items-center gap-2 text-slate-700 dark:text-slate-300">
+                    <CheckCircle2 className="w-4 h-4 text-emerald-500 shrink-0" />
+                    <span>48-Hour Talent Matching by Azmera</span>
+                  </li>
+                </ul>
+              </div>
+
+              <button
+                onClick={() =>
+                  openPaymentModal({
+                    amount: 1500,
+                    purpose: "job_post_featured",
+                    purposeLabel: "Featured Vacancy + Fast-Track (1,500 ETB)",
+                    title: "Featured Post Payment",
+                  })
+                }
+                className="w-full py-3 rounded-2xl bg-[#F59E0B] hover:bg-[#D97706] text-[#0A2540] text-xs font-black shadow-md shadow-[#F59E0B]/20 transition-all cursor-pointer"
+              >
+                Pay 1,500 ETB (Telebirr • CBE • M-Pesa)
+              </button>
+            </div>
+
+            {/* Omnichannel VIP Broadcast */}
+            <div className="p-6 rounded-3xl bg-white dark:bg-[#101E33] border border-slate-200 dark:border-slate-800 shadow-xs flex flex-col justify-between space-y-4">
+              <div className="space-y-3">
+                <span className="text-[10px] font-bold uppercase tracking-wider text-[#0A2540] dark:text-[#F59E0B]">
+                  {t(lang, "vipPlan")}
+                </span>
+                <h3 className="text-lg font-black text-slate-900 dark:text-white">
+                  VIP Mega Broadcast
+                </h3>
+                <div className="flex items-baseline gap-1">
+                  <span className="text-3xl font-black text-slate-900 dark:text-white">2,500</span>
+                  <span className="text-xs font-bold text-slate-500">ETB / Priority</span>
+                </div>
+                <p className="text-xs text-slate-500 dark:text-slate-400 leading-relaxed">
+                  Multi-lingual broadcast across Telegram and Facebook with 14-day replacement guarantee.
+                </p>
+                <ul className="space-y-2 text-xs pt-2">
+                  <li className="flex items-center gap-2 text-slate-700 dark:text-slate-300">
+                    <CheckCircle2 className="w-4 h-4 text-emerald-500 shrink-0" />
+                    <span>Trilingual broadcast (Amharic, Tigrigna, English)</span>
+                  </li>
+                  <li className="flex items-center gap-2 text-slate-700 dark:text-slate-300">
+                    <CheckCircle2 className="w-4 h-4 text-emerald-500 shrink-0" />
+                    <span>14-Day Free Candidate Replacement Guarantee</span>
+                  </li>
+                  <li className="flex items-center gap-2 text-slate-700 dark:text-slate-300">
+                    <CheckCircle2 className="w-4 h-4 text-emerald-500 shrink-0" />
+                    <span>Direct phone screening by Azmera team</span>
+                  </li>
+                </ul>
+              </div>
+
+              <button
+                onClick={() =>
+                  openPaymentModal({
+                    amount: 2500,
+                    purpose: "social_broadcast",
+                    purposeLabel: "VIP Omnichannel Broadcast (2,500 ETB)",
+                    title: "VIP Broadcast Payment",
+                  })
+                }
+                className="w-full py-3 rounded-2xl bg-[#0A2540] hover:bg-[#07192C] text-white dark:bg-slate-800 dark:hover:bg-slate-700 text-xs font-bold transition-colors cursor-pointer"
+              >
+                Pay 2,500 ETB (Telebirr • CBE • M-Pesa)
+              </button>
+            </div>
+          </div>
+        </div>
+      </section>
+
       {/* ── 8. TELEGRAM COMMUNITY & ENTERPRISE CTA BANNER ── */}
       <section className="bg-gradient-to-r from-[#0A2540] via-[#0D2947] to-[#0A2540] border-y border-[#F59E0B]/30 py-16 sm:py-20 text-white relative overflow-hidden">
         <div className="max-w-5xl mx-auto px-4 text-center space-y-6 relative z-10">
@@ -1000,11 +1239,11 @@ export default function LandingView() {
           </div>
 
           <h2 className="text-2xl sm:text-5xl font-black tracking-tight">
-            Ready to Accelerate Your Career or Scale Your Team?
+            {t(lang, "telegramBannerTitle")}
           </h2>
 
           <p className="text-sm sm:text-base text-slate-200 max-w-2xl mx-auto leading-relaxed">
-            Join over 92,000+ Ethiopian job seekers receiving daily verified alerts on Telegram, or partner with Azmera to recruit qualified professionals in under 48 hours.
+            {t(lang, "telegramBannerDesc")}
           </p>
 
           <div className="pt-2 flex flex-wrap justify-center items-center gap-3">
@@ -1012,7 +1251,7 @@ export default function LandingView() {
               onClick={() => setTab("role-selection")}
               className="px-8 py-4 bg-[#F59E0B] hover:bg-[#D97706] text-[#0A2540] font-black text-sm rounded-2xl shadow-xl transition-all cursor-pointer hover:scale-105"
             >
-              Get Started for Free
+              {t(lang, "getStarted")}
             </button>
 
             <a
@@ -1022,17 +1261,14 @@ export default function LandingView() {
               className="px-8 py-4 bg-[#0088cc] hover:bg-[#0077b5] text-white font-bold text-sm rounded-2xl transition-all shadow-md flex items-center gap-2 cursor-pointer hover:scale-105"
             >
               <Send className="w-4 h-4" />
-              <span>Join Telegram Channel (@AzmeraJobConnect)</span>
+              <span>{t(lang, "joinTelegramBtn")}</span>
             </a>
 
             <button
-              onClick={() => {
-                setRole("employer");
-                setTab("post-job");
-              }}
+              onClick={() => goEmployerTab("post-job", "Sign in as an Employer to post a job.")}
               className="px-8 py-4 bg-white/10 hover:bg-white/20 text-white font-bold text-sm rounded-2xl transition-all border border-white/30 cursor-pointer"
             >
-              Post a Vacancy
+              {t(lang, "postJobNavy")}
             </button>
           </div>
         </div>
@@ -1055,7 +1291,7 @@ export default function LandingView() {
                   Azmera<span className="text-[#F59E0B]">Jobs</span>
                 </span>
                 <p className="text-[10px] text-[#F59E0B] font-bold">
-                  YOUR TRUSTED PARTNER IN JOBS
+                  {t(lang, "tagline")}
                 </p>
               </div>
             </div>
@@ -1065,6 +1301,65 @@ export default function LandingView() {
             <div className="flex items-center gap-2 pt-1 text-slate-700 dark:text-slate-300">
               <Phone className="w-3.5 h-3.5 text-[#F59E0B]" />
               <span className="font-bold">+251 91 100 0000</span>
+            </div>
+
+            {/* Official Social Media Channels */}
+            <div className="pt-2">
+              <span className="text-[10px] font-bold uppercase tracking-wider text-slate-400 block mb-2">
+                Follow &amp; Connect
+              </span>
+              <div className="flex flex-wrap items-center gap-2">
+                {[
+                  {
+                    name: "Telegram",
+                    href: "https://t.me/AzmeraJobConnect",
+                    label: "TG",
+                    cls: "hover:bg-[#0088cc] hover:text-white hover:border-[#0088cc]",
+                  },
+                  {
+                    name: "Facebook",
+                    href: "https://facebook.com/AzmeraJobs",
+                    label: "FB",
+                    cls: "hover:bg-[#1877F2] hover:text-white hover:border-[#1877F2]",
+                  },
+                  {
+                    name: "LinkedIn",
+                    href: "https://linkedin.com/company/azmera-jobs",
+                    label: "IN",
+                    cls: "hover:bg-[#0A66C2] hover:text-white hover:border-[#0A66C2]",
+                  },
+                  {
+                    name: "WhatsApp",
+                    href: "https://wa.me/251911000000",
+                    label: "WA",
+                    cls: "hover:bg-[#25D366] hover:text-white hover:border-[#25D366]",
+                  },
+                  {
+                    name: "TikTok",
+                    href: "https://tiktok.com/@azmerajobs",
+                    label: "TT",
+                    cls: "hover:bg-slate-900 hover:text-white dark:hover:bg-white dark:hover:text-slate-900",
+                  },
+                  {
+                    name: "YouTube",
+                    href: "https://youtube.com/@azmerajobs",
+                    label: "YT",
+                    cls: "hover:bg-[#FF0000] hover:text-white hover:border-[#FF0000]",
+                  },
+                ].map((s) => (
+                  <a
+                    key={s.name}
+                    href={s.href}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    title={s.name}
+                    aria-label={`Azmera Jobs on ${s.name}`}
+                    className={`px-2.5 py-1.5 rounded-xl border border-slate-200 dark:border-slate-700 bg-slate-50 dark:bg-slate-800/80 text-[10px] font-black text-slate-700 dark:text-slate-200 transition-all duration-200 hover:-translate-y-0.5 shadow-2xs ${s.cls}`}
+                  >
+                    {s.label}
+                  </a>
+                ))}
+              </div>
             </div>
           </div>
 
@@ -1109,10 +1404,7 @@ export default function LandingView() {
             <ul className="space-y-2">
               <li>
                 <button
-                  onClick={() => {
-                    setRole("employer");
-                    setTab("post-job");
-                  }}
+                  onClick={() => goEmployerTab("post-job")}
                   className="hover:text-[#F59E0B] transition-colors"
                 >
                   Post a Vacancy (Word Mode)
@@ -1120,10 +1412,7 @@ export default function LandingView() {
               </li>
               <li>
                 <button
-                  onClick={() => {
-                    setRole("employer");
-                    setTab("employer-dashboard");
-                  }}
+                  onClick={() => goEmployerTab("employer-dashboard")}
                   className="hover:text-[#F59E0B] transition-colors"
                 >
                   Social Media Broadcast Center
@@ -1131,10 +1420,7 @@ export default function LandingView() {
               </li>
               <li>
                 <button
-                  onClick={() => {
-                    setRole("employer");
-                    setTab("applicants");
-                  }}
+                  onClick={() => goEmployerTab("applicants")}
                   className="hover:text-[#F59E0B] transition-colors"
                 >
                   Pre-Screened Talent Search
@@ -1153,7 +1439,7 @@ export default function LandingView() {
               <li>Hawassa (Industrial &amp; Tourism)</li>
               <li>Dire Dawa (Commercial &amp; Trade)</li>
               <li className="pt-2 text-[11px] text-[#F59E0B] font-bold">
-                Languages: English • አማርኛ • ትግርኛ • Oromoo
+                Languages: English • Amharic • Afaan Oromo • Tigrigna
               </li>
             </ul>
           </div>

@@ -226,10 +226,10 @@ export default function WordDocumentEditor({
     } else {
       calloutHtml = `
 <div class="p-4 my-3.5 rounded-2xl border-l-4 border-[#F59E0B] bg-amber-50/90 dark:bg-amber-950/40 text-amber-950 dark:text-amber-100 shadow-2xs text-xs sm:text-sm font-medium leading-relaxed">
-  <strong class="font-bold block mb-1">⚡ FAST-TRACK RECRUITMENT NOTICE (ናባይ ቀጥታ ኣመልክቱ)</strong>
+  <strong class="font-bold block mb-1">⚡ FAST-TRACK RECRUITMENT NOTICE</strong>
   Candidates may apply directly through Azmera Job Connect via Telegram (@AzmeraJobConnect) or Phone (+251 91 100 0000) for immediate interview scheduling.
 </div><p></p>`;
-      calloutMarkdown = `\n\n> ⚡ **FAST-TRACK RECRUITMENT NOTICE (ናባይ ቀጥታ ኣመልክቱ)**\n> Candidates may apply directly through Azmera Job Connect via Telegram (@AzmeraJobConnect) or Phone (+251 91 100 0000) for immediate interview scheduling.\n\n`;
+      calloutMarkdown = `\n\n> ⚡ **FAST-TRACK RECRUITMENT NOTICE**\n> Candidates may apply directly through Azmera Job Connect via Telegram (@AzmeraJobConnect) or Phone (+251 91 100 0000) for immediate interview scheduling.\n\n`;
     }
 
     if (viewMode === "visual" && canvasRef.current) {
@@ -696,7 +696,7 @@ export default function WordDocumentEditor({
               className="px-3 py-1.5 rounded-xl bg-amber-50 dark:bg-amber-950/40 hover:bg-amber-100 dark:hover:bg-amber-900/60 text-[#0A2540] dark:text-[#FBBF24] border border-amber-300 dark:border-amber-800 font-bold flex items-center gap-2 cursor-pointer"
             >
               <Flame className="w-4 h-4 text-[#D97706] dark:text-[#F59E0B]" />
-              <span>Insert Fast-Track Callout (ናባይ ቀጥታ)</span>
+              <span>Insert Fast-Track Callout</span>
             </button>
 
             <button

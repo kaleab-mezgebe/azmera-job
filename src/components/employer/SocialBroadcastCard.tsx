@@ -1,7 +1,8 @@
 "use client";
 
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { useApp } from "@/context/AppContext";
+import { t } from "@/lib/i18n";
 import {
   Share2,
   Copy,
@@ -17,9 +18,13 @@ import {
 } from "lucide-react";
 
 export default function SocialBroadcastCard() {
-  const { jobs, showToast, postNewJob } = useApp();
-  const [selectedLang, setSelectedLang] = useState<"ti" | "am" | "om" | "en">("ti");
+  const { jobs, showToast, postNewJob, openPaymentModal, lang } = useApp();
+  const [selectedLang, setSelectedLang] = useState<"ti" | "am" | "om" | "en">(lang);
+  useEffect(() => {
+    setSelectedLang(lang);
+  }, [lang]);
   const [copied, setCopied] = useState(false);
+  const [publishingTg, setPublishingTg] = useState(false);
   const [showQuickIntakeModal, setShowQuickIntakeModal] = useState(false);
 
   // Quick intake form state
@@ -120,6 +125,42 @@ export default function SocialBroadcastCard() {
     setTimeout(() => setCopied(false), 2500);
   };
 
+  const handlePublishTelegram = async () => {
+    setPublishingTg(true);
+    try {
+      const text = generateBroadcastText();
+      const res = await fetch("/api/broadcast", {
+        method: "POST",
+        credentials: "include",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ text, lang: selectedLang }),
+      });
+      const data = (await res.json()) as {
+        ok?: boolean;
+        error?: string;
+        delivered?: boolean;
+        queued?: boolean;
+        channelId?: string;
+      };
+      if (!res.ok || !data?.ok) {
+        showToast(data?.error || "Broadcast failed. Sign in as employer/admin.", "error");
+        return;
+      }
+      if (data.delivered) {
+        showToast(`Published live to ${data.channelId || "@AzmeraJobConnect"}!`, "success");
+      } else {
+        showToast(
+          `Broadcast logged! Add TELEGRAM_BOT_TOKEN in .env to auto-post to ${data.channelId || "@AzmeraJobConnect"}.`,
+          "info"
+        );
+      }
+    } catch {
+      showToast("Network error publishing broadcast.", "error");
+    } finally {
+      setPublishingTg(false);
+    }
+  };
+
   const handleQuickIntakeSubmit = (e: React.FormEvent) => {
     e.preventDefault();
     if (!jobTitle) return;
@@ -192,13 +233,42 @@ export default function SocialBroadcastCard() {
         </div>
 
         {/* Action Buttons */}
-        <div className="flex items-center gap-2.5">
+        <div className="flex items-center gap-2.5 flex-wrap">
+          <button
+            onClick={() =>
+              openPaymentModal({
+                sku: "social_broadcast_digest",
+                amount: 800,
+                purpose: "social_broadcast",
+                purposeLabel: "Sponsored Social Broadcast (Telegram @AzmeraJobConnect)",
+                title: "Launch Paid Telegram & FB Broadcast",
+                description: "Boost today's vacancy digest to 92,000+ job seekers across Addis Ababa, Mekelle, Hawassa via Telebirr, CBE Bank, or M-Pesa.",
+                onSuccess: () => {
+                  showToast("Broadcast payment verified! Post scheduled across Telegram & FB.", "success");
+                },
+              })
+            }
+            className="px-4 py-2.5 rounded-xl bg-emerald-600 hover:bg-emerald-700 text-white text-xs font-black shadow-md flex items-center gap-1.5 cursor-pointer transition-transform hover:scale-[1.02]"
+          >
+            <Sparkles className="w-4 h-4 text-[#F59E0B]" />
+            <span>Pay & Launch Broadcast (800 ETB)</span>
+          </button>
+
           <button
             onClick={() => setShowQuickIntakeModal(true)}
             className="px-4 py-2.5 rounded-xl bg-white/10 hover:bg-white/20 text-white text-xs font-bold border border-white/20 transition-all flex items-center gap-1.5 cursor-pointer"
           >
             <Plus className="w-4 h-4 text-[#F59E0B]" />
             <span>+ Quick Client Intake</span>
+          </button>
+
+          <button
+            onClick={handlePublishTelegram}
+            disabled={publishingTg}
+            className="px-4 py-2.5 rounded-xl bg-sky-500 hover:bg-sky-600 text-white text-xs font-extrabold shadow-md flex items-center gap-1.5 cursor-pointer transition-all disabled:opacity-60"
+          >
+            <Send className="w-3.5 h-3.5" />
+            <span>{publishingTg ? "Publishing..." : "Publish to Telegram"}</span>
           </button>
 
           <button
@@ -236,23 +306,23 @@ export default function SocialBroadcastCard() {
               { id: "am", label: "አማርኛ (Amharic)" },
               { id: "om", label: "Afaan Oromoo" },
               { id: "en", label: "English" },
-            ].map((lang) => (
+            ].map((opt) => (
               <button
-                key={lang.id}
-                onClick={() => setSelectedLang(lang.id as any)}
+                key={opt.id}
+                onClick={() => setSelectedLang(opt.id as any)}
                 className={`px-3 py-1 rounded-lg text-xs font-bold transition-all ${
-                  selectedLang === lang.id
+                  selectedLang === opt.id
                     ? "bg-[#F59E0B] text-[#0A2540] shadow-xs"
                     : "text-slate-300 hover:text-white"
                 }`}
               >
-                {lang.label}
+                {opt.label}
               </button>
             ))}
           </div>
         </div>
 
-        <div className="flex items-center gap-2">
+        <div className="flex flex-wrap items-center gap-2">
           <a
             href="https://t.me/AzmeraJobConnect"
             target="_blank"
@@ -260,7 +330,40 @@ export default function SocialBroadcastCard() {
             className="text-xs text-sky-300 hover:text-white flex items-center gap-1 hover:underline font-semibold"
           >
             <Send className="w-3 h-3" />
-            <span>Open Telegram Channel</span>
+            <span>@AzmeraJobConnect</span>
+          </a>
+          <span className="text-white/20">•</span>
+          <a
+            href={`https://t.me/share/url?url=${encodeURIComponent("https://azmerajobs.com")}&text=${encodeURIComponent(generateBroadcastText())}`}
+            target="_blank"
+            rel="noopener noreferrer"
+            className="px-2.5 py-1 rounded-lg bg-[#0088cc]/30 hover:bg-[#0088cc] text-sky-100 text-[11px] font-bold transition-all"
+          >
+            Share to Telegram
+          </a>
+          <a
+            href={`https://wa.me/?text=${encodeURIComponent(generateBroadcastText())}`}
+            target="_blank"
+            rel="noopener noreferrer"
+            className="px-2.5 py-1 rounded-lg bg-[#25D366]/25 hover:bg-[#25D366] text-emerald-100 hover:text-white text-[11px] font-bold transition-all"
+          >
+            WhatsApp
+          </a>
+          <a
+            href={`https://www.linkedin.com/sharing/share-offsite/?url=${encodeURIComponent("https://azmerajobs.com")}`}
+            target="_blank"
+            rel="noopener noreferrer"
+            className="px-2.5 py-1 rounded-lg bg-[#0A66C2]/30 hover:bg-[#0A66C2] text-blue-100 text-[11px] font-bold transition-all"
+          >
+            LinkedIn
+          </a>
+          <a
+            href={`https://www.facebook.com/sharer/sharer.php?u=${encodeURIComponent("https://azmerajobs.com")}`}
+            target="_blank"
+            rel="noopener noreferrer"
+            className="px-2.5 py-1 rounded-lg bg-[#1877F2]/30 hover:bg-[#1877F2] text-blue-100 text-[11px] font-bold transition-all"
+          >
+            Facebook
           </a>
         </div>
       </div>
@@ -304,7 +407,7 @@ export default function SocialBroadcastCard() {
                 <input
                   type="text"
                   required
-                  placeholder="e.g. Dining Host / መስተንግዶ or Barista"
+                  placeholder="e.g. Dining Host or Barista"
                   value={jobTitle}
                   onChange={(e) => setJobTitle(e.target.value)}
                   className="w-full px-4 py-2.5 rounded-xl border border-slate-200 dark:border-slate-700 bg-slate-50 dark:bg-slate-800 text-xs text-slate-900 dark:text-white outline-none focus:border-[#F59E0B]"
@@ -374,7 +477,7 @@ export default function SocialBroadcastCard() {
               <div className="p-3.5 bg-amber-50 dark:bg-amber-950/40 border border-amber-300 dark:border-amber-800 rounded-2xl flex items-center justify-between">
                 <div>
                   <span className="text-xs font-bold text-amber-950 dark:text-amber-200 block">
-                    ⚡ Fast-Track Direct Apply (ናባይ ቀጥታ ኣመልክቱ)
+                    ⚡ {t(lang, "directApplyBadge")}
                   </span>
                   <span className="text-[11px] text-amber-800 dark:text-amber-300">
                     Candidates can apply directly to Azmera via Telegram or phone

@@ -1,13 +1,6 @@
 import type { Metadata, Viewport } from "next";
-import { Inter } from "next/font/google";
 import { BASE_PATH } from "@/lib/constants";
 import "./globals.css";
-
-const inter = Inter({
-  subsets: ["latin"],
-  variable: "--font-inter",
-  display: "swap",
-});
 
 export const viewport: Viewport = {
   width: "device-width",
@@ -22,7 +15,7 @@ export const viewport: Viewport = {
 export const metadata: Metadata = {
   title: "Azmera Jobs – Your Trusted Partner in Jobs",
   description:
-    "Ethiopia's premier employment marketplace. Connecting talent with opportunity. Find verified jobs in Addis Ababa, Hawassa, Dire Dawa and beyond. በሥራ ፍለጋ አስተማማኝ አጋርዎ.",
+    "Ethiopia's premier employment marketplace. Connecting talent with opportunity. Find verified jobs in Addis Ababa, Hawassa, Dire Dawa and beyond.",
   keywords: ["Azmera Jobs", "Ethiopia jobs", "Addis Ababa careers", "Ethiopian employment", "ETB salary"],
   icons: { icon: `${BASE_PATH}/azmera-logo.png` },
 };
@@ -31,7 +24,7 @@ export default function RootLayout({
   children,
 }: Readonly<{ children: React.ReactNode }>) {
   return (
-    <html lang="en" className={inter.variable} suppressHydrationWarning>
+    <html lang="en" suppressHydrationWarning>
       <head>
         {/* Prevent flash of wrong theme - default to crisp professional light mode */}
         <script

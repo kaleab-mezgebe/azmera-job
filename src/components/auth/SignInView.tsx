@@ -2,6 +2,7 @@
 
 import React, { useState } from "react";
 import { useApp } from "@/context/AppContext";
+import { t } from "@/lib/i18n";
 import {
   Mail,
   Lock,
@@ -14,28 +15,17 @@ import {
 } from "lucide-react";
 
 export default function SignInView() {
-  const { setRole, setTab, showToast } = useApp();
-  const [email, setEmail] = useState("dawit.bekele@gmail.com");
-  const [password, setPassword] = useState("••••••••");
-  const [userRole, setUserRole] = useState<"seeker" | "employer">("seeker");
+  const { authenticateCredentials, setTab, showToast, lang } = useApp();
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
+  const [userRole, setUserRole] = useState<"seeker" | "employer" | "admin">("seeker");
+  const [submitting, setSubmitting] = useState(false);
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    setRole(userRole);
-    setTab(userRole === "employer" ? "employer-dashboard" : "dashboard");
-    showToast(`Signed in successfully as ${userRole === "seeker" ? "Dawit Bekele" : "Chapa HR"}`);
-  };
-
-  const handleQuickLoginSeeker = () => {
-    setRole("seeker");
-    setTab("dashboard");
-    showToast("Signed in as Dawit Bekele (Job Seeker)");
-  };
-
-  const handleQuickLoginEmployer = () => {
-    setRole("employer");
-    setTab("employer-dashboard");
-    showToast("Signed in as Chapa Financial Technologies (Employer)");
+    setSubmitting(true);
+    await authenticateCredentials(email, password, userRole);
+    setSubmitting(false);
   };
 
   return (
@@ -46,63 +36,48 @@ export default function SignInView() {
           <div className="w-12 h-12 rounded-2xl bg-[#0A2540]/5 dark:bg-[#F59E0B]/15 text-[#0A2540] dark:text-[#F59E0B] flex items-center justify-center mx-auto mb-3 border border-slate-200 dark:border-slate-700">
             <Lock className="w-6 h-6" />
           </div>
-          <h1 className="text-2xl font-extrabold text-slate-900 dark:text-white">Welcome Back</h1>
+          <h1 className="text-2xl font-extrabold text-slate-900 dark:text-white">{t(lang, "welcomeBack")}</h1>
           <p className="text-xs mt-1 text-slate-500 dark:text-slate-400">
-            Sign in to access your Azmera Jobs account
+            {t(lang, "signInSubtitle")}
           </p>
-        </div>
-
-        {/* Quick Demo Logins Pill */}
-        <div className="mb-6 p-3 rounded-2xl border" style={{ background: "var(--bg)", borderColor: "var(--border)" }}>
-          <span className="text-[11px] font-bold uppercase tracking-wider block mb-2 text-center" style={{ color: "var(--text-muted)" }}>
-            Demo Instant Sign In:
-          </span>
-          <div className="grid grid-cols-2 gap-2">
-            <button
-              onClick={handleQuickLoginSeeker}
-              className="p-2 rounded-xl border text-[11px] font-bold flex items-center justify-center gap-1.5 transition-colors cursor-pointer"
-              style={{ background: "var(--surface)", borderColor: "var(--border)", color: "var(--text)" }}
-            >
-              <User className="w-3.5 h-3.5 text-[#F59E0B]" />
-              <span>Job Seeker</span>
-            </button>
-            <button
-              onClick={handleQuickLoginEmployer}
-              className="p-2 rounded-xl border text-[11px] font-bold flex items-center justify-center gap-1.5 transition-colors cursor-pointer"
-              style={{ background: "var(--surface)", borderColor: "var(--border)", color: "var(--text)" }}
-            >
-              <Building2 className="w-3.5 h-3.5 text-[#F59E0B]" />
-              <span>Employer</span>
-            </button>
-          </div>
         </div>
 
         {/* Standard Form */}
         <form onSubmit={handleSubmit} className="space-y-4">
           <div>
             <label className="block text-xs font-bold mb-1" style={{ color: "var(--text)" }}>
-              Account Role
+              Account Identity
             </label>
-            <div className="grid grid-cols-2 gap-2 p-1 rounded-xl border border-slate-200 dark:border-slate-700 bg-slate-50 dark:bg-slate-800/80">
+            <div className="grid grid-cols-3 gap-1.5 p-1 rounded-xl border border-slate-200 dark:border-slate-700 bg-slate-50 dark:bg-slate-800/80">
               <button
                 type="button"
                 onClick={() => setUserRole("seeker")}
-                className={`py-2 text-xs rounded-lg transition-all ${userRole === "seeker"
-                    ? "bg-[#0A2540] dark:bg-[#F59E0B] text-white dark:text-[#0A2540] shadow-xs font-bold"
+                className={`py-2 text-xs rounded-lg transition-all font-bold ${userRole === "seeker"
+                    ? "bg-emerald-600 text-white shadow-xs"
                     : "text-slate-600 dark:text-slate-300 hover:text-slate-900 dark:hover:text-white"
                   }`}
               >
-                Job Seeker
+                {t(lang, "jobSeeker")}
               </button>
               <button
                 type="button"
                 onClick={() => setUserRole("employer")}
-                className={`py-2 text-xs rounded-lg transition-all ${userRole === "employer"
-                    ? "bg-[#0A2540] dark:bg-[#F59E0B] text-white dark:text-[#0A2540] shadow-xs font-bold"
+                className={`py-2 text-xs rounded-lg transition-all font-bold ${userRole === "employer"
+                    ? "bg-[#0A2540] dark:bg-[#F59E0B] text-white dark:text-[#0A2540] shadow-xs"
                     : "text-slate-600 dark:text-slate-300 hover:text-slate-900 dark:hover:text-white"
                   }`}
               >
-                Employer
+                {t(lang, "employer")}
+              </button>
+              <button
+                type="button"
+                onClick={() => setUserRole("admin")}
+                className={`py-2 text-xs rounded-lg transition-all font-bold ${userRole === "admin"
+                    ? "bg-[#0A2540] dark:bg-[#F59E0B] text-white dark:text-[#0A2540] shadow-xs"
+                    : "text-slate-600 dark:text-slate-300 hover:text-slate-900 dark:hover:text-white"
+                  }`}
+              >
+                Admin
               </button>
             </div>
           </div>
@@ -132,7 +107,7 @@ export default function SignInView() {
                 onClick={() => setTab("forgot-password")}
                 className="text-[11px] font-bold text-[#F59E0B] hover:underline cursor-pointer"
               >
-                Forgot Password?
+                {t(lang, "forgotPasswordQuestion")}
               </button>
             </div>
             <div className="flex items-center gap-2.5 px-3.5 py-2.5 rounded-xl border border-slate-200 dark:border-slate-700 bg-slate-50 dark:bg-slate-800/60 focus-within:border-[#0A2540] dark:focus-within:border-[#F59E0B] focus-within:bg-white dark:focus-within:bg-[#101E33] focus-within:ring-2 focus-within:ring-[#0A2540]/10 dark:focus-within:ring-[#F59E0B]/20 transition-all">
@@ -161,20 +136,30 @@ export default function SignInView() {
 
           <button
             type="submit"
-            className="w-full py-3.5 px-4 rounded-xl font-extrabold text-sm text-white bg-[#0A2540] hover:bg-[#07192C] dark:bg-[#F59E0B] dark:hover:bg-[#D97706] dark:text-[#0A2540] shadow-md shadow-[#0A2540]/20 dark:shadow-[#F59E0B]/20 border border-[#F59E0B]/30 flex items-center justify-center gap-2 transition-all cursor-pointer"
+            disabled={submitting}
+            className="w-full py-3.5 px-4 rounded-xl font-extrabold text-sm text-white bg-[#0A2540] hover:bg-[#07192C] dark:bg-[#F59E0B] dark:hover:bg-[#D97706] dark:text-[#0A2540] shadow-md shadow-[#0A2540]/20 dark:shadow-[#F59E0B]/20 border border-[#F59E0B]/30 flex items-center justify-center gap-2 transition-all cursor-pointer disabled:opacity-60"
           >
-            <span>Sign In</span>
+            <span>{submitting ? "Signing in..." : t(lang, "signIn")}</span>
             <ArrowRight className="w-4 h-4 text-[#F59E0B] dark:text-[#0A2540]" />
+          </button>
+
+          <button
+            type="button"
+            onClick={() => showToast("Google OAuth is not configured yet. Sign in with your email and password.", "info")}
+            className="w-full py-2.5 px-4 rounded-xl font-bold text-xs text-slate-700 dark:text-slate-200 bg-white dark:bg-slate-800 hover:bg-slate-50 dark:hover:bg-slate-700 border border-slate-200 dark:border-slate-700 flex items-center justify-center gap-2 transition-colors cursor-pointer"
+          >
+            <span className="font-black text-sm">G</span>
+            <span>{t(lang, "continueWithGoogle")}</span>
           </button>
         </form>
 
         <div className="mt-6 pt-4 border-t border-[#E2E8F0] dark:border-[#1E334D] text-center">
-          <span className="text-xs" style={{ color: "var(--text-muted)" }}>New to Azmera Jobs? </span>
+          <span className="text-xs" style={{ color: "var(--text-muted)" }}>{t(lang, "noAccountYet")} </span>
           <button
             onClick={() => setTab("role-selection")}
-            className="text-xs font-bold text-[#F59E0B] hover:underline"
+            className="text-xs font-bold text-[#F59E0B] hover:underline cursor-pointer"
           >
-            Create an Account
+            {t(lang, "registerNow")}
           </button>
         </div>
       </div>

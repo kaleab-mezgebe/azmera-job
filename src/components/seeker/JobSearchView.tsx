@@ -2,6 +2,7 @@
 
 import React, { useState, useMemo } from "react";
 import { useApp } from "@/context/AppContext";
+import { t, tCategory, tWorkplaceType, tJobType } from "@/lib/i18n";
 import { ETHIOPIAN_LOCATIONS, MOCK_CATEGORIES } from "@/data/mockData";
 import {
   Search,
@@ -15,6 +16,8 @@ import {
   Clock,
   Sparkles,
   SlidersHorizontal,
+  Bell,
+  Check,
 } from "lucide-react";
 
 export default function JobSearchView() {
@@ -29,6 +32,10 @@ export default function JobSearchView() {
     setSelectedLocation,
     selectedCategory,
     setSelectedCategory,
+    jobAlertPrefs,
+    setJobAlertPrefs,
+    showToast,
+    lang,
   } = useApp();
 
   const [selectedJobType, setSelectedJobType] = useState<string>("All Types");
@@ -36,10 +43,12 @@ export default function JobSearchView() {
   const [minSalary, setMinSalary] = useState<number>(0);
   const [sortBy, setSortBy] = useState<"latest" | "salary-high">("latest");
   const [showMobileFilters, setShowMobileFilters] = useState(false);
+  const [alertMenuOpen, setAlertMenuOpen] = useState(false);
 
-  // Filtered jobs
+  // Filtered jobs (exclude unpublished Drafts)
   const filteredJobs = useMemo(() => {
     return jobs.filter((job) => {
+      if (job.status === "Draft") return false;
       // Query filter
       const matchesQuery =
         !searchQuery ||
@@ -128,7 +137,7 @@ export default function JobSearchView() {
             <Search className="w-4 h-4 text-[#0A2540] dark:text-[#F59E0B] shrink-0" />
             <input
               type="text"
-              placeholder="Search by job title, skills, or company (e.g. Next.js, Chapa, PM)..."
+              placeholder={t(lang, "searchPlaceholder")}
               value={searchQuery}
               onChange={(e) => setSearchQuery(e.target.value)}
               className="w-full text-xs sm:text-sm text-slate-900 dark:text-white bg-transparent outline-none placeholder:text-slate-400"
@@ -151,7 +160,7 @@ export default function JobSearchView() {
               className="w-full text-xs text-slate-900 dark:text-white bg-transparent outline-none cursor-pointer"
             >
               <option value="All Locations (Ethiopia)" className="text-slate-900 bg-white dark:bg-[#101E33] dark:text-white">
-                All Locations (Ethiopia)
+                {t(lang, "allLocations")}
               </option>
               {ETHIOPIAN_LOCATIONS.filter((l) => !l.includes("All Locations")).map(
                 (loc) => (
@@ -168,14 +177,14 @@ export default function JobSearchView() {
             className="md:hidden flex items-center justify-center gap-2 py-2.5 px-4 bg-slate-50 dark:bg-slate-800 rounded-2xl border border-slate-200 dark:border-slate-700 text-xs font-bold text-slate-900 dark:text-white cursor-pointer"
           >
             <SlidersHorizontal className="w-4 h-4 text-[#0A2540] dark:text-[#F59E0B]" />
-            <span>Filters</span>
+            <span>{t(lang, "filterJobs")}</span>
           </button>
         </div>
 
         {/* Quick Category and Type Pills */}
         <div className="flex items-center gap-2 overflow-x-auto pb-1 pt-1 no-scrollbar">
           <span className="text-[11px] font-bold text-slate-500 dark:text-slate-400 uppercase tracking-wider shrink-0">
-            Sector:
+            {t(lang, "sector")}
           </span>
           <button
             onClick={() => setSelectedCategory("All Categories")}
@@ -185,7 +194,7 @@ export default function JobSearchView() {
                 : "bg-slate-100 dark:bg-slate-800 text-slate-600 dark:text-slate-400 hover:bg-slate-200 dark:hover:bg-slate-700 hover:text-slate-900 dark:hover:text-white"
             }`}
           >
-            All Sectors
+            {t(lang, "allSectors")}
           </button>
           {MOCK_CATEGORIES.map((cat) => (
             <button
@@ -197,7 +206,7 @@ export default function JobSearchView() {
                   : "bg-slate-100 dark:bg-slate-800 text-slate-600 dark:text-slate-400 hover:bg-slate-200 dark:hover:bg-slate-700 hover:text-slate-900 dark:hover:text-white"
               }`}
             >
-              {cat.name}
+              {tCategory(lang, cat.name)}
             </button>
           ))}
         </div>
@@ -215,14 +224,14 @@ export default function JobSearchView() {
           <div className="flex items-center justify-between pb-3 border-b border-slate-200 dark:border-slate-800">
             <div className="flex items-center gap-2">
               <Filter className="w-4 h-4 text-[#0A2540] dark:text-[#F59E0B]" />
-              <h3 className="font-bold text-sm text-slate-900 dark:text-white">Filter Jobs</h3>
+              <h3 className="font-bold text-sm text-slate-900 dark:text-white">{t(lang, "filterJobs")}</h3>
             </div>
             {hasActiveFilters && (
               <button
                 onClick={handleResetFilters}
                 className="text-xs text-[#0A2540] dark:text-[#F59E0B] hover:underline font-semibold cursor-pointer"
               >
-                Reset All
+                {t(lang, "resetAll")}
               </button>
             )}
           </div>
@@ -230,7 +239,7 @@ export default function JobSearchView() {
           {/* Job Type */}
           <div>
             <label className="block text-xs font-bold text-slate-900 dark:text-white mb-2">
-              Employment Type
+              {t(lang, "employmentType")}
             </label>
             <div className="space-y-1.5">
               {["All Types", "Full-time", "Contract", "Hybrid", "Remote"].map((type) => (
@@ -245,7 +254,7 @@ export default function JobSearchView() {
                     onChange={() => setSelectedJobType(type)}
                     className="accent-[#0A2540] dark:accent-[#F59E0B]"
                   />
-                  <span>{type}</span>
+                  <span>{type === "All Types" ? t(lang, "allTypes") : tJobType(lang, type)}</span>
                 </label>
               ))}
             </div>
@@ -254,7 +263,7 @@ export default function JobSearchView() {
           {/* Experience Level */}
           <div className="pt-3 border-t border-slate-200 dark:border-slate-800">
             <label className="block text-xs font-bold text-slate-900 dark:text-white mb-2">
-              Experience Level
+              {t(lang, "experienceLevel")}
             </label>
             <div className="space-y-1.5">
               {["All Experience", "Entry Level", "Mid Level", "Senior Level"].map((exp) => (
@@ -269,7 +278,7 @@ export default function JobSearchView() {
                     onChange={() => setSelectedExperience(exp)}
                     className="accent-[#0A2540] dark:accent-[#F59E0B]"
                   />
-                  <span>{exp}</span>
+                  <span>{exp === "All Experience" ? t(lang, "allExperience") : exp}</span>
                 </label>
               ))}
             </div>
@@ -279,7 +288,7 @@ export default function JobSearchView() {
           <div className="pt-3 border-t border-slate-200 dark:border-slate-800">
             <div className="flex items-center justify-between mb-2">
               <label className="text-xs font-bold text-slate-900 dark:text-white">
-                Min. Salary (ETB/mo)
+                {t(lang, "minSalary")}
               </label>
               <span className="text-xs font-bold text-[#0A2540] dark:text-[#F59E0B]">
                 {minSalary > 0 ? `${minSalary.toLocaleString()} ETB` : "Any"}
@@ -305,22 +314,73 @@ export default function JobSearchView() {
         {/* Results Column */}
         <div className="lg:col-span-3 space-y-4">
           {/* Results Summary Header */}
-          <div className="flex items-center justify-between px-4 py-3 rounded-2xl border" style={{ background: "var(--surface)", borderColor: "var(--border)" }}>
+          <div className="flex flex-wrap items-center justify-between gap-2 px-4 py-3 rounded-2xl border relative" style={{ background: "var(--surface)", borderColor: "var(--border)" }}>
             <span className="text-xs font-semibold text-slate-900 dark:text-white">
-              Showing <strong className="font-extrabold text-[#0A2540] dark:text-[#F59E0B]">{sortedJobs.length}</strong> open vacancies in Ethiopia
+              <strong className="font-extrabold text-[#0A2540] dark:text-[#F59E0B]">{sortedJobs.length}</strong>{" "}
+              {t(lang, "showingJobs")}
             </span>
 
             <div className="flex items-center gap-2 text-xs">
-              <span className="text-slate-500 dark:text-slate-400 hidden sm:inline">Sort by:</span>
+              <button
+                type="button"
+                onClick={() => setAlertMenuOpen(!alertMenuOpen)}
+                className={`px-3 py-1.5 rounded-xl border text-xs font-bold flex items-center gap-1.5 transition-colors cursor-pointer ${
+                  jobAlertPrefs.enabled
+                    ? "bg-amber-50 dark:bg-amber-950/50 border-[#F59E0B]/50 text-[#0A2540] dark:text-[#F59E0B]"
+                    : "bg-slate-50 dark:bg-slate-800 border-slate-200 dark:border-slate-700 text-slate-700 dark:text-slate-300"
+                }`}
+              >
+                <Bell className="w-3.5 h-3.5 text-[#F59E0B]" />
+                <span>{t(lang, "jobAlerts")}</span>
+                {jobAlertPrefs.enabled && <Check className="w-3 h-3 text-emerald-600" />}
+              </button>
+
+              <span className="text-slate-500 dark:text-slate-400 hidden sm:inline">{t(lang, "sortBy")}:</span>
               <select
                 value={sortBy}
                 onChange={(e) => setSortBy(e.target.value as any)}
                 className="bg-slate-50 dark:bg-slate-800 border border-slate-200 dark:border-slate-700 rounded-xl px-2.5 py-1 text-xs font-semibold text-slate-900 dark:text-white outline-none cursor-pointer"
               >
-                <option value="latest" className="text-slate-900 bg-white dark:bg-[#101E33] dark:text-white">Latest Vacancies</option>
-                <option value="salary-high" className="text-slate-900 bg-white dark:bg-[#101E33] dark:text-white">Highest Salary (ETB)</option>
+                <option value="latest" className="text-slate-900 bg-white dark:bg-[#101E33] dark:text-white">{t(lang, "newestFirst")}</option>
+                <option value="salary-high" className="text-slate-900 bg-white dark:bg-[#101E33] dark:text-white">{t(lang, "highestSalary")}</option>
               </select>
             </div>
+
+            {alertMenuOpen && (
+              <div className="w-full mt-2 pt-3 border-t border-slate-100 dark:border-slate-800 flex flex-wrap items-center justify-between gap-3 text-xs">
+                <div className="flex flex-wrap items-center gap-3">
+                  <span className="font-bold text-slate-900 dark:text-white">Alert Channels:</span>
+                  {(["platform", "telegram", "email", "sms"] as const).map((ch) => (
+                    <label key={ch} className="flex items-center gap-1.5 cursor-pointer capitalize text-slate-700 dark:text-slate-300">
+                      <input
+                        type="checkbox"
+                        checked={jobAlertPrefs.channels[ch]}
+                        onChange={(e) =>
+                          setJobAlertPrefs((prev) => ({
+                            ...prev,
+                            enabled: true,
+                            channels: { ...prev.channels, [ch]: e.target.checked },
+                          }))
+                        }
+                        className="accent-[#0A2540] dark:accent-[#F59E0B]"
+                      />
+                      <span>{ch === "sms" ? "SMS" : ch}</span>
+                    </label>
+                  ))}
+                </div>
+                <button
+                  type="button"
+                  onClick={() => {
+                    setJobAlertPrefs((prev) => ({ ...prev, enabled: true, keyword: searchQuery || selectedCategory }));
+                    setAlertMenuOpen(false);
+                    showToast(`Job alert saved for "${searchQuery || selectedCategory}"!`, "success");
+                  }}
+                  className="px-3 py-1.5 rounded-xl bg-[#0A2540] dark:bg-[#F59E0B] text-white dark:text-[#0A2540] font-bold cursor-pointer"
+                >
+                  {t(lang, "save")}
+                </button>
+              </div>
+            )}
           </div>
 
           {/* Empty State */}
@@ -330,17 +390,16 @@ export default function JobSearchView() {
                 <Search className="w-6 h-6" />
               </div>
               <h3 className="font-extrabold text-base text-slate-900 dark:text-white">
-                No jobs match your filter criteria
+                {t(lang, "noJobsFound")}
               </h3>
               <p className="text-xs text-slate-500 dark:text-slate-400 max-w-sm mx-auto">
-                Try loosening your filters or search query to find more vacancies across
-                Addis Ababa and other cities.
+                {t(lang, "tryAdjustingFilters")}
               </p>
               <button
                 onClick={handleResetFilters}
                 className="mt-2 px-4 py-2 bg-[#0A2540] hover:bg-[#07192C] dark:bg-[#F59E0B] dark:hover:bg-[#D97706] text-white dark:text-[#0A2540] text-xs font-bold rounded-xl shadow-xs cursor-pointer"
               >
-                Clear All Filters
+                {t(lang, "clearFilters")}
               </button>
             </div>
           ) : (
@@ -375,7 +434,7 @@ export default function JobSearchView() {
                             )}
                             {job.directAgentApply && (
                               <span className="inline-flex items-center gap-1 text-[10px] font-black text-[#D97706] bg-amber-100 dark:bg-amber-950/60 dark:text-[#FBBF24] border border-amber-300 dark:border-amber-800 px-2 py-0.5 rounded-md">
-                                ⚡ Direct Apply (ናባይ ቀጥታ ኣመልክቱ)
+                                ⚡ {t(lang, "directApplyBadge")}
                               </span>
                             )}
                             {job.openingsCount && (
@@ -402,10 +461,10 @@ export default function JobSearchView() {
                             </span>
                             <span>•</span>
                             <span className="font-semibold text-slate-800 dark:text-slate-200">
-                              {job.type}
+                              {tJobType(lang, job.type)}
                             </span>
                             <span>•</span>
-                            <span>{job.workplaceType}</span>
+                            <span>{tWorkplaceType(lang, job.workplaceType)}</span>
                           </div>
 
                           {/* Skills Pills */}
@@ -458,7 +517,7 @@ export default function JobSearchView() {
                             onClick={() => selectJob(job.id)}
                             className="px-4 py-2 rounded-xl bg-[#0A2540] hover:bg-[#07192C] dark:bg-[#F59E0B] dark:hover:bg-[#D97706] text-white dark:text-[#0A2540] text-xs font-bold transition-all shadow-xs hover:shadow-md cursor-pointer hover:scale-[1.02]"
                           >
-                            View Job
+                            {t(lang, "viewJob")}
                           </button>
                         </div>
                       </div>

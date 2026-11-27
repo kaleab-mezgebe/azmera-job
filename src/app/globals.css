@@ -6,6 +6,7 @@
    LIGHT THEME (default - Azmera Jobs Navy & Gold)
 ══════════════════════════════════════ */
 :root {
+  --font-inter: "Inter", "SF Pro Text", "Noto Sans Ethiopic", "Nyala", system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
   --primary: #0A2540;
   --primary-hover: #07192C;
   --primary-light: #EEF4FA;
@@ -127,13 +128,14 @@ body {
   border: 1px solid var(--border);
   border-radius: var(--radius-2xl);
   box-shadow: var(--shadow-xs);
-  transition: border-color 0.15s, box-shadow 0.15s, background-color 0.25s;
+  transition: transform 0.22s cubic-bezier(0.22, 1, 0.36, 1), border-color 0.2s ease, box-shadow 0.22s ease, background-color 0.25s ease;
 }
 
 .card:hover { box-shadow: var(--shadow-sm); }
 
 .card-hover:hover {
-  border-color: rgba(245, 158, 11, 0.5);
+  transform: translateY(-2px);
+  border-color: rgba(245, 158, 11, 0.55);
   box-shadow: var(--shadow-md);
 }
 
@@ -171,13 +173,26 @@ input.form-input:focus, textarea.form-input:focus, select.form-input:focus {
 
 
 /* ══════════════════════════════════════
-   BUTTON BASE
+   BUTTON BASE & TACTILE FEEDBACK
 ══════════════════════════════════════ */
-button { cursor: pointer; }
+button, a {
+  transition-timing-function: cubic-bezier(0.22, 1, 0.36, 1);
+}
+button {
+  cursor: pointer;
+}
+button:active:not(:disabled) {
+  transform: scale(0.98);
+}
 
 /* ══════════════════════════════════════
-   ANIMATE SLIDE IN
+   ANIMATE SLIDE IN & VIEW TRANSITIONS
 ══════════════════════════════════════ */
+@keyframes viewEnter {
+  from { opacity: 0; transform: translateY(10px) scale(0.995); }
+  to   { opacity: 1; transform: translateY(0) scale(1); }
+}
+
 @keyframes slideInUp {
   from { opacity: 0; transform: translateY(12px); }
   to   { opacity: 1; transform: translateY(0); }
@@ -198,9 +213,19 @@ button { cursor: pointer; }
   100% { background-position: 200% 0; }
 }
 
-.animate-slide-up { animation: slideInUp 0.3s ease both; }
+.animate-view-enter { animation: viewEnter 0.28s cubic-bezier(0.22, 1, 0.36, 1) both; }
+.animate-slide-up { animation: slideInUp 0.3s cubic-bezier(0.22, 1, 0.36, 1) both; }
 .animate-fade-in  { animation: fadeIn 0.25s ease both; }
 .animate-scale-in { animation: scaleIn 0.25s cubic-bezier(.34,1.56,.64,1) both; }
+
+@media (prefers-reduced-motion: reduce) {
+  .animate-view-enter, .animate-slide-up, .animate-fade-in, .animate-scale-in {
+    animation: none !important;
+  }
+  button:active:not(:disabled), .card-hover:hover {
+    transform: none !important;
+  }
+}
 
 .skeleton {
   background: linear-gradient(90deg, var(--border) 25%, var(--surface-hover) 50%, var(--border) 75%);

@@ -1,12 +1,66 @@
-export type UserRole = "guest" | "seeker" | "employer";
+export type UserRole = "guest" | "seeker" | "employer" | "admin";
+
+export interface UserSession {
+  id: string;
+  name: string;
+  email: string;
+  role: "admin" | "employer" | "seeker";
+  avatar?: string;
+  title?: string;
+  phone?: string;
+  companyId?: string;
+  companyName?: string;
+  companyLogo?: string;
+  loginTimestamp?: string;
+}
 
 export type ApplicationStatus =
   | "Submitted"
   | "Under Review"
   | "Shortlisted"
   | "Interview"
-  | "Accepted"
+  | "Assessment"
+  | "Offer"
+  | "Hired"
   | "Rejected";
+
+export interface StatusHistoryItem {
+  status: ApplicationStatus;
+  changedAt: string;
+  note?: string;
+  changedBy?: string;
+}
+
+export interface TalentPool {
+  id: string;
+  name: string;
+  description?: string;
+  candidateIds: string[];
+  createdAt: string;
+}
+
+export interface MessageItem {
+  id: string;
+  senderId: string;
+  senderName: string;
+  senderRole: "seeker" | "employer" | "admin";
+  content: string;
+  timestamp: string;
+  read: boolean;
+}
+
+export interface Conversation {
+  id: string;
+  participantId: string;
+  participantName: string;
+  participantAvatar: string;
+  participantRole: "seeker" | "employer" | "admin";
+  jobTitle?: string;
+  lastMessage: string;
+  lastMessageTime: string;
+  unreadCount: number;
+  messages: MessageItem[];
+}
 
 export type JobType =
   | "Full-time"
@@ -57,12 +111,16 @@ export interface Job {
   deadline: string;
   applicantCount: number;
   status: "Active" | "Closed" | "Draft";
+  approved?: boolean;
   featured?: boolean;
+  packageType?: "standard" | "featured" | "vip_broadcast";
+  paymentStatus?: "unpaid" | "paid";
   directAgentApply?: boolean; // Fast-track direct application to Azmera via Telegram/Phone (as on Facebook)
   directContactPhone?: string;
   directTelegramHandle?: string;
   openingsCount?: number; // e.g. 124 for Skylight Hotel, 5 for UNICEF
   sourceCircular?: string; // e.g. "TDRF.ORG" or "Azmera Job Connect Direct Customer Intake"
+  screeningQuestions?: string[];
 }
 
 export interface Candidate {
@@ -88,8 +146,21 @@ export interface Candidate {
     description: string;
   }[];
   skills: string[];
+  languages?: string[]; // e.g. ["English", "Amharic", "Tigrigna", "Afaan Oromo"]
+  certifications?: { name: string; issuer: string; year: string }[];
+  portfolioLinks?: { platform: string; url: string }[];
+  privacySettings?: {
+    hideContactUntilShortlisted: boolean;
+    allowDatabaseSearch: boolean;
+  };
   cvFileName: string;
   cvFileSize: string;
+  cvList?: { id: string; name: string; size: string; updatedAt: string }[];
+  preferences?: {
+    desiredRole: string;
+    minSalary: number;
+    preferredLocation: string;
+  };
   profileCompletion: number; // e.g. 85
 }
 
@@ -110,6 +181,11 @@ export interface Application {
   coverLetter: string;
   cvFileName: string;
   interviewDate?: string;
+  aiMatchScore?: number; // e.g. 94%
+  rating?: number; // 1 to 5 stars
+  internalNotes?: string[];
+  statusHistory?: StatusHistoryItem[];
+  screeningAnswers?: Record<string, string>;
 }
 
 export interface Interview {
@@ -126,7 +202,7 @@ export interface Interview {
   locationOrLink: string;
   interviewerName: string;
   notes: string;
-  status: "Scheduled" | "Completed" | "Cancelled";
+  status: "Scheduled" | "Confirmed" | "Reschedule Requested" | "Completed" | "Cancelled";
 }
 
 export interface Company {
@@ -153,7 +229,7 @@ export interface NotificationItem {
   timestamp: string;
   read: boolean;
   type: "application" | "interview" | "job_alert" | "system";
-  targetRole: "seeker" | "employer" | "both";
+  targetRole: "seeker" | "employer" | "admin" | "both";
 }
 
 export interface JobCategory {
@@ -162,4 +238,70 @@ export interface JobCategory {
   icon: string;
   jobCount: number;
   popular?: boolean;
+}
+
+// ── Monetization & Payment Methods (Telebirr, CBE, M-Pesa) ──
+export type PaymentMethodType = "telebirr" | "cbe" | "mpesa";
+
+export type PaymentPurpose =
+  | "job_post_standard"
+  | "job_post_featured"
+  | "social_broadcast"
+  | "talent_unlock"
+  | "employer_subscription"
+  | "seeker_cv_review"
+  | "seeker_profile_boost"
+  | "service_payment";
+
+export interface PaymentTransaction {
+  id: string;
+  sku?: string;
+  amount: number; // in ETB
+  currency: "ETB";
+  method: PaymentMethodType;
+  purpose: PaymentPurpose;
+  purposeLabel: string;
+  status: "Completed" | "Pending" | "Failed";
+  referenceNumber: string;
+  payerPhoneOrAccount: string;
+  createdAt: string;
+  invoiceNumber: string;
+  companyName?: string;
+  ownerUserId?: string;
+  verifiedBy?: "chapa_api" | "chapa_webhook" | "sandbox" | "admin";
+  gatewayReference?: string;
+  metadata?: {
+    jobId?: string;
+    jobTitle?: string;
+    candidateId?: string;
+    candidateName?: string;
+    packageId?: string;
+    packageName?: string;
+    packageType?: string;
+    usedForJobId?: string;
+  };
+}
+
+export interface PricingPackage {
+  id: string;
+  name: string;
+  amharicName: string;
+  price: number;
+  currency: "ETB";
+  billingPeriod?: string;
+  description: string;
+  features: string[];
+  recommended?: boolean;
+  badge?: string;
+}
+
+export interface PaymentModalOptions {
+  sku?: string;
+  amount: number;
+  purpose: PaymentPurpose;
+  purposeLabel: string;
+  title?: string;
+  description?: string;
+  metadata?: Record<string, any>;
+  onSuccess?: (transaction: PaymentTransaction) => void;
 }

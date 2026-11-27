@@ -2,6 +2,7 @@
 
 import React, { useState } from "react";
 import { useApp } from "@/context/AppContext";
+import { t } from "@/lib/i18n";
 import {
   User,
   Building2,
@@ -16,7 +17,7 @@ import {
 import { ETHIOPIAN_LOCATIONS } from "@/data/mockData";
 
 export default function RegisterView() {
-  const { role, setRole, setTab, showToast } = useApp();
+  const { role, registerUserAccount, setTab, showToast, lang } = useApp();
 
   const [roleType, setRoleType] = useState<"seeker" | "employer">(
     role === "employer" ? "employer" : "seeker"
@@ -28,20 +29,70 @@ export default function RegisterView() {
   const [location, setLocation] = useState("Addis Ababa (Bole)");
   const [password, setPassword] = useState("");
   const [acceptedTerms, setAcceptedTerms] = useState(true);
+  const [otpStep, setOtpStep] = useState(false);
+  const [otpCode, setOtpCode] = useState("");
+  const [devOtpHint, setDevOtpHint] = useState<string | null>(null);
+  const [submitting, setSubmitting] = useState(false);
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     if (!acceptedTerms) {
-      showToast("Please agree to the Terms of Service.");
+      showToast("Please agree to the Terms of Service.", "error");
       return;
     }
-    setRole(roleType);
-    setTab(roleType === "employer" ? "employer-dashboard" : "dashboard");
-    showToast(
-      `Welcome to Azmera Jobs! Account created as ${
-        roleType === "seeker" ? fullName || "Job Seeker" : companyName || "Employer"
-      }`
-    );
+    if (!otpStep) {
+      setSubmitting(true);
+      try {
+        const res = await fetch("/api/auth/otp/request", {
+          method: "POST",
+          credentials: "include",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({
+            identifier: (phone.trim().length > 6 ? phone : email).trim(),
+            phone: phone.trim() || undefined,
+            email: email.trim() || undefined,
+            purpose: "register",
+          }),
+        });
+        const data = (await res.json()) as {
+          ok?: boolean;
+          error?: string;
+          devCode?: string;
+        };
+        if (!res.ok || !data?.ok) {
+          showToast(data?.error || "Could not send verification OTP.", "error");
+          setSubmitting(false);
+          return;
+        }
+        setOtpStep(true);
+        if (data.devCode) {
+          setOtpCode(data.devCode);
+          setDevOtpHint(data.devCode);
+          showToast(`Verification OTP sent (test code: ${data.devCode})`, "info");
+        } else {
+          setOtpCode("");
+          setDevOtpHint(null);
+          showToast(`Verification OTP sent to ${phone || email}`, "info");
+        }
+      } catch {
+        showToast("Network error sending OTP.", "error");
+      } finally {
+        setSubmitting(false);
+      }
+      return;
+    }
+    setSubmitting(true);
+    await registerUserAccount({
+      role: roleType,
+      name: roleType === "seeker" ? fullName || "New Candidate" : companyName || "New Employer",
+      companyName: roleType === "employer" ? companyName : undefined,
+      email,
+      phone,
+      location,
+      password,
+      otpCode: otpCode.trim() || undefined,
+    });
+    setSubmitting(false);
   };
 
   return (
@@ -53,10 +104,10 @@ export default function RegisterView() {
             <Sparkles className="w-6 h-6" />
           </div>
           <h1 className="text-2xl font-extrabold text-slate-900 dark:text-white">
-            Create Azmera Jobs Account
+            {t(lang, "createAccount")}
           </h1>
           <p className="text-xs text-slate-500 dark:text-slate-400 mt-1">
-            Connect with Ethiopia's top employers and skilled talent
+            Connect with Ethiopia&apos;s top employers and skilled talent
           </p>
         </div>
 
@@ -221,12 +272,42 @@ export default function RegisterView() {
             </label>
           </div>
 
+          {otpStep && (
+            <div className="p-4 rounded-2xl bg-amber-50 dark:bg-amber-950/40 border border-[#F59E0B]/40 space-y-2">
+              <label className="block text-xs font-extrabold text-[#0A2540] dark:text-[#F59E0B]">
+                {t(lang, "verifyOtp")} ({phone || email})
+              </label>
+              <input
+                type="text"
+                maxLength={6}
+                value={otpCode}
+                onChange={(e) => setOtpCode(e.target.value)}
+                className="w-full px-3.5 py-2.5 rounded-xl border border-slate-300 dark:border-slate-700 bg-white dark:bg-[#101E33] text-sm font-mono font-black tracking-widest text-center text-slate-900 dark:text-white outline-none focus:border-[#F59E0B]"
+              />
+              <p className="text-[11px] text-slate-500 dark:text-slate-400">
+                {devOtpHint
+                  ? `Dev verification code pre-filled (${devOtpHint}). Click below to verify and create your workspace.`
+                  : "Enter the 6-digit verification code sent to your email or phone."}
+              </p>
+            </div>
+          )}
+
           <button
             type="submit"
-            className="w-full py-3.5 px-4 rounded-xl font-extrabold text-sm text-white bg-[#0A2540] hover:bg-[#07192C] dark:bg-[#F59E0B] dark:hover:bg-[#D97706] dark:text-[#0A2540] shadow-md shadow-[#0A2540]/20 dark:shadow-[#F59E0B]/20 flex items-center justify-center gap-2 transition-all cursor-pointer mt-4"
+            disabled={submitting}
+            className="w-full py-3.5 px-4 rounded-xl font-extrabold text-sm text-white bg-[#0A2540] hover:bg-[#07192C] dark:bg-[#F59E0B] dark:hover:bg-[#D97706] dark:text-[#0A2540] shadow-md shadow-[#0A2540]/20 dark:shadow-[#F59E0B]/20 flex items-center justify-center gap-2 transition-all cursor-pointer mt-4 disabled:opacity-60"
           >
-            <span>Complete Registration</span>
+            <span>{submitting ? "Creating account..." : otpStep ? t(lang, "verifyOtp") : t(lang, "registerNow")}</span>
             <ArrowRight className="w-4 h-4 text-[#F59E0B] dark:text-[#0A2540]" />
+          </button>
+
+          <button
+            type="button"
+            onClick={() => showToast("Complete the registration form above to create your account.", "info")}
+            className="w-full py-2.5 px-4 rounded-xl font-bold text-xs text-slate-700 dark:text-slate-200 bg-white dark:bg-slate-800 hover:bg-slate-50 dark:hover:bg-slate-700 border border-slate-200 dark:border-slate-700 flex items-center justify-center gap-2 transition-colors cursor-pointer"
+          >
+            <span className="font-black text-sm">G</span>
+            <span>{t(lang, "continueWithGoogle")}</span>
           </button>
         </form>
 
