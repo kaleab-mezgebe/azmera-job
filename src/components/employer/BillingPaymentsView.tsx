@@ -5,6 +5,7 @@ import { useApp } from "@/context/AppContext";
 import { t } from "@/lib/i18n";
 import { MOCK_PRICING_PACKAGES, MOCK_PAYMENT_GATEWAYS } from "@/data/mockData";
 import { PricingPackage, PaymentTransaction } from "@/types";
+import { exportTransactionsCsv, openPrintableVatInvoice } from "@/lib/invoice";
 import {
   CreditCard,
   Wallet,
@@ -125,14 +126,14 @@ export default function BillingPaymentsView() {
         <div className="p-5 rounded-2xl border border-slate-200 dark:border-slate-800 bg-white dark:bg-[#101E33] shadow-xs">
           <div className="flex items-center justify-between">
             <span className="text-xs font-bold text-slate-500 dark:text-slate-400">Staff Guarantee</span>
-            <div className="w-9 h-9 rounded-xl bg-blue-500/10 text-blue-600 flex items-center justify-center font-bold text-xs">
+            <div className="w-9 h-9 rounded-xl bg-[#0A2540]/10 dark:bg-[#F59E0B]/15 text-[#0A2540] dark:text-[#F59E0B] flex items-center justify-center font-bold text-xs">
               <ShieldCheck className="w-5 h-5" />
             </div>
           </div>
           <div className="text-2xl sm:text-3xl font-black mt-2 text-slate-900 dark:text-white">
             14 Days
           </div>
-          <span className="text-[11px] font-semibold text-blue-600 mt-1 block">
+          <span className="text-[11px] font-semibold text-[#0A2540] dark:text-[#F59E0B] mt-1 block">
             Free staff replacement
           </span>
         </div>
@@ -389,7 +390,10 @@ export default function BillingPaymentsView() {
               </p>
             </div>
             <button
-              onClick={() => showToast("Exporting all transactions as CSV/Excel...", "info")}
+              onClick={() => {
+                exportTransactionsCsv(transactions);
+                showToast("Exported transactions CSV!", "success");
+              }}
               className="px-3.5 py-2 bg-slate-100 dark:bg-slate-800 hover:bg-slate-200 text-xs font-bold text-slate-700 dark:text-slate-300 rounded-xl flex items-center gap-1.5 cursor-pointer"
             >
               <Download className="w-3.5 h-3.5" />
@@ -519,15 +523,21 @@ export default function BillingPaymentsView() {
               </div>
             </div>
 
-            <div className="p-3 bg-blue-50 dark:bg-blue-950/40 rounded-xl border border-blue-200 dark:border-blue-900/60 text-xs text-blue-900 dark:text-blue-200 flex items-center gap-2">
-              <ShieldCheck className="w-4 h-4 text-blue-600 shrink-0" />
+            <div className="p-3 bg-amber-50/70 dark:bg-slate-800/70 rounded-xl border border-amber-200 dark:border-slate-700 text-xs text-slate-800 dark:text-slate-200 flex items-center gap-2">
+              <ShieldCheck className="w-4 h-4 text-[#F59E0B] shrink-0" />
               <span>Includes 14-Day Free Candidate Replacement Guarantee.</span>
             </div>
 
             <div className="flex items-center justify-end gap-3 pt-2">
               <button
                 onClick={() => {
-                  showToast("Invoice downloaded successfully!", "success");
+                  const opened = openPrintableVatInvoice(selectedReceipt);
+                  showToast(
+                    opened
+                      ? "VAT receipt opened — select 'Save as PDF' to save."
+                      : "VAT receipt saved to downloads.",
+                    "success"
+                  );
                   setSelectedReceipt(null);
                 }}
                 className="px-5 py-2.5 bg-[#0A2540] hover:bg-[#07192C] dark:bg-[#F59E0B] dark:hover:bg-[#D97706] text-white dark:text-[#0A2540] text-xs font-bold rounded-xl flex items-center gap-2 cursor-pointer"

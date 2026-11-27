@@ -94,7 +94,7 @@ export default function ScheduleInterviewModal({
             <label className="block text-xs font-bold text-slate-900 dark:text-white mb-1.5">
               Interview Format *
             </label>
-            <div className="grid grid-cols-3 gap-2">
+            <div className="grid grid-cols-1 sm:grid-cols-3 gap-2">
               {(["Google Meet", "In-person", "Phone"] as const).map((fmt) => (
                 <button
                   key={fmt}
@@ -112,7 +112,7 @@ export default function ScheduleInterviewModal({
             </div>
           </div>
 
-          <div className="grid grid-cols-2 gap-3">
+          <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
             <div>
               <label className="block text-xs font-bold text-slate-900 dark:text-white mb-1">
                 Interview Date *

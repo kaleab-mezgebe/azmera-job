@@ -691,7 +691,7 @@ We are building high-resilience payment infrastructure powering digital commerce
               <div className="flex items-center gap-1.5 text-[11px] font-bold text-slate-500">
                 <span>Pay via:</span>
                 <span className="text-[#00843D] bg-emerald-50 dark:bg-emerald-950/60 px-1.5 py-0.5 rounded">Telebirr</span>
-                <span className="text-[#8A1538] bg-pink-50 dark:bg-pink-950/60 px-1.5 py-0.5 rounded">CBE Bank</span>
+                <span className="text-[#0A2540] dark:text-slate-200 bg-slate-100 dark:bg-slate-800 px-1.5 py-0.5 rounded">CBE Bank</span>
                 <span className="text-[#00B04F] bg-green-50 dark:bg-green-950/60 px-1.5 py-0.5 rounded">M-Pesa</span>
               </div>
             </div>
@@ -863,7 +863,7 @@ We are building high-resilience payment infrastructure powering digital commerce
                 <label className="block text-xs font-bold text-slate-900 dark:text-white mb-1">
                   Workplace Model *
                 </label>
-                <div className="grid grid-cols-3 gap-2">
+                <div className="grid grid-cols-1 sm:grid-cols-3 gap-2">
                   {(["On-site", "Hybrid", "Remote"] as const).map((m) => (
                     <button
                       key={m}
@@ -978,7 +978,7 @@ We are building high-resilience payment infrastructure powering digital commerce
                 <button
                   type="button"
                   onClick={() => handleApplyTemplate("tdrf")}
-                  className="px-2.5 py-1 rounded-lg bg-rose-50 hover:bg-rose-100 text-rose-800 dark:bg-rose-950/50 dark:text-rose-200 text-[11px] font-bold border border-rose-200 dark:border-rose-800 transition-colors cursor-pointer"
+                  className="px-2.5 py-1 rounded-lg bg-slate-100 hover:bg-slate-200 text-[#0A2540] dark:bg-slate-800 dark:text-slate-200 text-[11px] font-bold border border-slate-200 dark:border-slate-700 transition-colors cursor-pointer"
                 >
                   🏛️ TDRF NGO
                 </button>
@@ -992,7 +992,7 @@ We are building high-resilience payment infrastructure powering digital commerce
                 <button
                   type="button"
                   onClick={() => handleApplyTemplate("fintech")}
-                  className="px-2.5 py-1 rounded-lg bg-blue-50 hover:bg-blue-100 text-[#0A2540] dark:bg-blue-950/50 dark:text-blue-200 text-[11px] font-bold border border-blue-200 dark:border-blue-800 transition-colors cursor-pointer"
+                  className="px-2.5 py-1 rounded-lg bg-[#EEF4FA] hover:bg-slate-200 text-[#0A2540] dark:bg-slate-800 dark:text-[#F59E0B] text-[11px] font-bold border border-slate-200 dark:border-slate-700 transition-colors cursor-pointer"
                 >
                   💻 FinTech
                 </button>
@@ -1189,7 +1189,7 @@ We are building high-resilience payment infrastructure powering digital commerce
               <div className="flex items-center gap-1.5 text-[11px] font-bold text-slate-500">
                 <span>Pay via:</span>
                 <span className="text-[#00843D] bg-emerald-50 dark:bg-emerald-950/60 px-1.5 py-0.5 rounded">Telebirr</span>
-                <span className="text-[#8A1538] bg-pink-50 dark:bg-pink-950/60 px-1.5 py-0.5 rounded">CBE Bank</span>
+                <span className="text-[#0A2540] dark:text-slate-200 bg-slate-100 dark:bg-slate-800 px-1.5 py-0.5 rounded">CBE Bank</span>
                 <span className="text-[#00B04F] bg-green-50 dark:bg-green-950/60 px-1.5 py-0.5 rounded">M-Pesa</span>
               </div>
             </div>

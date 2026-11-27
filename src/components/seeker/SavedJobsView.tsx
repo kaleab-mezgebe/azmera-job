@@ -79,7 +79,7 @@ export default function SavedJobsView() {
 
                   <button
                     onClick={() => toggleSaveJob(job.id)}
-                    className="p-1.5 text-rose-500 hover:bg-rose-50 dark:hover:bg-rose-950/40 rounded-lg transition-colors cursor-pointer"
+                    className="p-1.5 text-red-500 hover:bg-red-50 dark:hover:bg-red-950/40 rounded-lg transition-colors cursor-pointer"
                     title="Remove bookmark"
                   >
                     <Trash2 className="w-4 h-4" />

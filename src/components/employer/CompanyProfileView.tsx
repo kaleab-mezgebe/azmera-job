@@ -473,7 +473,7 @@ export default function CompanyProfileView() {
 
               <div className="flex items-center justify-between p-3.5 bg-white dark:bg-[#101E33] rounded-xl border border-slate-200 dark:border-slate-700">
                 <div className="flex items-center gap-3">
-                  <div className="w-10 h-10 rounded-xl bg-rose-50 dark:bg-rose-950/40 text-rose-500 flex items-center justify-center font-bold text-xs shrink-0">
+                  <div className="w-10 h-10 rounded-xl bg-[#EEF4FA] dark:bg-slate-800 text-[#0A2540] dark:text-[#F59E0B] flex items-center justify-center font-bold text-xs shrink-0">
                     PDF
                   </div>
                   <div>
@@ -513,7 +513,7 @@ export default function CompanyProfileView() {
             <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 pb-4 border-b border-slate-100 dark:border-slate-800">
               <div>
                 <div className="flex items-center gap-2">
-                  <span className="px-2.5 py-0.5 rounded-md bg-blue-100 dark:bg-blue-950 text-blue-800 dark:text-blue-300 text-[10px] font-black uppercase">
+                  <span className="px-2.5 py-0.5 rounded-md bg-[#EEF4FA] dark:bg-slate-800 text-[#0A2540] dark:text-[#F59E0B] text-[10px] font-black uppercase">
                     Role-Based Access Control
                   </span>
                   <span className="text-xs text-slate-400 font-bold">• Multi-Recruiter Organization</span>
@@ -571,7 +571,7 @@ export default function CompanyProfileView() {
                     {member.role !== "Company Admin" && (
                       <button
                         onClick={() => handleRemoveMember(member.id, member.name)}
-                        className="p-1.5 rounded-lg text-slate-400 hover:text-rose-600 hover:bg-rose-50 dark:hover:bg-rose-950/40 transition-colors cursor-pointer"
+                        className="p-1.5 rounded-lg text-slate-400 hover:text-red-600 hover:bg-red-50 dark:hover:bg-red-950/40 transition-colors cursor-pointer"
                         title="Remove member"
                       >
                         <Trash2 className="w-4 h-4" />
@@ -612,7 +612,7 @@ export default function CompanyProfileView() {
           <div className="bg-white dark:bg-[#101E33] rounded-3xl border border-slate-200 dark:border-slate-800 shadow-2xl w-full max-w-md p-6 sm:p-7 space-y-5">
             <div className="flex items-center justify-between pb-3 border-b border-slate-100 dark:border-slate-800">
               <div className="flex items-center gap-2.5">
-                <div className="w-9 h-9 rounded-xl bg-blue-500/10 text-blue-600 flex items-center justify-center">
+                <div className="w-9 h-9 rounded-xl bg-[#0A2540]/10 dark:bg-[#F59E0B]/15 text-[#0A2540] dark:text-[#F59E0B] flex items-center justify-center">
                   <UserPlus className="w-5 h-5" />
                 </div>
                 <div>

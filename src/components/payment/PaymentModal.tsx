@@ -3,6 +3,7 @@
 import React, { useState } from "react";
 import { useApp } from "@/context/AppContext";
 import { PaymentMethodType, PaymentTransaction, PaymentModalOptions } from "@/types";
+import { openPrintableVatInvoice } from "@/lib/invoice";
 import { MOCK_PAYMENT_GATEWAYS } from "@/data/mockData";
 import {
   X,
@@ -308,7 +309,7 @@ export default function PaymentModal({ options, onClose }: PaymentModalProps) {
                 <label className="block text-xs font-bold text-slate-900 dark:text-white mb-2">
                   Select Ethiopian Payment Method:
                 </label>
-                <div className="grid grid-cols-3 gap-2.5">
+                <div className="grid grid-cols-1 sm:grid-cols-3 gap-2.5">
                   {/* Telebirr */}
                   <button
                     type="button"
@@ -339,7 +340,7 @@ export default function PaymentModal({ options, onClose }: PaymentModalProps) {
                     onClick={() => setSelectedMethod("cbe")}
                     className={`p-3 rounded-2xl border text-left transition-all cursor-pointer relative overflow-hidden ${
                       selectedMethod === "cbe"
-                        ? "border-[#8A1538] bg-pink-50/80 dark:bg-pink-950/40 ring-2 ring-[#8A1538]/30"
+                        ? "border-[#0A2540] bg-slate-100 dark:bg-slate-800 ring-2 ring-[#0A2540]/20 dark:border-[#F59E0B] dark:ring-[#F59E0B]/20"
                         : "border-slate-200 dark:border-slate-700 bg-white dark:bg-slate-800/60 hover:border-slate-300"
                     }`}
                   >
@@ -592,7 +593,7 @@ export default function PaymentModal({ options, onClose }: PaymentModalProps) {
                               `FT26${Math.floor(10000000 + Math.random() * 90000000)}`
                             )
                           }
-                          className="px-3 py-2 bg-pink-100 dark:bg-pink-950/60 hover:bg-pink-200 text-[#8A1538] dark:text-pink-300 text-xs font-bold rounded-xl cursor-pointer"
+                          className="px-3 py-2 bg-slate-100 dark:bg-slate-800 hover:bg-slate-200 dark:hover:bg-slate-700 text-[#0A2540] dark:text-[#F59E0B] text-xs font-bold rounded-xl cursor-pointer"
                         >
                           Auto-Fill Sample
                         </button>
@@ -827,7 +828,15 @@ export default function PaymentModal({ options, onClose }: PaymentModalProps) {
               <button
                 type="button"
                 onClick={() => {
-                  showToast("Invoice downloaded to your device as PDF!", "info");
+                  if (completedTx) {
+                    const opened = openPrintableVatInvoice(completedTx);
+                    showToast(
+                      opened
+                        ? "VAT invoice opened — select 'Save as PDF' to save."
+                        : "VAT invoice HTML saved to downloads.",
+                      "success"
+                    );
+                  }
                 }}
                 className="px-4 py-2.5 rounded-xl border border-slate-200 dark:border-slate-700 bg-white dark:bg-slate-800 text-xs font-bold text-slate-700 dark:text-slate-300 hover:bg-slate-100 flex items-center gap-1.5 cursor-pointer"
               >

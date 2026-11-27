@@ -57,7 +57,7 @@ export default function EmployerDashboardView() {
                 {company.name}
               </h1>
               {company.verified && (
-                <span className="inline-flex items-center gap-1 text-[11px] font-bold text-[#0A2540] dark:text-[#38BDF8] bg-blue-50 dark:bg-blue-950/60 border border-blue-200/60 dark:border-blue-900/60 px-2.5 py-0.5 rounded-md">
+                <span className="inline-flex items-center gap-1 text-[11px] font-bold text-[#0A2540] dark:text-[#F59E0B] bg-[#EEF4FA] dark:bg-slate-800 border border-slate-200 dark:border-slate-700 px-2.5 py-0.5 rounded-md">
                   <ShieldCheck className="w-3.5 h-3.5" />
                   Verified Recruiter
                 </span>
@@ -124,19 +124,19 @@ export default function EmployerDashboardView() {
 
         <div
           onClick={() => setTab("applicants")}
-          className="p-5 rounded-2xl border shadow-xs hover:border-blue-400 transition-all cursor-pointer"
+          className="p-5 rounded-2xl border shadow-xs hover:border-[#F59E0B] transition-all cursor-pointer"
           style={{ background: "var(--surface)", borderColor: "var(--border)" }}
         >
           <div className="flex items-center justify-between">
             <span className="text-xs font-bold" style={{ color: "var(--text-muted)" }}>{t(lang, "totalApplicants")}</span>
-            <div className="w-9 h-9 rounded-xl bg-blue-50 dark:bg-blue-950/40 text-blue-600 dark:text-blue-400 flex items-center justify-center border border-blue-200 dark:border-blue-800">
+            <div className="w-9 h-9 rounded-xl bg-[#0A2540]/5 dark:bg-[#F59E0B]/15 text-[#0A2540] dark:text-[#F59E0B] flex items-center justify-center">
               <Users className="w-4 h-4" />
             </div>
           </div>
           <div className="text-2xl sm:text-3xl font-extrabold mt-2" style={{ color: "var(--text)" }}>
             {totalApplicants > 0 ? totalApplicants : applications.length * 12}
           </div>
-          <span className="text-[11px] text-blue-600 dark:text-blue-400 font-semibold mt-1 block">
+          <span className="text-[11px] text-emerald-600 dark:text-emerald-400 font-semibold mt-1 block">
             +18 this week
           </span>
         </div>
@@ -295,7 +295,7 @@ export default function EmployerDashboardView() {
                           ? "bg-emerald-50 text-emerald-800 dark:bg-emerald-950/60 dark:text-emerald-300 border border-emerald-200 dark:border-emerald-800"
                           : app.status === "Rejected"
                           ? "bg-red-50 text-red-800 dark:bg-red-950/60 dark:text-red-300 border border-red-200 dark:border-red-800"
-                          : "bg-blue-50 text-blue-800 dark:bg-blue-950/60 dark:text-blue-300 border border-blue-200 dark:border-blue-800"
+                          : "bg-[#EEF4FA] text-[#0A2540] dark:bg-slate-800 dark:text-slate-200 border border-slate-200 dark:border-slate-700"
                       }`}
                     >
                       {app.status}

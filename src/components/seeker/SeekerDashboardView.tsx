@@ -171,14 +171,14 @@ export default function SeekerDashboardView() {
         >
           <div className="flex items-center justify-between">
             <span className="text-xs font-semibold" style={{ color: "var(--text-muted)" }}>{t(lang, "underReview")}</span>
-            <div className="w-8 h-8 rounded-lg bg-blue-50 text-blue-600 flex items-center justify-center">
+            <div className="w-8 h-8 rounded-lg bg-[#0A2540]/5 dark:bg-[#F59E0B]/15 text-[#0A2540] dark:text-[#F59E0B] flex items-center justify-center">
               <Clock className="w-4 h-4" />
             </div>
           </div>
           <div className="text-2xl font-extrabold mt-2" style={{ color: "var(--text)" }}>
             {underReviewCount}
           </div>
-          <span className="text-[11px] text-blue-600 font-medium mt-1 block">
+          <span className="text-[11px] text-[#0A2540] dark:text-[#F59E0B] font-medium mt-1 block">
             {t(lang, "hrScreening")}
           </span>
         </div>
@@ -344,7 +344,7 @@ export default function SeekerDashboardView() {
                     <span className="px-2 py-0.5 rounded text-[10px] font-semibold bg-slate-100 dark:bg-slate-800 text-slate-700 dark:text-slate-300 border border-slate-200 dark:border-slate-700">
                       {job.type}
                     </span>
-                    <span className="px-2 py-0.5 rounded text-[10px] font-semibold bg-blue-50 dark:bg-blue-950/50 text-[#0A2540] dark:text-blue-300 border border-blue-200/70 dark:border-blue-900/60">
+                    <span className="px-2 py-0.5 rounded text-[10px] font-semibold bg-[#EEF4FA] dark:bg-slate-800 text-[#0A2540] dark:text-slate-200 border border-slate-200 dark:border-slate-700">
                       {job.workplaceType}
                     </span>
                     <span className="px-2 py-0.5 rounded text-[10px] font-bold bg-amber-50 dark:bg-amber-950/40 text-amber-900 dark:text-amber-300 border border-amber-200/80 dark:border-amber-900/60">

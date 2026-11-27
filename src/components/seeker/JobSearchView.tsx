@@ -427,8 +427,8 @@ export default function JobSearchView() {
                               {job.companyName}
                             </span>
                             {job.verified && (
-                              <span className="inline-flex items-center gap-1 text-[10px] font-bold text-[#0A2540] dark:text-[#38BDF8] bg-blue-50 dark:bg-blue-950/50 border border-blue-200/60 dark:border-blue-900/60 px-1.5 py-0.5 rounded-md">
-                                <ShieldCheck className="w-3 h-3 text-[#0A2540] dark:text-[#38BDF8]" />
+                              <span className="inline-flex items-center gap-1 text-[10px] font-bold text-[#0A2540] dark:text-[#F59E0B] bg-[#EEF4FA] dark:bg-slate-800 border border-slate-200 dark:border-slate-700 px-1.5 py-0.5 rounded-md">
+                                <ShieldCheck className="w-3 h-3 text-[#0A2540] dark:text-[#F59E0B]" />
                                 Verified
                               </span>
                             )}
@@ -438,7 +438,7 @@ export default function JobSearchView() {
                               </span>
                             )}
                             {job.openingsCount && (
-                              <span className="inline-flex items-center gap-1 text-[10px] font-black text-rose-700 bg-rose-50 dark:bg-rose-950/60 dark:text-rose-300 border border-rose-200 dark:border-rose-900/60 px-2 py-0.5 rounded-md">
+                              <span className="inline-flex items-center gap-1 text-[10px] font-black text-amber-900 bg-amber-50 dark:bg-amber-950/60 dark:text-amber-300 border border-amber-200 dark:border-amber-900/60 px-2 py-0.5 rounded-md">
                                 🔥 {job.openingsCount} Vacancies
                               </span>
                             )}

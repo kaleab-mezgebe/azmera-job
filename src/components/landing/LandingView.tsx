@@ -154,12 +154,12 @@ export default function LandingView() {
       <section className="relative overflow-hidden pt-12 pb-16 md:pt-16 md:pb-20 border-b border-slate-200/80 dark:border-slate-800/80 bg-gradient-to-b from-[#F9FBFA] via-[#FFFFFF] to-[#F3F7F5] dark:from-[#060D17] dark:via-[#091526] dark:to-[#0C1B2E]">
         {/* Soft ambient background warmth & dot matrix */}
         <div className="absolute inset-0 hero-grid-pattern opacity-40 pointer-events-none" />
-        <div className="absolute top-10 left-1/2 -translate-x-1/2 w-[720px] h-[360px] bg-gradient-to-r from-orange-400/10 via-[#F59E0B]/15 to-orange-400/10 rounded-full blur-3xl pointer-events-none" />
+        <div className="absolute top-10 left-1/2 -translate-x-1/2 w-[min(92vw,720px)] h-[360px] bg-gradient-to-r from-[#F59E0B]/15 via-amber-300/10 to-[#0A2540]/10 rounded-full blur-3xl pointer-events-none" />
 
         <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10 text-center">
-          {/* Top Pill Tag - Exactly like TalentHub #1 Job Portal Platform */}
-          <div className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-[#FFF4ED] dark:bg-[#F59E0B]/15 border border-[#FFE1CF] dark:border-[#F59E0B]/30 text-xs font-bold text-[#EA580C] dark:text-[#FBBF24] shadow-xs mb-6">
-            <span className="text-[#EA580C] dark:text-[#FBBF24]">✦</span>
+          {/* Top Pill Tag - Azmera Official */}
+          <div className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-amber-50 dark:bg-[#F59E0B]/15 border border-amber-200 dark:border-[#F59E0B]/30 text-xs font-bold text-[#B45309] dark:text-[#FBBF24] shadow-xs mb-6">
+            <span className="text-[#F59E0B] dark:text-[#FBBF24]">✦</span>
             <span>{t(lang, "heroBadge")}</span>
           </div>
 
@@ -178,10 +178,10 @@ export default function LandingView() {
             {t(lang, "heroSubtitle")}
           </p>
 
-          {/* Centerpiece: The Floating Search Capsule (3 distinct fields + orange button) */}
+          {/* Centerpiece: The Floating Search Capsule (3 distinct fields + Azmera Gold CTA) */}
           <form
             onSubmit={handleHeroSearch}
-            className="mt-10 p-2 sm:p-2.5 rounded-2xl md:rounded-full bg-white dark:bg-[#101E33] border border-slate-200/90 dark:border-slate-700/80 shadow-2xl shadow-orange-500/10 dark:shadow-black/60 flex flex-col md:flex-row items-center gap-2 max-w-4xl mx-auto transition-all focus-within:border-[#F59E0B] focus-within:ring-4 focus-within:ring-[#F59E0B]/15"
+            className="mt-10 p-2 sm:p-2.5 rounded-2xl md:rounded-full bg-white dark:bg-[#101E33] border border-slate-200/90 dark:border-slate-700/80 shadow-xl shadow-[#0A2540]/10 dark:shadow-black/60 flex flex-col md:flex-row items-center gap-2 max-w-4xl mx-auto transition-all focus-within:border-[#F59E0B] focus-within:ring-4 focus-within:ring-[#F59E0B]/15"
           >
             {/* Field 1: Keyword search */}
             <div className="flex-1 w-full flex items-center gap-3 px-4 py-2">
@@ -209,7 +209,7 @@ export default function LandingView() {
 
             {/* Field 2: Location dropdown */}
             <div className="w-full md:w-52 flex items-center gap-2.5 px-4 py-2 border-t md:border-t-0 border-slate-100 dark:border-slate-800">
-              <MapPin className="w-5 h-5 text-[#EA580C] shrink-0" />
+              <MapPin className="w-5 h-5 text-[#F59E0B] shrink-0" />
               <select
                 value={localLocation}
                 onChange={(e) => setLocalLocation(e.target.value)}
@@ -261,7 +261,7 @@ export default function LandingView() {
             {/* Submit Button */}
             <button
               type="submit"
-              className="w-full md:w-auto px-7 py-3.5 bg-gradient-to-r from-[#EA580C] to-[#F59E0B] hover:from-[#C2410C] hover:to-[#D97706] text-white font-extrabold text-sm sm:text-base rounded-xl md:rounded-full shadow-lg shadow-orange-500/25 flex items-center justify-center gap-2 cursor-pointer transition-all hover:scale-[1.02] shrink-0"
+              className="w-full md:w-auto px-7 py-3.5 bg-[#F59E0B] hover:bg-[#D97706] text-[#0A2540] font-extrabold text-sm sm:text-base rounded-xl md:rounded-full shadow-lg shadow-[#F59E0B]/25 flex items-center justify-center gap-2 cursor-pointer transition-all hover:scale-[1.02] shrink-0"
             >
               <span>{t(lang, "searchJobs")}</span>
               <ArrowRight className="w-4 h-4" />
@@ -664,14 +664,14 @@ export default function LandingView() {
                         </span>
                       )}
                       {job.openingsCount && (
-                        <span className="px-2.5 py-1 rounded-lg text-[11px] font-black bg-rose-50 text-rose-700 dark:bg-rose-950/60 dark:text-rose-300 border border-rose-200 dark:border-rose-900/60 flex items-center gap-1">
+                        <span className="px-2.5 py-1 rounded-lg text-[11px] font-black bg-amber-50 text-amber-900 dark:bg-amber-950/60 dark:text-amber-300 border border-amber-200 dark:border-amber-900/60 flex items-center gap-1">
                           🔥 {job.openingsCount} Vacancies
                         </span>
                       )}
                       <span className="px-2.5 py-1 rounded-lg text-[11px] font-semibold bg-slate-100 dark:bg-slate-800 text-slate-700 dark:text-slate-300 border border-slate-200 dark:border-slate-700">
                         {tJobType(lang, job.type)}
                       </span>
-                      <span className="px-2.5 py-1 rounded-lg text-[11px] font-semibold bg-blue-50 dark:bg-blue-950/50 text-[#0A2540] dark:text-blue-300 border border-blue-200/70 dark:border-blue-900/60">
+                      <span className="px-2.5 py-1 rounded-lg text-[11px] font-semibold bg-[#EEF4FA] dark:bg-slate-800 text-[#0A2540] dark:text-slate-200 border border-slate-200 dark:border-slate-700">
                         {tWorkplaceType(lang, job.workplaceType)}
                       </span>
                     </div>
@@ -1039,22 +1039,22 @@ export default function LandingView() {
             </div>
 
             {/* CBE Bank Card */}
-            <div className="p-5 rounded-3xl bg-white dark:bg-[#101E33] border border-pink-500/30 shadow-xs flex items-center justify-between">
+            <div className="p-5 rounded-3xl bg-white dark:bg-[#101E33] border border-slate-200 dark:border-slate-800 shadow-xs flex items-center justify-between">
               <div className="flex items-center gap-3.5">
-                <div className="w-12 h-12 rounded-2xl bg-[#8A1538] text-white flex items-center justify-center font-black text-sm shadow-md shadow-[#8A1538]/20">
+                <div className="w-12 h-12 rounded-2xl bg-[#0A2540] text-[#F59E0B] flex items-center justify-center font-black text-sm shadow-md">
                   CBE
                 </div>
                 <div>
                   <div className="flex items-center gap-1.5">
                     <h3 className="font-extrabold text-sm text-slate-900 dark:text-white">CBE Bank &amp; CBE Birr</h3>
-                    <span className="text-[10px] font-bold text-[#8A1538] bg-pink-50 dark:bg-pink-950 px-1.5 py-0.2 rounded">#1 Bank</span>
+                    <span className="text-[10px] font-bold text-[#0A2540] dark:text-[#F59E0B] bg-slate-100 dark:bg-slate-800 px-1.5 py-0.2 rounded">#1 Bank</span>
                   </div>
                   <p className="text-[11px] text-slate-500 dark:text-slate-400">
                     Acc: <strong>1000 4829 19283</strong>
                   </p>
                 </div>
               </div>
-              <span className="text-xs font-bold text-[#8A1538] dark:text-pink-400">
+              <span className="text-xs font-bold text-[#0A2540] dark:text-[#F59E0B]">
                 Mobile &amp; USSD
               </span>
             </div>

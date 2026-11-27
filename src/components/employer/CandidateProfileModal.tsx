@@ -59,14 +59,14 @@ export default function CandidateProfileModal({
                         ? "bg-emerald-50 dark:bg-emerald-950/60 text-emerald-800 dark:text-emerald-300 border border-emerald-200 dark:border-emerald-800"
                         : application.status === "Interview"
                         ? "bg-amber-100 text-amber-900 dark:bg-amber-950/60 dark:text-amber-300 border border-amber-300 dark:border-amber-800"
-                        : "bg-blue-50 text-blue-800 dark:bg-blue-950/60 dark:text-blue-300 border border-blue-200 dark:border-blue-800"
+                        : "bg-[#EEF4FA] text-[#0A2540] dark:bg-slate-800 dark:text-slate-200 border border-slate-200 dark:border-slate-700"
                     }`}
                   >
                     {application.status}
                   </span>
                 )}
               </div>
-              <p className="text-xs font-semibold text-[#0A2540] dark:text-[#38BDF8]">{candidate.title}</p>
+              <p className="text-xs font-semibold text-[#0A2540] dark:text-[#F59E0B]">{candidate.title}</p>
               <p className="text-xs text-slate-500 dark:text-slate-400 flex items-center gap-1 mt-0.5">
                 <MapPin className="w-3.5 h-3.5 text-[#0A2540] dark:text-[#F59E0B]" />
                 {candidate.location} • {candidate.experienceYears} Years Exp.
@@ -176,14 +176,14 @@ export default function CandidateProfileModal({
           </div>
 
           {/* Contact Details */}
-          <div className="grid grid-cols-2 gap-3 text-xs">
-            <div className="p-3 bg-slate-50 dark:bg-slate-800/60 rounded-xl border border-slate-200 dark:border-slate-700 flex items-center gap-2">
-              <Mail className="w-4 h-4 text-[#0A2540] dark:text-[#F59E0B]" />
-              <span className="font-semibold text-slate-900 dark:text-white">{candidate.email}</span>
+          <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 text-xs">
+            <div className="p-3 bg-slate-50 dark:bg-slate-800/60 rounded-xl border border-slate-200 dark:border-slate-700 flex items-center gap-2 min-w-0">
+              <Mail className="w-4 h-4 text-[#0A2540] dark:text-[#F59E0B] shrink-0" />
+              <span className="font-semibold text-slate-900 dark:text-white truncate">{candidate.email}</span>
             </div>
-            <div className="p-3 bg-slate-50 dark:bg-slate-800/60 rounded-xl border border-slate-200 dark:border-slate-700 flex items-center gap-2">
-              <Phone className="w-4 h-4 text-[#0A2540] dark:text-[#F59E0B]" />
-              <span className="font-semibold text-slate-900 dark:text-white">{candidate.phone}</span>
+            <div className="p-3 bg-slate-50 dark:bg-slate-800/60 rounded-xl border border-slate-200 dark:border-slate-700 flex items-center gap-2 min-w-0">
+              <Phone className="w-4 h-4 text-[#0A2540] dark:text-[#F59E0B] shrink-0" />
+              <span className="font-semibold text-slate-900 dark:text-white truncate">{candidate.phone}</span>
             </div>
           </div>
 

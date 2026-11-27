@@ -198,7 +198,7 @@ export default function SeekerApplicationsView() {
                 {/* Status Progress Stepper (Except if rejected) */}
                 {app.status !== "Rejected" ? (
                   <div className="pt-2">
-                    <div className="grid grid-cols-5 gap-1 sm:gap-2 relative">
+                    <div className="grid grid-cols-2 sm:grid-cols-5 gap-2 relative">
                       {[
                         { num: 1, label: t(lang, "submitted") },
                         { num: 2, label: t(lang, "underReview") },
@@ -213,16 +213,16 @@ export default function SeekerApplicationsView() {
                             <div
                               className={`h-2 rounded-full transition-all ${
                                 isDone
-                                  ? "bg-gradient-to-r from-[#0A2540] to-[#F59E0B]"
+                                  ? "bg-[#0A2540] dark:bg-[#F59E0B]"
                                   : "bg-[#E2E8F0] dark:bg-[#1E334D]"
                               }`}
                             />
                             <span
-                              className={`text-[9px] sm:text-[10px] font-bold block truncate ${
+                              className={`text-[10px] font-bold block truncate ${
                                 isCurrent
                                   ? "text-[#F59E0B]"
                                   : isDone
-                                  ? "text-[#0A2540] dark:text-[#7DD3FC]"
+                                  ? "text-[#0A2540] dark:text-slate-200"
                                   : "text-[#64748B]"
                               }`}
                             >
@@ -320,7 +320,7 @@ export default function SeekerApplicationsView() {
                     {app.status !== "Hired" && app.status !== "Rejected" && (
                       <button
                         onClick={() => withdrawApplication(app.id)}
-                        className="px-3 py-1.5 rounded-xl text-rose-600 hover:bg-rose-50 dark:hover:bg-rose-950/40 font-bold transition-colors cursor-pointer"
+                        className="px-3 py-1.5 rounded-xl text-red-600 hover:bg-red-50 dark:hover:bg-red-950/40 font-bold transition-colors cursor-pointer"
                       >
                         {t(lang, "withdrawApplication")}
                       </button>

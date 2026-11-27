@@ -581,7 +581,7 @@ export default function SeekerProfileView() {
                     showToast("Account deactivated. Signed out of session.", "info");
                     logout();
                   }}
-                  className="w-full py-2 rounded-xl border border-rose-200 dark:border-rose-900 text-rose-600 hover:bg-rose-50 dark:hover:bg-rose-950/40 font-bold text-xs cursor-pointer transition-colors"
+                  className="w-full py-2 rounded-xl border border-red-200 dark:border-red-900 text-red-600 hover:bg-red-50 dark:hover:bg-red-950/40 font-bold text-xs cursor-pointer transition-colors"
                 >
                   {t(lang, "deactivateAccount")}
                 </button>

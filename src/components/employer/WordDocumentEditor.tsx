@@ -209,7 +209,7 @@ export default function WordDocumentEditor({
 
     if (type === "notice") {
       calloutHtml = `
-<div class="p-4 my-3.5 rounded-2xl border-l-4 border-[#0A2540] bg-blue-50/90 dark:bg-blue-950/40 text-slate-900 dark:text-blue-100 shadow-2xs text-xs sm:text-sm font-medium leading-relaxed">
+<div class="p-4 my-3.5 rounded-2xl border-l-4 border-[#0A2540] bg-[#EEF4FA] dark:bg-slate-800/80 text-[#0A2540] dark:text-slate-100 shadow-2xs text-xs sm:text-sm font-medium leading-relaxed">
   <strong class="font-bold block mb-1">📋 OFFICIAL RECRUITMENT NOTICE</strong>
   This position is governed by standard organizational recruitment policies and Ethiopian labor regulations.
 </div><p></p>`;
@@ -612,7 +612,7 @@ export default function WordDocumentEditor({
                         "</span>"
                       )
                 }
-                className="p-1.5 px-2.5 rounded-lg bg-blue-50 dark:bg-blue-950/40 hover:bg-blue-100 dark:hover:bg-blue-900/60 text-[#0A2540] dark:text-[#38BDF8] border border-blue-200 dark:border-blue-800 flex items-center gap-1 cursor-pointer font-bold"
+                className="p-1.5 px-2.5 rounded-lg bg-[#EEF4FA] dark:bg-slate-800 hover:bg-slate-200 dark:hover:bg-slate-700 text-[#0A2540] dark:text-[#F59E0B] border border-slate-200 dark:border-slate-700 flex items-center gap-1 cursor-pointer font-bold"
                 title="Navy Color Text"
               >
                 <Palette className="w-3.5 h-3.5" />
@@ -729,7 +729,7 @@ export default function WordDocumentEditor({
                 onApplyTemplate?.("tdrf");
                 setViewMode("visual");
               }}
-              className="px-3 py-1.5 rounded-xl bg-rose-50 dark:bg-rose-950/40 text-rose-900 dark:text-rose-200 border border-rose-300 font-extrabold flex items-center gap-1.5 hover:bg-rose-100 cursor-pointer"
+              className="px-3 py-1.5 rounded-xl bg-slate-100 dark:bg-slate-800 text-[#0A2540] dark:text-slate-100 border border-slate-300 dark:border-slate-700 font-extrabold flex items-center gap-1.5 hover:bg-slate-200 dark:hover:bg-slate-700 cursor-pointer"
             >
               <span>🏛️ TDRF Humanitarian Circular (Mekelle)</span>
             </button>
@@ -751,7 +751,7 @@ export default function WordDocumentEditor({
                 onApplyTemplate?.("fintech");
                 setViewMode("visual");
               }}
-              className="px-3 py-1.5 rounded-xl bg-blue-50 dark:bg-blue-950/40 text-blue-900 dark:text-blue-200 border border-blue-300 font-extrabold flex items-center gap-1.5 hover:bg-blue-100 cursor-pointer"
+              className="px-3 py-1.5 rounded-xl bg-[#EEF4FA] dark:bg-slate-800 text-[#0A2540] dark:text-[#F59E0B] border border-slate-300 dark:border-slate-700 font-extrabold flex items-center gap-1.5 hover:bg-slate-200 dark:hover:bg-slate-700 cursor-pointer"
             >
               <span>💻 FinTech / Banking Lead Role</span>
             </button>
@@ -775,7 +775,7 @@ export default function WordDocumentEditor({
                     key={file.id}
                     className="inline-flex items-center gap-1.5 px-3 py-1 rounded-xl bg-white dark:bg-slate-800 border border-slate-300 dark:border-slate-700 text-xs font-bold text-slate-900 dark:text-white shadow-xs"
                   >
-                    <FileText className="w-3.5 h-3.5 text-rose-500" />
+                    <FileText className="w-3.5 h-3.5 text-[#0A2540] dark:text-[#F59E0B]" />
                     <span>{file.name}</span>
                     <span className="text-[10px] text-slate-400 font-normal">
                       ({file.size})
@@ -863,7 +863,7 @@ export default function WordDocumentEditor({
                       className="p-3 rounded-xl bg-slate-50 dark:bg-slate-800/80 border border-slate-200 dark:border-slate-700 flex items-center justify-between"
                     >
                       <div className="flex items-center gap-2.5 truncate">
-                        <div className="w-8 h-8 rounded-lg bg-rose-50 dark:bg-rose-950/60 text-rose-600 flex items-center justify-center font-black text-xs shrink-0">
+                        <div className="w-8 h-8 rounded-lg bg-[#EEF4FA] dark:bg-slate-800 text-[#0A2540] dark:text-[#F59E0B] flex items-center justify-center font-black text-xs shrink-0">
                           {att.type.toUpperCase()}
                         </div>
                         <div className="truncate">
@@ -950,7 +950,7 @@ export default function WordDocumentEditor({
                       className="p-3.5 rounded-xl border border-slate-200 dark:border-slate-700 bg-slate-50 dark:bg-slate-800/60 flex items-center justify-between"
                     >
                       <div className="flex items-center gap-3">
-                        <div className="w-9 h-9 rounded-xl bg-rose-50 text-rose-600 flex items-center justify-center font-bold text-xs">
+                        <div className="w-9 h-9 rounded-xl bg-[#EEF4FA] dark:bg-slate-800 text-[#0A2540] dark:text-[#F59E0B] flex items-center justify-center font-bold text-xs">
                           {file.type.toUpperCase()}
                         </div>
                         <div>
@@ -1153,22 +1153,22 @@ export default function WordDocumentEditor({
                     onClick={() => setAttachFileType("pdf")}
                     className={`py-2 rounded-xl border text-xs font-bold flex items-center justify-center gap-2 cursor-pointer ${
                       attachFileType === "pdf"
-                        ? "bg-rose-50 border-rose-400 text-rose-900"
+                        ? "bg-amber-50 dark:bg-amber-950/40 border-[#F59E0B] text-[#0A2540] dark:text-amber-200"
                         : "bg-slate-50 dark:bg-slate-800 border-slate-200 dark:border-slate-700 text-slate-600 dark:text-slate-300"
                     }`}
                   >
-                    <span className="font-black text-rose-600">PDF</span> Document (.pdf)
+                    <span className="font-black text-[#0A2540] dark:text-[#F59E0B]">PDF</span> Document (.pdf)
                   </button>
                   <button
                     type="button"
                     onClick={() => setAttachFileType("docx")}
                     className={`py-2 rounded-xl border text-xs font-bold flex items-center justify-center gap-2 cursor-pointer ${
                       attachFileType === "docx"
-                        ? "bg-blue-50 border-blue-400 text-blue-900"
+                        ? "bg-[#EEF4FA] dark:bg-slate-700 border-[#0A2540] dark:border-[#F59E0B] text-[#0A2540] dark:text-white"
                         : "bg-slate-50 dark:bg-slate-800 border-slate-200 dark:border-slate-700 text-slate-600 dark:text-slate-300"
                     }`}
                   >
-                    <span className="font-black text-blue-600">DOCX</span> Word Doc (.docx)
+                    <span className="font-black text-[#0A2540] dark:text-[#F59E0B]">DOCX</span> Word Doc (.docx)
                   </button>
                 </div>
               </div>

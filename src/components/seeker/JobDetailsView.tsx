@@ -108,7 +108,7 @@ export default function JobDetailsView() {
                   {selectedJob.companyName}
                 </span>
                 {selectedJob.verified && (
-                  <span className="inline-flex items-center gap-1 text-[11px] font-bold text-[#0A2540] dark:text-[#38BDF8] bg-blue-50 dark:bg-blue-950/60 border border-blue-200/60 dark:border-blue-900/60 px-2 py-0.5 rounded-md">
+                  <span className="inline-flex items-center gap-1 text-[11px] font-bold text-[#0A2540] dark:text-[#F59E0B] bg-[#EEF4FA] dark:bg-slate-800 border border-slate-200 dark:border-slate-700 px-2 py-0.5 rounded-md">
                     <ShieldCheck className="w-3.5 h-3.5" />
                     {t(lang, "verifiedEmployer")}
                   </span>
@@ -276,8 +276,8 @@ export default function JobDetailsView() {
         {(selectedJob.openingsCount || selectedJob.sourceCircular) && (
           <div className="flex flex-wrap items-center gap-2 pt-2 border-t border-slate-100 dark:border-slate-800">
             {selectedJob.openingsCount && (
-              <span className="inline-flex items-center gap-1.5 px-3 py-1 rounded-xl text-xs font-black bg-rose-50 text-rose-700 dark:bg-rose-950/60 dark:text-rose-300 border border-rose-200 dark:border-rose-900/60">
-                <Flame className="w-3.5 h-3.5 text-rose-500 fill-rose-500" />
+              <span className="inline-flex items-center gap-1.5 px-3 py-1 rounded-xl text-xs font-black bg-amber-50 text-amber-900 dark:bg-amber-950/60 dark:text-amber-300 border border-amber-200 dark:border-amber-900/60">
+                <Flame className="w-3.5 h-3.5 text-[#F59E0B] fill-[#F59E0B]" />
                 {selectedJob.openingsCount} Vacancies Available
               </span>
             )}
@@ -413,8 +413,8 @@ export default function JobDetailsView() {
             <div className="bg-white dark:bg-[#101E33] p-6 sm:p-8 rounded-3xl border border-[#E2E8F0] dark:border-slate-800 shadow-xs space-y-4">
               <div className="flex items-center justify-between pb-3 border-b border-slate-100 dark:border-slate-800">
                 <div className="flex items-center gap-3">
-                  <div className="w-10 h-10 rounded-2xl bg-rose-50 dark:bg-rose-950/60 text-rose-600 flex items-center justify-center font-bold">
-                    <Paperclip className="w-5 h-5 text-rose-600" />
+                  <div className="w-10 h-10 rounded-2xl bg-[#EEF4FA] dark:bg-slate-800 text-[#0A2540] dark:text-[#F59E0B] flex items-center justify-center font-bold">
+                    <Paperclip className="w-5 h-5" />
                   </div>
                   <div>
                     <h3 className="text-base font-extrabold text-slate-900 dark:text-white">
@@ -437,7 +437,7 @@ export default function JobDetailsView() {
                     className="p-4 rounded-2xl border border-slate-200 dark:border-slate-700 bg-slate-50 dark:bg-slate-800/60 hover:bg-slate-100/80 transition-all flex items-center justify-between group"
                   >
                     <div className="flex items-center gap-3 truncate">
-                      <div className="w-10 h-10 rounded-xl bg-white dark:bg-slate-700 border border-slate-200 dark:border-slate-600 flex items-center justify-center font-black text-xs text-rose-600 shrink-0 shadow-2xs">
+                      <div className="w-10 h-10 rounded-xl bg-white dark:bg-slate-700 border border-slate-200 dark:border-slate-600 flex items-center justify-center font-black text-xs text-[#0A2540] dark:text-[#F59E0B] shrink-0 shadow-2xs">
                         {file.type.toUpperCase()}
                       </div>
                       <div className="truncate">

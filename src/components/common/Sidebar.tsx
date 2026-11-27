@@ -163,7 +163,7 @@ export default function Sidebar() {
       <div className="pt-4 border-t space-y-2" style={{ borderColor: "var(--border)" }}>
         <button
           onClick={logout}
-          className="w-full flex items-center gap-2 p-2.5 rounded-xl text-xs font-semibold text-rose-600 hover:bg-rose-50 dark:hover:bg-rose-950/40 rounded-xl transition-colors cursor-pointer"
+          className="w-full flex items-center gap-2 p-2.5 rounded-xl text-xs font-semibold text-red-600 hover:bg-red-50 dark:hover:bg-red-950/40 rounded-xl transition-colors cursor-pointer"
         >
           <LogOut className="w-3.5 h-3.5" />
           <span>{t(lang, "signOut")}</span>

@@ -89,15 +89,15 @@ export default function ApplyJobModal({ job, onClose }: ApplyJobModalProps) {
         {step === 1 ? (
           <div className="p-6 space-y-5">
             {/* Telegram 30-Second Fast-Track Option */}
-            <div className="p-4 bg-gradient-to-r from-sky-50 to-blue-50 dark:from-sky-950/40 dark:to-blue-950/40 border-2 border-sky-200 dark:border-sky-800 rounded-2xl flex flex-col sm:flex-row sm:items-center justify-between gap-3 text-xs">
+            <div className="p-4 bg-amber-50/70 dark:bg-slate-800/70 border border-amber-200 dark:border-slate-700 rounded-2xl flex flex-col sm:flex-row sm:items-center justify-between gap-3 text-xs">
               <div className="flex items-start gap-3">
-                <div className="w-9 h-9 rounded-xl bg-[#0088cc] text-white flex items-center justify-center shrink-0 shadow-sm">
+                <div className="w-9 h-9 rounded-xl bg-[#0A2540] text-[#F59E0B] flex items-center justify-center shrink-0 shadow-sm">
                   <Send className="w-4 h-4" />
                 </div>
                 <div>
-                  <h4 className="font-extrabold text-slate-900 dark:text-white flex items-center gap-1.5">
+                  <h4 className="font-extrabold text-slate-900 dark:text-white flex items-center gap-1.5 flex-wrap">
                     <span>No CV ready on your phone? Apply via Telegram</span>
-                    <span className="text-[10px] bg-[#0088cc] text-white font-black px-1.5 py-0.5 rounded-full">30 Sec</span>
+                    <span className="text-[10px] bg-[#F59E0B] text-[#0A2540] font-black px-1.5 py-0.5 rounded-full">30 Sec</span>
                   </h4>
                   <p className="text-[11px] text-slate-600 dark:text-slate-300 mt-0.5">
                     Connect directly with Azmera coordinators on Telegram for fast telephone screening.
@@ -108,7 +108,7 @@ export default function ApplyJobModal({ job, onClose }: ApplyJobModalProps) {
                 href={`https://t.me/${(job.directTelegramHandle || "@AzmeraJobConnect").replace("@", "")}`}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="px-4 py-2 bg-[#0088cc] hover:bg-[#0077b5] text-white font-extrabold text-xs rounded-xl shadow-xs transition-all hover:scale-[1.02] flex items-center justify-center gap-1.5 shrink-0"
+                className="px-4 py-2 bg-[#0A2540] hover:bg-[#07192C] dark:bg-[#F59E0B] dark:hover:bg-[#D97706] text-white dark:text-[#0A2540] font-extrabold text-xs rounded-xl shadow-xs transition-all hover:scale-[1.02] flex items-center justify-center gap-1.5 shrink-0"
               >
                 <Send className="w-3.5 h-3.5" />
                 <span>Open Telegram</span>
@@ -190,7 +190,7 @@ export default function ApplyJobModal({ job, onClose }: ApplyJobModalProps) {
                     }`}
                   >
                     <div className="flex items-center gap-3">
-                      <div className="w-10 h-10 rounded-xl bg-blue-50 dark:bg-blue-950/50 text-blue-600 dark:text-blue-400 flex items-center justify-center">
+                      <div className="w-10 h-10 rounded-xl bg-[#EEF4FA] dark:bg-slate-800 text-[#0A2540] dark:text-[#F59E0B] flex items-center justify-center">
                         <FileText className="w-5 h-5" />
                       </div>
                       <div>

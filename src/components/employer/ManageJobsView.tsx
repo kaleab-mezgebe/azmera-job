@@ -223,7 +223,7 @@ export default function ManageJobsView() {
                       <td className="px-6 py-4">
                         <button
                           onClick={() => setTab("applicants")}
-                          className="inline-flex items-center gap-1.5 px-3 py-1 rounded-xl bg-blue-50 dark:bg-blue-950/60 hover:bg-[#0A2540] dark:hover:bg-[#F59E0B] text-[#0A2540] dark:text-[#38BDF8] hover:text-white dark:hover:text-[#0A2540] border border-blue-200/60 dark:border-blue-900/60 text-xs font-bold transition-colors cursor-pointer"
+                          className="inline-flex items-center gap-1.5 px-3 py-1 rounded-xl bg-[#EEF4FA] dark:bg-slate-800 hover:bg-[#0A2540] dark:hover:bg-[#F59E0B] text-[#0A2540] dark:text-[#F59E0B] hover:text-white dark:hover:text-[#0A2540] border border-slate-200 dark:border-slate-700 text-xs font-bold transition-colors cursor-pointer"
                         >
                           <Users className="w-3.5 h-3.5" />
                           <span>{job.applicantCount} Candidates</span>
@@ -285,7 +285,7 @@ export default function ManageJobsView() {
                           {/* Duplicate Vacancy */}
                           <button
                             onClick={() => handleDuplicate(job)}
-                            className="p-1.5 rounded-lg border border-slate-200 dark:border-slate-700 hover:bg-blue-50 dark:hover:bg-blue-950/40 text-blue-600 dark:text-blue-400 cursor-pointer"
+                            className="p-1.5 rounded-lg border border-slate-200 dark:border-slate-700 hover:bg-slate-100 dark:hover:bg-slate-800 text-[#0A2540] dark:text-slate-300 cursor-pointer"
                             title="Duplicate Vacancy"
                           >
                             <Copy className="w-3.5 h-3.5" />
@@ -318,7 +318,7 @@ export default function ManageJobsView() {
                             onClick={() => closeJob(job.id)}
                             className={`px-2.5 py-1 rounded-lg text-[11px] font-bold transition-colors cursor-pointer ${
                               job.status === "Active"
-                                ? "bg-rose-50 hover:bg-rose-100 text-rose-800 dark:bg-rose-950/40 dark:text-rose-300 border border-rose-200 dark:border-rose-900"
+                                ? "bg-red-50 hover:bg-red-100 text-red-700 dark:bg-red-950/40 dark:text-red-300 border border-red-200 dark:border-red-900"
                                 : "bg-slate-100 dark:bg-slate-800 hover:bg-[#0A2540] dark:hover:bg-[#F59E0B] text-slate-800 dark:text-slate-200 hover:text-white dark:hover:text-[#0A2540]"
                             }`}
                           >
@@ -373,14 +373,14 @@ export default function ManageJobsView() {
 
               <div className="p-4 rounded-2xl bg-slate-50 dark:bg-slate-800/60 border border-slate-100 dark:border-slate-800">
                 <span className="text-[10px] font-bold uppercase text-slate-400">Telegram Views</span>
-                <p className="text-2xl font-black text-sky-600 dark:text-sky-400 mt-1">980</p>
-                <span className="text-[10px] text-sky-500 font-bold">@AzmeraJobConnect</span>
+                <p className="text-2xl font-black text-[#0A2540] dark:text-[#F59E0B] mt-1">980</p>
+                <span className="text-[10px] text-slate-500 font-bold">@AzmeraJobConnect</span>
               </div>
 
               <div className="p-4 rounded-2xl bg-slate-50 dark:bg-slate-800/60 border border-slate-100 dark:border-slate-800">
                 <span className="text-[10px] font-bold uppercase text-slate-400">Applications</span>
-                <p className="text-2xl font-black text-blue-600 dark:text-blue-400 mt-1">{analyticsJob.applicantCount}</p>
-                <span className="text-[10px] text-blue-500 font-bold">Active Candidates</span>
+                <p className="text-2xl font-black text-slate-900 dark:text-white mt-1">{analyticsJob.applicantCount}</p>
+                <span className="text-[10px] text-slate-500 font-bold">Active Candidates</span>
               </div>
 
               <div className="p-4 rounded-2xl bg-slate-50 dark:bg-slate-800/60 border border-slate-100 dark:border-slate-800">
@@ -398,7 +398,7 @@ export default function ManageJobsView() {
 
               <div className="space-y-2">
                 {[
-                  { stage: "Applied (Received)", count: analyticsJob.applicantCount, pct: 100, color: "bg-blue-500" },
+                  { stage: "Applied (Received)", count: analyticsJob.applicantCount, pct: 100, color: "bg-slate-400" },
                   { stage: "Under Review", count: Math.max(1, Math.round(analyticsJob.applicantCount * 0.8)), pct: 80, color: "bg-[#0A2540]" },
                   { stage: "Shortlisted for Interview", count: Math.max(1, Math.round(analyticsJob.applicantCount * 0.35)), pct: 35, color: "bg-emerald-500" },
                   { stage: "Interview Conducted", count: Math.max(1, Math.round(analyticsJob.applicantCount * 0.15)), pct: 15, color: "bg-amber-500" },
@@ -461,7 +461,7 @@ export default function ManageJobsView() {
               <label className="block text-xs font-bold text-slate-700 dark:text-slate-300 mb-2">
                 Select Extension Period:
               </label>
-              <div className="grid grid-cols-3 gap-2">
+              <div className="grid grid-cols-1 sm:grid-cols-3 gap-2">
                 {[
                   { days: 7, label: "+7 Days" },
                   { days: 14, label: "+14 Days" },

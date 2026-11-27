@@ -820,7 +820,7 @@ export default function Navbar() {
                             logout();
                             setAccountMenuOpen(false);
                           }}
-                          className="w-full flex items-center gap-2 p-2 rounded-xl text-xs font-bold text-rose-600 hover:bg-rose-50 dark:hover:bg-rose-950/40 transition-colors cursor-pointer"
+                          className="w-full flex items-center gap-2 p-2 rounded-xl text-xs font-bold text-red-600 hover:bg-red-50 dark:hover:bg-red-950/40 transition-colors cursor-pointer"
                         >
                           <LogOut className="w-4 h-4" />
                           <span>Sign Out (Session Exit)</span>

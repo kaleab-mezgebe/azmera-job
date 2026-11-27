@@ -445,7 +445,7 @@ export default function ApplicantsManagementView() {
                         ? "bg-emerald-50 text-emerald-800 dark:bg-emerald-950/60 dark:text-emerald-300 border border-emerald-200 dark:border-emerald-800"
                         : app.status === "Rejected"
                         ? "bg-red-50 text-red-800 dark:bg-red-950/60 dark:text-red-300 border border-red-200 dark:border-red-800"
-                        : "bg-blue-50 text-blue-800 dark:bg-blue-950/60 dark:text-blue-300 border border-blue-200 dark:border-blue-800"
+                        : "bg-[#EEF4FA] text-[#0A2540] dark:bg-slate-800 dark:text-slate-200 border border-slate-200 dark:border-slate-700"
                     }`}
                   >
                     {app.status}

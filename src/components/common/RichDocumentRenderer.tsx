@@ -30,14 +30,47 @@ export function stripRichFormatting(raw: string): string {
 }
 
 /**
+ * Sanitizes untrusted HTML fragments before inline markdown expansion to block XSS.
+ */
+function sanitizeRichHtml(input: string): string {
+  return input
+    // Strip dangerous blocks completely
+    .replace(/<\s*(script|style|iframe|object|embed|svg|math|form|input|button|textarea|select|meta|link|base)[^>]*>[\s\S]*?<\/\s*\1\s*>/gi, "")
+    .replace(/<\s*(script|style|iframe|object|embed|svg|math|form|input|button|textarea|select|meta|link|base)[^>]*\/?>/gi, "")
+    // Strip inline JS event handlers (onload=, onerror=, onclick=, etc.) and javascript:/data: URIs
+    .replace(/\s+on[a-z]+\s*=\s*(?:"[^"]*"|'[^']*'|[^\s>]+)/gi, "")
+    .replace(/(href|src)\s*=\s*(?:"\s*(?:javascript|vbscript|data:text\/html)[^"]*"|'\s*(?:javascript|vbscript|data:text\/html)[^']*')/gi, '$1="#"')
+    // Escape any HTML tags outside the small safe formatting whitelist
+    .replace(/<\/?([a-z][a-z0-9]*)\b[^>]*>/gi, (full, tagName: string) => {
+      const tag = tagName.toLowerCase();
+      if (tag === "br") return "<br/>";
+      if (tag === "u" || tag === "strong" || tag === "em" || tag === "b" || tag === "i" || tag === "p" || tag === "mark") {
+        const isClose = full.startsWith("</");
+        return isClose ? `</${tag}>` : `<${tag}>`;
+      }
+      return full.replace(/</g, "&lt;").replace(/>/g, "&gt;");
+    });
+}
+
+function isSafeImageUrl(rawUrl: string): boolean {
+  const url = rawUrl.trim();
+  return (
+    url.startsWith("https://") ||
+    url.startsWith("http://") ||
+    url.startsWith("/api/uploads/") ||
+    url.startsWith("/")
+  );
+}
+
+/**
  * Converts a raw description (which might be markdown, HTML, or mixed with <mark> and <u> tags)
- * into rich, valid, beautifully styled HTML that renders inside Word Canvas and Candidate views.
+ * into rich, sanitized HTML that renders safely inside Word Canvas and Candidate views.
  */
 export function renderJobDescriptionHtml(raw: string): string {
   if (!raw || typeof raw !== "string") return "";
 
-  // If already full HTML with structured blocks and no markdown markers, sanitize & enhance
-  const lines = raw.split("\n");
+  const sanitizedRaw = sanitizeRichHtml(raw);
+  const lines = sanitizedRaw.split("\n");
   const processedLines: string[] = [];
   let inBlockquote = false;
   let blockquoteContent: string[] = [];
@@ -60,7 +93,7 @@ export function renderJobDescriptionHtml(raw: string): string {
       const isBenefits =
         fullText.includes("🎁") || fullText.toLowerCase().includes("benefits");
 
-      let borderClass = "border-l-4 border-[#0A2540] bg-blue-50/90 dark:bg-blue-950/40 text-slate-900 dark:text-blue-100";
+      let borderClass = "border-l-4 border-[#0A2540] bg-[#EEF4FA] dark:bg-slate-800/80 text-[#0A2540] dark:text-slate-100";
       if (isUrgent) {
         borderClass =
           "border-l-4 border-[#F59E0B] bg-amber-50/90 dark:bg-amber-950/40 text-amber-950 dark:text-amber-100";
@@ -156,16 +189,18 @@ export function renderJobDescriptionHtml(raw: string): string {
         /<u>(.*?)<\/u>/gi,
         '<u class="underline decoration-2 decoration-[#F59E0B] underline-offset-3 font-semibold">$1</u>'
       )
-      // Highlight <mark ...>text</mark> or <mark>text</mark> -> styled yellow highlighter
+      // Highlight <mark ...>text</mark> -> cohesive Azmera Gold highlight
       .replace(
         /<mark(?:\s+[^>]*)?>(.*?)<\/mark>/gi,
-        '<mark style="background:#FEF08A;color:#713F12;padding:2px 6px;border-radius:4px;font-weight:600;display:inline-block;">$1</mark>'
+        '<mark class="bg-amber-200/80 dark:bg-amber-400/25 text-[#0A2540] dark:text-amber-200 px-1.5 py-0.5 rounded-md font-semibold inline-block">$1</mark>'
       )
-      // Image markdown ![alt](url)
-      .replace(
-        /!\[(.*?)\]\((.*?)\)/g,
-        '<div class="my-4 rounded-2xl overflow-hidden border border-slate-200 dark:border-slate-700 shadow-sm"><img src="$2" alt="$1" class="w-full max-h-80 object-cover"/><div class="p-2 text-[11px] text-center text-slate-500 font-medium">$1</div></div>'
-      );
+      // Image markdown ![alt](url) — allow only safe http(s) or relative upload URLs
+      .replace(/!\[(.*?)\]\((.*?)\)/g, (_m, alt: string, url: string) => {
+        if (!isSafeImageUrl(url)) return "";
+        const safeAlt = alt.replace(/"/g, "&quot;").replace(/</g, "&lt;").replace(/>/g, "&gt;");
+        const safeUrl = url.trim().replace(/"/g, "&quot;");
+        return `<div class="my-4 rounded-2xl overflow-hidden border border-slate-200 dark:border-slate-700 shadow-sm"><img src="${safeUrl}" alt="${safeAlt}" class="w-full max-h-80 object-cover"/><div class="p-2 text-[11px] text-center text-slate-500 font-medium">${safeAlt}</div></div>`;
+      });
   };
 
   for (let i = 0; i < lines.length; i++) {
@@ -196,7 +231,23 @@ export function renderJobDescriptionHtml(raw: string): string {
       flushBlockquote();
     }
 
-    // 3. Bullet line (• ... or - ... or * ...)
+    // 3. Markdown Checklist (- [x] / - [ ] / * [x] / * [ ]) & Bullet line (• / - / *)
+    const checklistMatch = trimmed.match(/^(?:-|\*|•)\s*\[(x|X|\s)\]\s+(.*)$/);
+    if (checklistMatch) {
+      flushNumberedList();
+      inBulletList = true;
+      const checked = checklistMatch[1].toLowerCase() === "x";
+      const itemText = formatInline(checklistMatch[2]);
+      bulletListItems.push(
+        `<span class="inline-flex items-center gap-2">${
+          checked
+            ? '<span class="inline-flex items-center justify-center w-4 h-4 rounded-md bg-emerald-600 text-white text-[10px] font-black shrink-0">✓</span>'
+            : '<span class="inline-flex items-center justify-center w-4 h-4 rounded-md border border-slate-300 dark:border-slate-600 bg-white dark:bg-slate-800 text-transparent text-[10px] shrink-0">•</span>'
+        }<span>${itemText}</span></span>`
+      );
+      continue;
+    }
+
     if (
       trimmed.startsWith("•") ||
       (trimmed.startsWith("-") && !trimmed.startsWith("---")) ||

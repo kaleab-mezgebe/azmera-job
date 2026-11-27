@@ -642,10 +642,10 @@ export default function AdminDashboardView() {
                       <span
                         className={`px-2 py-0.5 rounded text-[10px] font-black uppercase ${
                           tx.method === "telebirr"
-                            ? "bg-emerald-100 text-[#00843D] dark:bg-emerald-950/60"
+                            ? "bg-emerald-100 text-emerald-800 dark:bg-emerald-950/60 dark:text-emerald-300"
                             : tx.method === "cbe"
-                            ? "bg-pink-100 text-[#8A1538] dark:bg-pink-950/60"
-                            : "bg-green-100 text-[#00B04F] dark:bg-green-950/60"
+                            ? "bg-[#EEF4FA] text-[#0A2540] dark:bg-slate-800 dark:text-slate-200"
+                            : "bg-amber-100 text-amber-900 dark:bg-amber-950/60 dark:text-amber-300"
                         }`}
                       >
                         {tx.method === "telebirr" ? "Telebirr" : tx.method === "cbe" ? "CBE Bank" : "M-Pesa"}
@@ -712,7 +712,7 @@ export default function AdminDashboardView() {
                       <h3 className="font-extrabold text-xs text-slate-900 dark:text-white flex items-center gap-1">
                         <span>{comp.name}</span>
                         {comp.verified && (
-                          <ShieldCheck className="w-3.5 h-3.5 text-blue-500 fill-blue-500/20" />
+                          <ShieldCheck className="w-3.5 h-3.5 text-emerald-600 dark:text-emerald-400" />
                         )}
                       </h3>
                       <span className="text-[11px] text-slate-400">{comp.industry}</span>
@@ -834,7 +834,7 @@ export default function AdminDashboardView() {
                     <td className="py-3 px-2">
                       <div className="font-bold text-slate-900 dark:text-white flex items-center gap-1.5">
                         <span>{usr.name}</span>
-                        {usr.verified && <CheckCircle2 className="w-3.5 h-3.5 text-blue-500" />}
+                        {usr.verified && <CheckCircle2 className="w-3.5 h-3.5 text-emerald-600 dark:text-emerald-400" />}
                       </div>
                       <span className="text-[11px] text-slate-400 font-mono">{usr.email}</span>
                     </td>
@@ -847,7 +847,7 @@ export default function AdminDashboardView() {
                         className={`px-2.5 py-0.5 rounded-full text-[10px] font-bold ${
                           usr.status === "Active"
                             ? "bg-emerald-100 text-emerald-800 dark:bg-emerald-950 dark:text-emerald-300"
-                            : "bg-rose-100 text-rose-800 dark:bg-rose-950 dark:text-rose-300"
+                            : "bg-red-100 text-red-800 dark:bg-red-950 dark:text-red-300"
                         }`}
                       >
                         {usr.status}
@@ -859,7 +859,7 @@ export default function AdminDashboardView() {
                           onClick={() => handleToggleUserStatus(usr.id)}
                           className={`px-3 py-1 rounded-xl text-xs font-bold transition-all cursor-pointer ${
                             usr.status === "Active"
-                              ? "bg-rose-50 text-rose-700 hover:bg-rose-600 hover:text-white dark:bg-rose-950/60 dark:text-rose-300 border border-rose-200 dark:border-rose-900"
+                              ? "bg-red-50 text-red-700 hover:bg-red-600 hover:text-white dark:bg-red-950/60 dark:text-red-300 border border-red-200 dark:border-red-900"
                               : "bg-emerald-600 text-white hover:bg-emerald-700 shadow-xs"
                           }`}
                         >
@@ -920,7 +920,7 @@ export default function AdminDashboardView() {
                     <>
                       <button
                         onClick={() => handleResolveDispute(disp.id, "suspend")}
-                        className="px-3.5 py-1.5 rounded-xl bg-rose-600 hover:bg-rose-700 text-white text-xs font-bold shadow-xs cursor-pointer flex items-center gap-1"
+                        className="px-3.5 py-1.5 rounded-xl bg-red-600 hover:bg-red-700 text-white text-xs font-bold shadow-xs cursor-pointer flex items-center gap-1"
                       >
                         <UserX className="w-3.5 h-3.5" />
                         <span>{t(lang, "sanctionEmployer")}</span>
@@ -995,7 +995,7 @@ export default function AdminDashboardView() {
               <div className="text-xs space-y-2 pt-2 border-t border-slate-200 dark:border-slate-700">
                 <div className="flex justify-between">
                   <span className="text-slate-500">Target Channel:</span>
-                  <span className="font-mono font-bold text-sky-600">@AzmeraJobConnect</span>
+                  <span className="font-mono font-bold text-[#0A2540] dark:text-[#F59E0B]">@AzmeraJobConnect</span>
                 </div>
                 <div className="flex justify-between">
                   <span className="text-slate-500">Subscriber Base:</span>
@@ -1009,18 +1009,18 @@ export default function AdminDashboardView() {
 
               <button
                 onClick={handleManualTelegramBroadcast}
-                className="w-full py-2.5 rounded-xl bg-sky-500 hover:bg-sky-600 text-white text-xs font-black shadow-md flex items-center justify-center gap-2 cursor-pointer transition-transform hover:scale-[1.02]"
+                className="w-full py-2.5 rounded-xl bg-[#0A2540] hover:bg-[#07192C] dark:bg-[#F59E0B] dark:hover:bg-[#D97706] text-white dark:text-[#0A2540] text-xs font-black shadow-md flex items-center justify-center gap-2 cursor-pointer transition-transform hover:scale-[1.02]"
               >
                 <Send className="w-4 h-4" />
                 <span>{t(lang, "triggerBroadcast")} 🚀</span>
               </button>
             </div>
 
-            <div className="p-5 rounded-2xl bg-sky-50/50 dark:bg-sky-950/20 border border-sky-200 dark:border-sky-900/60 space-y-3 font-mono text-xs">
-              <span className="text-[10px] font-bold uppercase text-sky-700 dark:text-sky-300 block">
+            <div className="p-5 rounded-2xl bg-slate-50 dark:bg-slate-800/50 border border-slate-200 dark:border-slate-700 space-y-3 font-mono text-xs">
+              <span className="text-[10px] font-bold uppercase text-[#0A2540] dark:text-[#F59E0B] block">
                 Telegram Post Format Template:
               </span>
-              <div className="p-3 bg-white dark:bg-[#101E33] rounded-xl border border-sky-100 dark:border-sky-800 space-y-1.5 leading-relaxed">
+              <div className="p-3 bg-white dark:bg-[#101E33] rounded-xl border border-slate-200 dark:border-slate-700 space-y-1.5 leading-relaxed">
                 <p className="font-bold text-slate-900 dark:text-white">📢 #AzmeraJobs_Vacancy</p>
                 <p>🏢 <strong>Ethiopian Skylight Hotel</strong></p>
                 <p>📍 Bole, Addis Ababa</p>
