@@ -220,6 +220,8 @@ export interface Company {
   foundedYear: string;
   activeJobsCount: number;
   bannerUrl: string;
+  kycDocumentName?: string;
+  kycDocumentUrl?: string;
 }
 
 export interface NotificationItem {

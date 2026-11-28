@@ -4,6 +4,7 @@ import React, { useState, useRef, useEffect } from "react";
 import { useApp } from "@/context/AppContext";
 import { t } from "@/lib/i18n";
 import { Candidate } from "@/types";
+import { exportTransactionsCsv, openPrintableVatInvoice } from "@/lib/invoice";
 import CandidateProfileModal from "@/components/employer/CandidateProfileModal";
 import {
   ShieldCheck,
@@ -129,13 +130,80 @@ export default function AdminDashboardView() {
   const [telegramAutoPost, setTelegramAutoPost] = useState(true);
   const [lastTelegramBroadcast, setLastTelegramBroadcast] = useState("Nov 25, 2026, 10:45 AM");
 
-  // Audit Logs state
+  // Audit Logs state (hydrated from PostgreSQL /api/audit-logs)
   const [auditLogs, setAuditLogs] = useState([
-    { id: "log-1", action: "Approved Vacancy", target: "Senior Full Stack Engineer (Skylight Hotel)", admin: "Azmera Admin", time: "10 mins ago", ip: "196.188.241.12" },
-    { id: "log-2", action: "Verified Payment", target: "1,500 ETB via Telebirr (Ref: TB-291840281)", admin: "System Settlement", time: "35 mins ago", ip: "Gateway Webhook" },
-    { id: "log-3", action: "Approved Employer KYC", target: "Ethiopian Skylight Hotel (TIN: 0048192841)", admin: "Azmera Admin", time: "2 hrs ago", ip: "196.188.241.12" },
-    { id: "log-4", action: "Suspended Malicious Account", target: "Apex Consultancy (Violated Terms)", admin: "Azmera Admin", time: "Yesterday", ip: "196.188.241.12" },
+    { id: "log-1", action: "Approved Vacancy", target: "Senior Full Stack Engineer (Skylight Hotel)", admin: "Azmera Admin", time: "10 mins ago", ip: "System" },
   ]);
+
+  useEffect(() => {
+    if (adminTab === "users") {
+      void (async () => {
+        try {
+          const res = await fetch("/api/admin/users", { credentials: "include" });
+          const data = (await res.json()) as {
+            ok?: boolean;
+            users?: Array<{
+              id: string;
+              name: string;
+              email: string;
+              role: string;
+              companyName?: string;
+              status: string;
+              joined: string;
+              verified: boolean;
+            }>;
+          };
+          if (res.ok && data?.ok && Array.isArray(data.users) && data.users.length > 0) {
+            setUsersList(
+              data.users.map((u) => ({
+                id: u.id,
+                name: u.name,
+                email: u.email,
+                role: u.companyName ? `${u.role} (${u.companyName})` : u.role,
+                status: u.status,
+                joined: u.joined,
+                verified: u.verified,
+              }))
+            );
+          }
+        } catch {
+          // Keep loaded state when offline
+        }
+      })();
+    }
+    if (adminTab !== "audit") return;
+    void (async () => {
+      try {
+        const res = await fetch("/api/audit-logs?limit=50", { credentials: "include" });
+        const data = (await res.json()) as {
+          ok?: boolean;
+          logs?: Array<{
+            id: string;
+            actor_id: string | null;
+            actor_role: string | null;
+            action: string;
+            target_type: string;
+            target_id: string | null;
+            created_at: string;
+          }>;
+        };
+        if (res.ok && data?.ok && Array.isArray(data.logs) && data.logs.length > 0) {
+          setAuditLogs(
+            data.logs.map((row) => ({
+              id: row.id,
+              action: row.action,
+              target: `${row.target_type}${row.target_id ? ` (${row.target_id})` : ""}`,
+              admin: row.actor_role ? `${row.actor_role.toUpperCase()} (${row.actor_id || "system"})` : "System",
+              time: new Date(row.created_at).toLocaleString(),
+              ip: "PostgreSQL Audit",
+            }))
+          );
+        }
+      } catch {
+        // fallback to existing state
+      }
+    })();
+  }, [adminTab]);
 
   // Sync outer sidebar tab → inner admin sub-tab
   useEffect(() => {
@@ -244,15 +312,27 @@ export default function AdminDashboardView() {
     }
   };
 
-  const handleToggleUserStatus = (userId: string) => {
-    setUsersList((prev) =>
-      prev.map((u) => {
-        if (u.id !== userId) return u;
-        const newStatus = u.status === "Active" ? "Suspended" : "Active";
-        showToast(`User ${u.name} set to ${newStatus}!`, newStatus === "Active" ? "success" : "error");
-        return { ...u, status: newStatus };
-      })
-    );
+  const handleToggleUserStatus = async (userId: string) => {
+    const targetUser = usersList.find((u) => u.id === userId);
+    if (!targetUser) return;
+    const newStatus = targetUser.status === "Active" ? "Suspended" : "Active";
+    try {
+      const res = await fetch(`/api/admin/users/${encodeURIComponent(userId)}/status`, {
+        method: "PATCH",
+        credentials: "include",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ status: newStatus }),
+      });
+      const data = (await res.json().catch(() => null)) as { ok?: boolean; error?: string; message?: string } | null;
+      if (!res.ok || !data?.ok) {
+        showToast(data?.error || data?.message || "Failed to update user status.", "error");
+        return;
+      }
+      setUsersList((prev) => prev.map((u) => (u.id === userId ? { ...u, status: newStatus } : u)));
+      showToast(`User ${targetUser.name} set to ${newStatus}!`, newStatus === "Active" ? "success" : "error");
+    } catch {
+      showToast("Network error while updating user status.", "error");
+    }
   };
 
   const handleResolveDispute = (dispId: string, action: "dismiss" | "suspend") => {
@@ -262,9 +342,35 @@ export default function AdminDashboardView() {
     showToast(action === "suspend" ? "Employer sanctioned and warning issued!" : "Dispute dismissed as benign.", "info");
   };
 
-  const handleManualTelegramBroadcast = () => {
-    setLastTelegramBroadcast("Just now");
-    showToast("🚀 Broadcasted latest verified vacancies to @AzmeraJobConnect (95,240 subscribers)!", "success");
+  const handleManualTelegramBroadcast = async () => {
+    const activeLines = jobs
+      .filter((j) => j.approved && j.status === "Active")
+      .slice(0, 6)
+      .map((j, idx) => `${idx + 1}. ${j.title} — ${j.companyName} (${j.location})`)
+      .join("\n");
+    const text = `📢 Azmera Jobs Official Daily Digest\n\n${activeLines}\n\n🌐 Apply now on azmerajobs.com`;
+    try {
+      const res = await fetch("/api/broadcast", {
+        method: "POST",
+        credentials: "include",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ text, lang }),
+      });
+      const data = (await res.json()) as { ok?: boolean; delivered?: boolean; channelId?: string; error?: string };
+      if (!res.ok || !data?.ok) {
+        showToast(data?.error || "Broadcast request failed.", "error");
+        return;
+      }
+      setLastTelegramBroadcast("Just now");
+      showToast(
+        data.delivered
+          ? `Broadcast published live to ${data.channelId || "@AzmeraJobConnect"}!`
+          : `Broadcast recorded & queued (set TELEGRAM_BOT_TOKEN in .env for auto-posting).`,
+        data.delivered ? "success" : "info"
+      );
+    } catch {
+      showToast("Network error publishing broadcast.", "error");
+    }
   };
 
   // Financial totals
@@ -611,7 +717,10 @@ export default function AdminDashboardView() {
               </p>
             </div>
             <button
-              onClick={() => showToast("Exported official VAT transaction report (CSV) for Ethiopian Ministry of Revenue")}
+              onClick={() => {
+                exportTransactionsCsv(transactions);
+                showToast("Exported official VAT tax ledger (CSV)!", "success");
+              }}
               className="px-4 py-2 rounded-xl border border-slate-200 dark:border-slate-700 text-xs font-bold text-slate-900 dark:text-white flex items-center gap-1.5 hover:bg-slate-50 dark:hover:bg-slate-800 cursor-pointer"
             >
               <Download className="w-3.5 h-3.5" />
@@ -669,7 +778,15 @@ export default function AdminDashboardView() {
                     </td>
                     <td className="py-3 px-2 text-right">
                       <button
-                        onClick={() => showToast(`VAT E-Receipt re-issued for Ref ${tx.referenceNumber}`)}
+                        onClick={() => {
+                          const opened = openPrintableVatInvoice(tx);
+                          showToast(
+                            opened
+                              ? `VAT E-Receipt opened for Ref ${tx.referenceNumber}`
+                              : `VAT E-Receipt downloaded for Ref ${tx.referenceNumber}`,
+                            "success"
+                          );
+                        }}
                         className="text-xs font-bold text-[#0A2540] hover:text-[#F59E0B] dark:text-[#F59E0B] underline cursor-pointer"
                       >
                         {t(lang, "viewReceipt")}

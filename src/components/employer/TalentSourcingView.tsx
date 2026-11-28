@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { useApp } from "@/context/AppContext";
 import { t } from "@/lib/i18n";
 import { Candidate, TalentPool, Job } from "@/types";
@@ -51,27 +51,21 @@ export default function TalentSourcingView() {
   const [createPoolOpen, setCreatePoolOpen] = useState(false);
   const [newPoolName, setNewPoolName] = useState("");
 
-  // Local talent pools state
-  const [talentPools, setTalentPools] = useState<TalentPool[]>([
-    {
-      id: "pool-1",
-      name: "💻 Senior Tech & Software",
-      candidateIds: ["cand-1", "cand-4"],
-      createdAt: "Nov 2026",
-    },
-    {
-      id: "pool-2",
-      name: "🏨 5-Star Hospitality Crew",
-      candidateIds: ["cand-2", "cand-5"],
-      createdAt: "Nov 2026",
-    },
-    {
-      id: "pool-3",
-      name: "🌍 NGO Field Operations",
-      candidateIds: ["cand-3"],
-      createdAt: "Nov 2026",
-    },
-  ]);
+  const [talentPools, setTalentPools] = useState<TalentPool[]>([]);
+
+  useEffect(() => {
+    void (async () => {
+      try {
+        const res = await fetch("/api/talent-pools", { credentials: "include" });
+        const data = (await res.json()) as { ok?: boolean; pools?: TalentPool[] };
+        if (res.ok && data?.ok && Array.isArray(data.pools)) {
+          setTalentPools(data.pools);
+        }
+      } catch {
+        // ignore fetch failures
+      }
+    })();
+  }, []);
 
   const companyJobs = jobs.filter((j) => j.companyId === company.id && j.status === "Active");
 
@@ -100,34 +94,53 @@ export default function TalentSourcingView() {
     return matchesSearch && matchesLocation && matchesExp && matchesPool;
   });
 
-  const handleCreatePool = () => {
+  const handleCreatePool = async () => {
     if (!newPoolName.trim()) return;
-    const newPool: TalentPool = {
-      id: `pool-${Date.now()}`,
-      name: newPoolName.trim(),
-      candidateIds: [],
-      createdAt: "Just now",
-    };
-    setTalentPools([...talentPools, newPool]);
-    setNewPoolName("");
-    setCreatePoolOpen(false);
-    showToast(`Created Talent Pool "${newPool.name}"!`);
+    const poolName = newPoolName.trim();
+    try {
+      const res = await fetch("/api/talent-pools", {
+        method: "POST",
+        credentials: "include",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ name: poolName, candidateIds: [] }),
+      });
+      const data = (await res.json()) as { ok?: boolean; pool?: TalentPool; error?: string };
+      if (!res.ok || !data?.ok || !data.pool) {
+        showToast(data?.error || "Could not create talent pool.", "error");
+        return;
+      }
+      setTalentPools((prev) => [data.pool!, ...prev]);
+      setNewPoolName("");
+      setCreatePoolOpen(false);
+      showToast(`Created Talent Pool "${data.pool.name}"!`);
+    } catch {
+      showToast("Network error creating talent pool.", "error");
+    }
   };
 
-  const handleToggleCandidateInPool = (poolId: string, candidateId: string) => {
+  const handleToggleCandidateInPool = async (poolId: string, candidateId: string) => {
+    const targetPool = talentPools.find((p) => p.id === poolId);
+    if (!targetPool) return;
+    const exists = targetPool.candidateIds.includes(candidateId);
+    const nextIds = exists
+      ? targetPool.candidateIds.filter((id) => id !== candidateId)
+      : [...targetPool.candidateIds, candidateId];
+
     setTalentPools((prev) =>
-      prev.map((p) => {
-        if (p.id !== poolId) return p;
-        const exists = p.candidateIds.includes(candidateId);
-        return {
-          ...p,
-          candidateIds: exists
-            ? p.candidateIds.filter((id) => id !== candidateId)
-            : [...p.candidateIds, candidateId],
-        };
-      })
+      prev.map((p) => (p.id === poolId ? { ...p, candidateIds: nextIds } : p))
     );
     showToast("Updated candidate in Talent Pool!", "success");
+
+    try {
+      await fetch(`/api/talent-pools/${encodeURIComponent(poolId)}`, {
+        method: "PATCH",
+        credentials: "include",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ candidateIds: nextIds }),
+      });
+    } catch {
+      // optimistic UI already updated
+    }
   };
 
   const handleSendInvitation = () => {

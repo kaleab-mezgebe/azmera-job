@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useState } from "react";
+import React, { useRef, useState } from "react";
 import { useApp } from "@/context/AppContext";
 import { t } from "@/lib/i18n";
 import {
@@ -56,6 +56,56 @@ export default function CompanyProfileView() {
   const [tinNumber, setTinNumber] = useState("0078945612");
   const [commercialRegNumber, setCommercialRegNumber] = useState("AA/BOL/109/2016");
   const [licenseType, setLicenseType] = useState("Grade 1 Hospitality, Commercial & Service Enterprise");
+  const [kycUploading, setKycUploading] = useState(false);
+  const kycFileInputRef = useRef<HTMLInputElement | null>(null);
+
+  const handleKycFileSelect = async (e: React.ChangeEvent<HTMLInputElement>) => {
+    const file = e.target.files?.[0];
+    e.target.value = "";
+    if (!file) return;
+    if (file.size > 5 * 1024 * 1024) {
+      showToast("KYC document must be 5 MB or smaller.", "error");
+      return;
+    }
+    setKycUploading(true);
+    try {
+      const dataUrl = await new Promise<string>((resolve, reject) => {
+        const reader = new FileReader();
+        reader.onload = () => resolve(String(reader.result || ""));
+        reader.onerror = () => reject(new Error("Could not read file"));
+        reader.readAsDataURL(file);
+      });
+      const res = await fetch("/api/uploads", {
+        method: "POST",
+        credentials: "include",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          filename: file.name,
+          mimeType: file.type || "application/pdf",
+          dataBase64: dataUrl,
+        }),
+      });
+      const data = (await res.json().catch(() => null)) as {
+        ok?: boolean;
+        error?: string;
+        file?: { originalName: string; url: string; sizeLabel: string };
+      } | null;
+      if (!res.ok || !data?.ok || !data.file) {
+        showToast(data?.error || "Failed to upload KYC document.", "error");
+        return;
+      }
+      setCompany({
+        ...company,
+        kycDocumentName: data.file.originalName,
+        kycDocumentUrl: data.file.url,
+      });
+      showToast(`Uploaded ${data.file.originalName} (${data.file.sizeLabel}) for Admin KYC review!`, "success");
+    } catch {
+      showToast("Error uploading KYC certificate.", "error");
+    } finally {
+      setKycUploading(false);
+    }
+  };
 
   // Team members state
   const [teamMembers, setTeamMembers] = useState<HRTeamMember[]>([
@@ -472,35 +522,63 @@ export default function CompanyProfileView() {
               </h4>
 
               <div className="flex items-center justify-between p-3.5 bg-white dark:bg-[#101E33] rounded-xl border border-slate-200 dark:border-slate-700">
-                <div className="flex items-center gap-3">
+                <div className="flex items-center gap-3 min-w-0">
                   <div className="w-10 h-10 rounded-xl bg-[#EEF4FA] dark:bg-slate-800 text-[#0A2540] dark:text-[#F59E0B] flex items-center justify-center font-bold text-xs shrink-0">
-                    PDF
+                    {(company.kycDocumentName || ".pdf").split(".").pop()?.toUpperCase().slice(0, 4) || "PDF"}
                   </div>
-                  <div>
-                    <p className="text-xs font-bold text-slate-900 dark:text-white">
-                      Skylight_Hotel_Commercial_Registration_Certificate_2026.pdf
+                  <div className="min-w-0">
+                    <p className="text-xs font-bold text-slate-900 dark:text-white truncate">
+                      {company.kycDocumentName || "Skylight_Hotel_Commercial_Registration_Certificate_2026.pdf"}
                     </p>
-                    <p className="text-[11px] text-slate-400">1.8 MB • Verified by Azmera Platform Admin</p>
+                    <p className="text-[11px] text-slate-400">
+                      {company.kycDocumentUrl
+                        ? "Stored in PostgreSQL • Verified KYC Document"
+                        : "Sample KYC Reference • Upload updated PDF/image below"}
+                    </p>
                   </div>
                 </div>
 
-                <button
-                  onClick={() => showToast("Downloading verified commercial registration certificate...", "info")}
-                  className="px-3 py-1.5 rounded-lg border border-slate-200 dark:border-slate-700 hover:bg-slate-50 dark:hover:bg-slate-800 text-xs font-bold text-slate-700 dark:text-slate-300 cursor-pointer"
-                >
-                  Download
-                </button>
+                {company.kycDocumentUrl ? (
+                  <a
+                    href={company.kycDocumentUrl}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    download={company.kycDocumentName || "kyc-document"}
+                    className="px-3 py-1.5 rounded-lg border border-slate-200 dark:border-slate-700 hover:bg-slate-50 dark:hover:bg-slate-800 text-xs font-bold text-slate-700 dark:text-slate-300 cursor-pointer shrink-0 inline-flex items-center gap-1.5"
+                  >
+                    Download
+                    <ExternalLink className="w-3.5 h-3.5" />
+                  </a>
+                ) : (
+                  <button
+                    type="button"
+                    onClick={() => kycFileInputRef.current?.click()}
+                    className="px-3 py-1.5 rounded-lg border border-slate-200 dark:border-slate-700 hover:bg-slate-50 dark:hover:bg-slate-800 text-xs font-bold text-slate-700 dark:text-slate-300 cursor-pointer shrink-0"
+                  >
+                    Upload PDF
+                  </button>
+                )}
               </div>
 
               <div className="flex items-center justify-between pt-2">
                 <span className="text-[11px] text-slate-500 dark:text-slate-400">
                   Need to update your corporate legal credentials?
                 </span>
+                <input
+                  ref={kycFileInputRef}
+                  type="file"
+                  accept=".pdf,image/png,image/jpeg,image/webp"
+                  className="hidden"
+                  onChange={handleKycFileSelect}
+                />
                 <button
-                  onClick={() => showToast("Document re-submission request dispatched to Admin queue.", "info")}
-                  className="text-xs font-bold text-[#0A2540] dark:text-[#F59E0B] hover:underline cursor-pointer"
+                  type="button"
+                  disabled={kycUploading}
+                  onClick={() => kycFileInputRef.current?.click()}
+                  className="text-xs font-bold text-[#0A2540] dark:text-[#F59E0B] hover:underline cursor-pointer disabled:opacity-60 inline-flex items-center gap-1.5"
                 >
-                  Request Document Update
+                  <Upload className="w-3.5 h-3.5" />
+                  {kycUploading ? "Uploading..." : "Upload Updated Document"}
                 </button>
               </div>
             </div>

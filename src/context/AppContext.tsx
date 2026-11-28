@@ -322,6 +322,19 @@ export function AppProvider({ children }: { children: React.ReactNode }) {
     if (Array.isArray(data.notifications)) setNotifications(data.notifications);
     if (Array.isArray(data.transactions)) setTransactions(data.transactions);
     if (Array.isArray(data.savedJobIds)) setSavedJobIds(data.savedJobIds);
+    if (data.user) {
+      const alertRes = await apiFetch<{
+        ok?: boolean;
+        prefs?: {
+          enabled: boolean;
+          channels: { platform: boolean; email: boolean; telegram: boolean; sms: boolean };
+          keyword: string;
+        };
+      }>("/api/job-alerts");
+      if (alertRes?.ok && alertRes.prefs) {
+        setJobAlertPrefsState(alertRes.prefs);
+      }
+    }
     return data;
   }, []);
 
